@@ -26,6 +26,10 @@ export default class PresentationScreen extends React.Component {
             </Text>
           </View>
 
+          <RoundedButton onPress={NavigationActions.feed}>
+            Feed
+          </RoundedButton>
+
           <RoundedButton onPress={NavigationActions.componentExamples}>
             Component Examples Screen
           </RoundedButton>
