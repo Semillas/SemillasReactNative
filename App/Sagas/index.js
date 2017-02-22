@@ -1,5 +1,6 @@
 import { takeLatest } from 'redux-saga'
 import API from '../Services/Api'
+import SemillasApi from '../Services/SemillasApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugSettings from '../Config/DebugSettings'
 
@@ -29,7 +30,7 @@ export default function * root () {
   yield [
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(LoginTypes.LOGIN_REQUEST, login),
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, SemillasApi),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
 
     // some sagas receive extra parameters in addition to an action
