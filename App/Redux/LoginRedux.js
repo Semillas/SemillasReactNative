@@ -51,4 +51,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 /* ------------- Selectors ------------- */
 
 // Is the current user logged in?
-export const isLoggedIn = (loginState: Object) => loginState.key !== null
+export const isLoggedIn = (loginState: Object) => loginState.key !== undefined
