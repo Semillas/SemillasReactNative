@@ -21,6 +21,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     // 10 second timeout...
     timeout: 10000
   })
+  debugger;
 
   // Force OpenWeather API Key on all requests
   // api.addRequestTransform((request) => {
@@ -49,10 +50,10 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   // way at this level.
   const login = (email, password) => api.post('/rest-auth/login/', {'email': email, 'password': password})
 
-  const logout = (email, password) => api.post('/rest-auth/logout/', {})
+  // const logout = (email, password) => api.post('/rest-auth/logout/', {})
 
-
-  const feed = (search_text, category) => api.post('/services/feed', {})
+  // const feed = (search_text, category) => api.post('/services/feed', {})
+  const user_detail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
 
   // ------
   // STEP 3
