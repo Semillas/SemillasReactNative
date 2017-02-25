@@ -10,6 +10,7 @@ import CustomNavBar from '../Navigation/CustomNavBar'
 // screens identified by the router
 import PresentationScreen from '../Containers/PresentationScreen'
 import FeedScreen from '../Containers/FeedScreen'
+import UserScreen from '../Containers/UserScreen'
 import AllComponentsScreen from '../Containers/AllComponentsScreen'
 import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
 import LoginScreen from '../Containers/LoginScreen'
@@ -34,6 +35,7 @@ class NavigationRouter extends Component {
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
             <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
             <Scene key='feed' component={FeedScreen} title='Feed' />
+            <Scene key='user' component={UserScreen} title='User' />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
             <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
