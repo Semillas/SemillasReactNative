@@ -6,43 +6,45 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  temperatureRequest: ['city'],
-  temperatureSuccess: ['temperature'],
-  temperatureFailure: null
+  usersRequest: ['uuid'],
+  usersSuccess: ['entities'],
+  usersFailure: null
 })
 
-export const TemperatureTypes = Types
+export const UsersTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  temperature: null,
+  entities: {},
   fetching: null,
   error: null,
-  city: null
+  uuid: null
 })
 
 /* ------------- Reducers ------------- */
 
-// request the temperature for a city
-export const request = (state: Object, { city }: Object) =>
-  state.merge({ fetching: true, city, temperature: null })
+// request the user for a uuid
+export const request = (state: Object, { uuid }: Object) =>
+  state.merge({ fetching: true, uuid })
 
-// successful temperature lookup
+// successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { temperature } = action
-  return state.merge({ fetching: false, error: null, temperature })
+  const { user } = action
+  users = state.entities
+  users[user.uuid] = user
+  return state.merge({ fetching: false, error: null, entities: users })
 }
 
-// failed to get the temperature
+// failed to get the user
 export const failure = (state: Object) =>
-  state.merge({ fetching: false, error: true, temperature: null })
+  state.merge({ fetching: false, error: true })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.TEMPERATURE_REQUEST]: request,
-  [Types.TEMPERATURE_SUCCESS]: success,
-  [Types.TEMPERATURE_FAILURE]: failure
+  [Types.USERS_REQUEST]: request,
+  [Types.USERS_SUCCESS]: success,
+  [Types.USERS_FAILURE]: failure
 })

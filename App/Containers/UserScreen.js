@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { ScrollView, Text, KeyboardAvoidingView, View } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -40,13 +40,22 @@ class UserScreen extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
+UserScreen.propTypes = {
+  uuid: PropTypes.string,
+  requestUser: PropTypes.func,
+  user: PropTypes.object
+}
+
+const mapStateToProps = (state, ownProps) => {
   return {
+    uuid: ownProps.params.uuid,
+    user: state.users[uuid]
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    requestUser: (uuid) => dispatch(UserActions.userRequest(uuid))
   }
 }
 

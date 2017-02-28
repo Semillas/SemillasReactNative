@@ -53,7 +53,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   // const logout = (email, password) => api.post('/rest-auth/logout/', {})
 
   // const feed = (search_text, category) => api.post('/services/feed', {})
-  const user_detail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
+  const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
 
   // ------
   // STEP 3
