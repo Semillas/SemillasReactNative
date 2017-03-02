@@ -17,6 +17,7 @@ import { UsersTypes } from '../Redux/UsersRedux'
 import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getTemperature } from './TemperatureSagas'
+import { getUser } from './UserSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -37,6 +38,6 @@ export default function * root () {
     // some sagas receive extra parameters in addition to an action
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
     takeLatest(TemperatureTypes.TEMPERATURE_REQUEST, getTemperature, api),
-    takeLatest(UsersTypes.USERS_REQUEST, getUserDetail, semillasApi)
+    takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi)
   ]
 }

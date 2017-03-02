@@ -32,7 +32,7 @@ export const request = (state: Object, { uuid }: Object) =>
 // successful user lookup
 export const success = (state: Object, action: Object) => {
   const { user } = action
-  users = state.entities
+  const users = state.entities
   users[user.uuid] = user
   return state.merge({ fetching: false, error: null, entities: users })
 }

@@ -21,7 +21,6 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     // 10 second timeout...
     timeout: 10000
   })
-  debugger;
 
   // Force OpenWeather API Key on all requests
   // api.addRequestTransform((request) => {
@@ -69,7 +68,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   //
   return {
     // a list of the API functions from step 2
-    login
+    login,
+    getUserDetail
   }
 }
 

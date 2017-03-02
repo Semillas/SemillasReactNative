@@ -1,8 +1,8 @@
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
-import TemperatureActions from '../Redux/UsersRedux'
+import UsersActions from '../Redux/UsersRedux'
 
-export function * getUser(api, action) {
+export function * getUser (api, action) {
   const { uuid } = action
   // make the call to the api
   const response = yield call(api.getUserDetail, uuid)
