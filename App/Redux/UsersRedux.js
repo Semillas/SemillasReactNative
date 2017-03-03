@@ -7,7 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   usersRequest: ['uuid'],
-  usersSuccess: ['entities'],
+  usersSuccess: ['user'],
   usersFailure: null
 })
 
@@ -32,9 +32,9 @@ export const request = (state: Object, { uuid }: Object) =>
 // successful user lookup
 export const success = (state: Object, action: Object) => {
   const { user } = action
-  const users = state.entities
-  users[user.uuid] = user
-  return state.merge({ fetching: false, error: null, entities: users })
+  const entities = {}
+  entities[user['uuid']] = user
+  return state.merge({ fetching: false, error: null, entities: entities })
 }
 
 // failed to get the user

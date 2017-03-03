@@ -10,10 +10,13 @@ import styles from './Styles/UserScreenStyle'
 
 class UserScreen extends React.Component {
 
-  render () {
+  componentWillMount () {
+    const { dispatch } = this.props
+    dispatch(UserActions.usersRequest(this.props.uuid))
+  }
+
+  render (uuid) {
     return (
-//      <ScrollView style={styles.container}>
-//        <KeyboardAvoidingView behavior='position'>
       <View style={styles.mainContainer}>
         <Text>UserScreen Container</Text>
         <View style={styles.section}>
@@ -21,11 +24,10 @@ class UserScreen extends React.Component {
         </View>
         <View style={styles.section}>
           <Text>UserScreen Container</Text>
+          <Text>uuid: {this.props.uuid}</Text>
         </View>
       </View>
 
-//        </KeyboardAvoidingView>
-//      </ScrollView>
     )
   }
 
@@ -39,15 +41,9 @@ UserScreen.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    uuid: ownProps.params.uuid,
-    user: state.users[ownProps.params.uuid]
+    uuid: ownProps.uuid,
+    user: state.users[ownProps.uuid]
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    requestUser: (uuid) => dispatch(UserActions.userRequest(uuid))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserScreen)
+export default connect(mapStateToProps)(UserScreen)

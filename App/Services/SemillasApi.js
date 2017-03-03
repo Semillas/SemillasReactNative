@@ -54,6 +54,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   // const feed = (search_text, category) => api.post('/services/feed', {})
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
 
+  const setHeader = api.setHeader
+
   // ------
   // STEP 3
   // ------
@@ -69,7 +71,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   return {
     // a list of the API functions from step 2
     login,
-    getUserDetail
+    getUserDetail,
+    setHeader
   }
 }
 

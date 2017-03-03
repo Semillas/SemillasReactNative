@@ -17,7 +17,7 @@ import { UsersTypes } from '../Redux/UsersRedux'
 import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getTemperature } from './TemperatureSagas'
-import { getUser } from './UserSagas'
+import { getUser } from './UsersSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
