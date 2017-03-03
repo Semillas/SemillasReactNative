@@ -16,21 +16,35 @@ class UserScreen extends React.Component {
   }
 
   render (uuid) {
-    return (
-      <View style={styles.mainContainer}>
-        <Text>UserScreen Container</Text>
-        <View style={styles.section}>
-          <Text>UserScreen Container</Text>
+    const { user } = this.props
+    if (!user) {
+      return (
+        <View style={styles.mainContainer}>
+          <Text>Loading</Text>
+          <View style={styles.section}>
+            <Text>UserScreen Container</Text>
+          </View>
+          <View style={styles.section}>
+            <Text>UserScreen Container</Text>
+            <Text>uuid: {this.props.uuid}</Text>
+          </View>
         </View>
-        <View style={styles.section}>
-          <Text>UserScreen Container</Text>
-          <Text>uuid: {this.props.uuid}</Text>
+      )
+    } else {
+      return (
+        <View style={styles.mainContainer}>
+          <Text>Loaded</Text>
+          <View style={styles.section}>
+            <Text>{user.name}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text>UserScreen Container</Text>
+            <Text>uuid: {this.props.uuid}</Text>
+          </View>
         </View>
-      </View>
-
-    )
+      )
+    }
   }
-
 }
 
 UserScreen.propTypes = {
@@ -42,7 +56,7 @@ UserScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     uuid: ownProps.uuid,
-    user: state.users[ownProps.uuid]
+    user: state.users['entities'][ownProps.uuid]
   }
 }
 
