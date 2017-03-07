@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import {
   ListView,
+	Text,
   RefreshControl,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
@@ -10,8 +11,7 @@ class Feed extends React.Component {
   static propTypes = {
     // Assume data shape looks like:
     // {items: ["item1", "item2"], nextUrl: null, isFetching: false}
-    listData: PropTypes.object.isRequired,
-
+    listData: PropTypes.object,
     // dispatch is automatically provided by react-redux, and is used to
     // interact with the store.
     dispatch: PropTypes.func.isRequired,
@@ -20,14 +20,24 @@ class Feed extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: this._rowHasChanged.bind(this),
-      }),
-    };
+    //this.state = {
+    //  dataSource: new ListView.DataSource({
+    //    rowHasChanged: this._rowHasChanged.bind(this),
+    //  }),
+    //};
 
     // Update the data store with initial data.
-    this.state.dataSource = this.getUpdatedDataStore(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        'row 1',
+        'row 2',
+      ]),
+    };
+//    this.state.dataSource = this.getUpdatedDataSource(props);
+    this.state['listData'] = {items: ["item1", "item2"], nextUrl: null, isFetching: false}
+
+
   }
 
   async componentWillMount() {
@@ -45,7 +55,7 @@ class Feed extends React.Component {
   getUpdatedDataSource(props) {
     // See the ListView.DataSource documentation for more information on
     // how to properly structure your data depending on your use case.
-    let rows = props.listData.items;
+    let rows = this.state.listData.items;
 
     let ids = rows.map((obj, index) => index);
 
@@ -61,7 +71,7 @@ class Feed extends React.Component {
     // Reload all data
     return (
       <RefreshControl
-        refreshing={this.props.listData.isFetching}
+        refreshing={this.state.listData.isFetching}
         onRefresh={this._loadMoreContentAsync.bind(this)}
       />
     );
@@ -73,7 +83,13 @@ class Feed extends React.Component {
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    this.props.dispatch(fetchMoreContent(this.props.listData.nextUrl));
+    this.props.dispatch(fetchMoreContent(this.state.listData.nextUrl));
+  }
+
+  renderRow(data) {
+    return (
+       <Text>{data}</Text>
+    )
   }
 
   render() {
@@ -81,9 +97,9 @@ class Feed extends React.Component {
       <ListView
         renderScrollComponent={props => <InfiniteScrollView {...props} />}
         dataSource={this.state.dataSource}
-        renderRow={() => <Text>row</Text>}
+        renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={!!this.props.listData.nextUrl}
+        canLoadMore={!!this.state.listData.nextUrl}
         onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
       />
     );
