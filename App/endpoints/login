@@ -1,0 +1,1 @@
+curl -X POST --header Content-Type: application/json --header Accept: application/json -d { "email": "ismael.deesteban@gmail.com", "password": "PrafJets5"} https://www.semillasocial.org/rest-auth/login/

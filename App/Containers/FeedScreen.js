@@ -2,8 +2,7 @@
 
 // An Feed Screen is a great way to dev and quick-test components
 import React from 'react'
-import { Platform, View, ScrollView, Text, Image } from 'react-native'
-import { Images } from '../Themes'
+import { Platform, View, Text } from 'react-native'
 import styles from './Styles/FeedScreenStyle'
 
 // Components to show examples (only real point of merge conflict)
@@ -13,9 +12,6 @@ import '../Components/RoundedButton'
 import '../Components/DrawerButton'
 import Feed from '../Containers/Feed'
 // import '../Components/MapCallout'
-
-// Examples Render Engine
-import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 class FeedScreen extends React.Component {
 

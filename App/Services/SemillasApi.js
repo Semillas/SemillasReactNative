@@ -51,7 +51,13 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
 
   // const logout = (email, password) => api.post('/rest-auth/logout/', {})
 
-  // const feed = (search_text, category) => api.post('/services/feed', {})
+  const getFeed = function (searchText, category, nextPageUrl) {
+    if (nextPageUrl != null) {
+      return api.get(nextPageUrl)
+    } else {
+      return api.get('/services/feed/', {category: category, search: searchText})
+    }
+  }
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
 
   const setHeader = api.setHeader
@@ -72,7 +78,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     // a list of the API functions from step 2
     login,
     getUserDetail,
-    setHeader
+    setHeader,
+    getFeed
   }
 }
 

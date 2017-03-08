@@ -11,6 +11,7 @@ import { TemperatureTypes } from '../Redux/TemperatureRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { UsersTypes } from '../Redux/UsersRedux'
+import { FeedTypes } from '../Redux/FeedRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -18,6 +19,7 @@ import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getTemperature } from './TemperatureSagas'
 import { getUser } from './UsersSagas'
+import { getFeed } from './FeedSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -38,6 +40,7 @@ export default function * root () {
     // some sagas receive extra parameters in addition to an action
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
     takeLatest(TemperatureTypes.TEMPERATURE_REQUEST, getTemperature, api),
-    takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi)
+    takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
+    takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi)
   ]
 }
