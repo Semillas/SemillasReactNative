@@ -6,8 +6,8 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  feedRequest: ['uuid'],
-  feedSuccess: ['user'],
+  feedRequest: ['nextPageUrl', 'searchText', 'category'],
+  feedSuccess: ['nextPageUrl', 'items'],
   feedFailure: null
 })
 
@@ -33,13 +33,15 @@ export const request = (state: Object, { nextPageUrl }: Object) =>
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { feed } = action
-  const items = feed.map(function (item) {
-    var rObj = {}
-    rObj[item.uuid] = item
-    return rObj
-  })
-  return state.merge({ fetching: false, error: null, items: items })
+  const { items } = action
+  const nextPageUrl = action.nextPageUrl.next.url
+  // TODO: pass feed to { uuid: item }
+//  const items = feed.map(function (item) {
+//    var rObj = {}
+//    rObj[item.uuid] = item
+//    return rObj
+//  })
+  return state.merge({ fetching: false, error: null, items: items , nextPageUrl: nextPageUrl })
 }
 
 // failed to get the user

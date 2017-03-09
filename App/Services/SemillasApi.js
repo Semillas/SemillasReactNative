@@ -55,7 +55,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     if (nextPageUrl != null) {
       return api.get(nextPageUrl)
     } else {
-      return api.get('/services/feed/', {category: category, search: searchText})
+      return api.get('/api/v1/service/feed', {category: category, search: searchText})
     }
   }
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')

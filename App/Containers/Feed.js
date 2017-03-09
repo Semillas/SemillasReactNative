@@ -12,7 +12,12 @@ class Feed extends React.Component {
   static propTypes = {
     // Assume data shape looks like:
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
-    listData: PropTypes.object,
+    items: PropTypes.array,
+    nextPageUrl: PropTypes.string,
+//    fetching: Proptypes.bool,
+//    category: Proptypes.integer,
+//    searchText: Proptypes.string,
+
     // dispatch is automatically provided by react-redux, and is used to
     // interact with the store.
     dispatch: PropTypes.func.isRequired
@@ -25,7 +30,7 @@ class Feed extends React.Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: this._rowHasChanged.bind(this)
       }),
-      listData: {items: [], nextUrl: null, fetching: false}
+      feed: {items: {}, nextPageUrl: null, fetching: false}
     }
 
     // Update the data store with initial data.
@@ -37,11 +42,11 @@ class Feed extends React.Component {
 //      ]),
 //    };
     this.state.dataSource = this.getUpdatedDataSource(props)
-    // this.state['listData'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
+    // this.state['feed'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
   }
 
   async componentWillMount () {
-    // Initial fetch for data, assuming that listData is not yet populated.
+    // Initial fetch for data, assuming that feed is not yet populated.
     this._loadMoreContentAsync()
   }
 
@@ -51,17 +56,6 @@ class Feed extends React.Component {
       dataSource: this.getUpdatedDataSource(nextProps)
     })
   }
-
-  getUpdatedDataSource (props) {
-    // See the ListView.DataSource documentation for more information on
-    // how to properly structure your data depending on your use case.
-    let rows = this.state.listData.items
-
-    let ids = rows.map((obj, index) => index)
-
-    return this.state.dataSource.cloneWithRows(rows, ids)
-  }
-
   _rowHasChanged (r1, r2) {
     // You might want to use a different comparison mechanism for performance.
     return JSON.stringify(r1) !== JSON.stringify(r2)
@@ -71,7 +65,7 @@ class Feed extends React.Component {
     // Reload all data
     return (
       <RefreshControl
-        refreshing={this.state.listData.fetching}
+        refreshing={this.state.feed.fetching}
         onRefresh={this._loadMoreContentAsync.bind(this)}
       />
     )
@@ -79,16 +73,28 @@ class Feed extends React.Component {
 
   _loadMoreContentAsync = async () => {
     // In this example, we're assuming cursor-based pagination, where any
-    // additional data can be accessed at this.props.listData.nextUrl.
+    // additional data can be accessed at this.props.feed.nextUrl.
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    this.props.dispatch(FeedActions.feedRequest(this.state.listData.nextUrl))
+    this.props.dispatch(FeedActions.feedRequest(this.state.feed.nextPageUrl))
   }
+
+  getUpdatedDataSource (props) {
+    // See the ListView.DataSource documentation for more information on
+    // how to properly structure your data depending on your use case.
+    let rows = props.items
+
+    //let ids = rows.map((obj, index) => index)
+    let ids = Object.keys(rows)
+
+    return this.state.dataSource.cloneWithRows(rows, ids)
+  }
+
 
   renderRow (data) {
     return (
-      <Text>{data}</Text>
+      <Text>{data.uuid}</Text>
     )
   }
 
@@ -99,15 +105,21 @@ class Feed extends React.Component {
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={!!this.state.listData.nextUrl}
+        canLoadMore={!!this.state.feed.nextPageUrl}
         onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
       />
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {listData: state.listData}
+const mapStateToProps = (state, ownProps) => {
+  return {
+    items: state.feed.items,
+    nextPageUrl: state.feed.nextPageUrl,
+    searchText: ownProps.searchText,
+    category: ownProps.category
+
+  }
 }
 
 export default connect(mapStateToProps)(Feed)
