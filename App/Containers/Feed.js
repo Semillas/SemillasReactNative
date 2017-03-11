@@ -16,10 +16,10 @@ class Feed extends React.Component {
   static propTypes = {
     // Assume data shape looks like:
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
-    items: PropTypes.array,
+    items: PropTypes.object,
     nextPageUrl: PropTypes.string,
 //    fetching: Proptypes.bool,
-//    category: Proptypes.integer,
+//    category: Proptypes.number,
 //    searchText: Proptypes.string,
 
     // dispatch is automatically provided by react-redux, and is used to
@@ -42,6 +42,8 @@ class Feed extends React.Component {
       fetching: false
     }
 
+    props.nextPageUrl = null
+
 
     this. dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
@@ -63,6 +65,9 @@ class Feed extends React.Component {
 
   async componentWillMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
+    //debugger;
+    //this.props.nextPageUrl = null
+
     this._loadMoreContentAsync()
   }
 

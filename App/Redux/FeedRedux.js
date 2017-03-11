@@ -40,13 +40,13 @@ export const success = (state: Object, action: Object) => {
   } else {
     nextUrl = action.nextPageUrl.next.url
   }
-  // TODO: pass feed to { uuid: item }
-//  const items = feed.map(function (item) {
-//    var rObj = {}
-//    rObj[item.uuid] = item
-//    return rObj
-//  })
-  return state.merge({ fetching: false, error: null, items: items , nextPageUrl: nextUrl })
+  newItems = {}
+  for (var id in items) {
+    newItems[items[id]["uuid"]] = items[id]
+  }
+  allItems = Object.assign({}, state.items, newItems)
+
+  return state.merge({ fetching: false, error: null, items: allItems, nextPageUrl: nextUrl })
 }
 
 // failed to get the user
