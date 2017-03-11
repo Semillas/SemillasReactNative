@@ -29,14 +29,25 @@ class Feed extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    this.props = {} //When implementing persistance. We can remove this and expire old props based on time.
 
+//    this.state = {
+//      dataSource: new ListView.DataSource({
+//        rowHasChanged: this._rowHasChanged.bind(this)
+//      }),
+//      feed: {items: {}, nextPageUrl: null, fetching: false}
+//    }
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: this._rowHasChanged.bind(this)
-      }),
-      feed: {items: {}, nextPageUrl: null, fetching: false}
+      items: {},
+      nextPageUrl: null,
+      fetching: false
     }
+
+
+    this. dataSource = new ListView.DataSource({
+      rowHasChanged: this._rowHasChanged.bind(this)
+    })
+
+
 
     // Update the data store with initial data.
     // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -46,7 +57,7 @@ class Feed extends React.Component {
 //        'row 2',
 //      ]),
 //    };
-    this.state.dataSource = this.getUpdatedDataSource(props)
+    this.dataSource = this.getUpdatedDataSource(props)
     // this.state['feed'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
   }
 
@@ -70,7 +81,7 @@ class Feed extends React.Component {
     // Reload all data
     return (
       <RefreshControl
-        refreshing={this.state.feed.fetching}
+        refreshing={this.state.fetching}
         onRefresh={this._loadMoreContentAsync.bind(this)}
       />
     )
@@ -93,7 +104,7 @@ class Feed extends React.Component {
     //let ids = rows.map((obj, index) => index)
     let ids = Object.keys(rows)
 
-    return this.state.dataSource.cloneWithRows(rows, ids)
+    return this.dataSource.cloneWithRows(rows, ids)
   }
 
 
@@ -112,7 +123,7 @@ class Feed extends React.Component {
     return (
       <ListView
         renderScrollComponent={props => <InfiniteScrollView {...props} />}
-        dataSource={this.state.dataSource}
+        dataSource={this.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
         canLoadMore={!!this.props.nextPageUrl}

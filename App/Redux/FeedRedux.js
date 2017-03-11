@@ -35,7 +35,7 @@ export const request = (state: Object, { nextPageUrl }: Object) =>
 export const success = (state: Object, action: Object) => {
   const { items } = action;
   var nextUrl;
-  if (action.nextPageUrl == null) {
+  if ((action.nextPageUrl == null) || (action.nextPageUrl.next == null)) {
     nextUrl = null
   } else {
     nextUrl = action.nextPageUrl.next.url
