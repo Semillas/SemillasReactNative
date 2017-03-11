@@ -51,7 +51,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
 
   // const logout = (email, password) => api.post('/rest-auth/logout/', {})
 
-  const getFeed = function (searchText, category, nextPageUrl) {
+  const getFeed = function (nextPageUrl, category, searchText) {
     if (nextPageUrl != null) {
       return api.get(nextPageUrl)
     } else {

@@ -7,6 +7,7 @@ export function * getFeed (api, action) {
   const { nextPageUrl } = action
   // make the call to the api
   // TODO: Add filters
+  console.log(nextPageUrl)
   const response = yield call(api.getFeed, nextPageUrl)
 
   // success?

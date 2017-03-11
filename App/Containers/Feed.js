@@ -2,11 +2,15 @@ import React, { PropTypes } from 'react'
 import {
   ListView,
   Text,
+  View,
   RefreshControl
 } from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
+
+import styles from './Styles/UsageExamplesScreenStyle'
+
 
 class Feed extends React.Component {
   static propTypes = {
@@ -25,6 +29,7 @@ class Feed extends React.Component {
 
   constructor (props, context) {
     super(props, context)
+    this.props = {} //When implementing persistance. We can remove this and expire old props based on time.
 
     this.state = {
       dataSource: new ListView.DataSource({
@@ -77,7 +82,7 @@ class Feed extends React.Component {
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    this.props.dispatch(FeedActions.feedRequest(this.state.feed.nextPageUrl))
+    this.props.dispatch(FeedActions.feedRequest(this.props.nextPageUrl))
   }
 
   getUpdatedDataSource (props) {
@@ -94,7 +99,12 @@ class Feed extends React.Component {
 
   renderRow (data) {
     return (
+      <View >
       <Text>{data.uuid}</Text>
+      <Text>{data.title}</Text>
+      <Text>{data.title}</Text>
+      <Text>{data.title}</Text>
+      </View >
     )
   }
 
@@ -105,7 +115,7 @@ class Feed extends React.Component {
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={!!this.state.feed.nextPageUrl}
+        canLoadMore={!!this.props.nextPageUrl}
         onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
       />
     )

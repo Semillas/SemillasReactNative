@@ -33,15 +33,20 @@ export const request = (state: Object, { nextPageUrl }: Object) =>
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { items } = action
-  const nextPageUrl = action.nextPageUrl.next.url
+  const { items } = action;
+  var nextUrl;
+  if (action.nextPageUrl == null) {
+    nextUrl = null
+  } else {
+    nextUrl = action.nextPageUrl.next.url
+  }
   // TODO: pass feed to { uuid: item }
 //  const items = feed.map(function (item) {
 //    var rObj = {}
 //    rObj[item.uuid] = item
 //    return rObj
 //  })
-  return state.merge({ fetching: false, error: null, items: items , nextPageUrl: nextPageUrl })
+  return state.merge({ fetching: false, error: null, items: items , nextPageUrl: nextUrl })
 }
 
 // failed to get the user
