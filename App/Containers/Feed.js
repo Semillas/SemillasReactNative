@@ -42,9 +42,6 @@ class Feed extends React.Component {
       fetching: false
     }
 
-    props.nextPageUrl = null
-
-
     this. dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
     })
@@ -63,19 +60,12 @@ class Feed extends React.Component {
     // this.state['feed'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
   }
 
-  async componentWillMount () {
-    // Initial fetch for data, assuming that feed is not yet populated.
-    //debugger;
-    //this.props.nextPageUrl = null
-
-    this._loadMoreContentAsync()
-  }
-
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
-    this.setState({
-      dataSource: this.getUpdatedDataSource(nextProps)
-    })
+    this.dataSource = this.getUpdatedDataSource(nextProps)
+    //this.setState({
+    //  dataSource: this.getUpdatedDataSource(nextProps)
+    //})
   }
   _rowHasChanged (r1, r2) {
     // You might want to use a different comparison mechanism for performance.
@@ -87,9 +77,21 @@ class Feed extends React.Component {
     return (
       <RefreshControl
         refreshing={this.state.fetching}
-        onRefresh={this._loadMoreContentAsync.bind(this)}
+        onRefresh={this.refresh.bind(this)}
       />
     )
+  }
+
+  refresh () {
+    this.props.dispatch(FeedActions.feedClear())
+    this._loadMoreContentAsync()
+  }
+
+  async componentWillMount () {
+    // Initial fetch for data, assuming that feed is not yet populated.
+
+    //this._loadMoreContentAsync()
+    this.props.dispatch(FeedActions.feedRequest(null))
   }
 
   _loadMoreContentAsync = async () => {
@@ -98,12 +100,15 @@ class Feed extends React.Component {
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    this.props.dispatch(FeedActions.feedRequest(this.props.nextPageUrl))
+    if (this.props.nextPageUrl != 'LastPage'){
+      this.props.dispatch(FeedActions.feedRequest(this.props.nextPageUrl))
+    }
   }
 
   getUpdatedDataSource (props) {
     // See the ListView.DataSource documentation for more information on
     // how to properly structure your data depending on your use case.
+    //debugger;
     let rows = props.items
 
     //let ids = rows.map((obj, index) => index)
@@ -131,7 +136,7 @@ class Feed extends React.Component {
         dataSource={this.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={!!this.props.nextPageUrl}
+        canLoadMore={this.props.nextPageUrl != 'LastPage'}
         onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
       />
     )
