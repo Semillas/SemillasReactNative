@@ -31,12 +31,8 @@ export const INITIAL_STATE = Immutable({
 // request the feed with a given url.
 export const request = (state: Object, { nextPageUrl }: Object) => {
   if (nextPageUrl == 'LastPage') {
-    //return state.merge({ fetching: false })
     return Object.assign({}, state, { fetching: false })
   }
-
-  //return state.merge({ fetching: true, nextPageUrl })
-
   return Object.assign({}, state, { fetching: true, nextPageUrl})
 }
 
@@ -67,17 +63,14 @@ export const success = (state: Object, action: Object) => {
   allItems = Object.assign({}, state.items, newItems)
 
   return Object.assign({}, state, { fetching: false, error: null, items: allItems, nextPageUrl: nextUrl })
-  //return state.merge({ fetching: false, error: null, items: allItems, nextPageUrl: nextUrl })
 }
 
 // failed to get the user
 export const failure = (state: Object) =>
-  //state.merge({ fetching: false, error: true, nextPageUrl: null })
   Object.assign({}, state, { fetching: false, error: true, nextPageUrl: null })
 
 export const clear = (state: Object) => {
   var newState = Object.assign({}, state, { fetching: false, items: {}, nextPageUrl: null })
-  //return state.merge({ fetching: false, items: {}, nextPageUrl: null })
   return newState
 }
 

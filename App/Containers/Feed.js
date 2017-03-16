@@ -14,11 +14,9 @@ import styles from './Styles/UsageExamplesScreenStyle'
 
 class Feed extends React.Component {
   static propTypes = {
-    // Assume data shape looks like:
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
     items: PropTypes.object,
     nextUrl: PropTypes.string,
-//    fetching: Proptypes.bool,
 //    category: Proptypes.number,
 //    searchText: Proptypes.string,
 
@@ -29,13 +27,6 @@ class Feed extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-
-//    this.state = {
-//      dataSource: new ListView.DataSource({
-//        rowHasChanged: this._rowHasChanged.bind(this)
-//      }),
-//      feed: {items: {}, nextPageUrl: null, fetching: false}
-//    }
     this.state = {
       items: {},
       nextUrl: null,
@@ -46,19 +37,9 @@ class Feed extends React.Component {
       rowHasChanged: this._rowHasChanged.bind(this)
     })
 
-
-
-    // Update the data store with initial data.
-    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-//    this.state = {
-//      dataSource: ds.cloneWithRows([
-//        'row 1',
-//        'row 2',
-//      ]),
-//    };
     this.dataSource = this.getUpdatedDataSource(props)
-    // this.state['feed'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
   }
+
   _rowHasChanged (r1, r2) {
     // You might want to use a different comparison mechanism for performance.
     return JSON.stringify(r1) !== JSON.stringify(r2)
@@ -81,12 +62,10 @@ class Feed extends React.Component {
 
   async componentWillMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
-
-    //this._loadMoreContentAsync()
     this.props.dispatch(FeedActions.feedRequest(null))
   }
 
-  _loadMoreContentAsync = async () => {
+  async loadMoreContentAsync() {
     // In this example, we're assuming cursor-based pagination, where any
     // additional data can be accessed at this.props.feed.nextUrl.
     //
@@ -113,9 +92,6 @@ class Feed extends React.Component {
     // Trigger a re-render when receiving new props (when redux has more data).
     this.dataSource = this.getUpdatedDataSource(nextProps)
     this.props.nextUrl = nextProps.nextPageUrl
-    //this.setState({
-    //  dataSource: this.getUpdatedDataSource(nextProps)
-    //})
   }
 
   renderRow (data) {
@@ -137,7 +113,8 @@ class Feed extends React.Component {
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
         canLoadMore={this.props.nextUrl != 'LastPage'}
-        onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
+        onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
+        distanceToLoadMore={3}
       />
     )
   }
