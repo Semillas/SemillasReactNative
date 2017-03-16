@@ -17,7 +17,7 @@ class Feed extends React.Component {
     // Assume data shape looks like:
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
     items: PropTypes.object,
-    nextPageUrl: PropTypes.string,
+    nextUrl: PropTypes.string,
 //    fetching: Proptypes.bool,
 //    category: Proptypes.number,
 //    searchText: Proptypes.string,
@@ -38,7 +38,7 @@ class Feed extends React.Component {
 //    }
     this.state = {
       items: {},
-      nextPageUrl: null,
+      nextUrl: null,
       fetching: false
     }
 
@@ -59,14 +59,6 @@ class Feed extends React.Component {
     this.dataSource = this.getUpdatedDataSource(props)
     // this.state['feed'] = {items: ["item1", "item2"], nextUrl: null, fetching: false}
   }
-
-  componentWillReceiveProps (nextProps) {
-    // Trigger a re-render when receiving new props (when redux has more data).
-    this.dataSource = this.getUpdatedDataSource(nextProps)
-    //this.setState({
-    //  dataSource: this.getUpdatedDataSource(nextProps)
-    //})
-  }
   _rowHasChanged (r1, r2) {
     // You might want to use a different comparison mechanism for performance.
     return JSON.stringify(r1) !== JSON.stringify(r2)
@@ -84,7 +76,7 @@ class Feed extends React.Component {
 
   refresh () {
     this.props.dispatch(FeedActions.feedClear())
-    this._loadMoreContentAsync()
+    this.props.dispatch(FeedActions.feedRequest(undefined))
   }
 
   async componentWillMount () {
@@ -100,15 +92,14 @@ class Feed extends React.Component {
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    if (this.props.nextPageUrl != 'LastPage'){
-      this.props.dispatch(FeedActions.feedRequest(this.props.nextPageUrl))
+    if (this.props.nextUrl != 'LastPage'){
+      this.props.dispatch(FeedActions.feedRequest(this.props.nextUrl))
     }
   }
 
   getUpdatedDataSource (props) {
     // See the ListView.DataSource documentation for more information on
     // how to properly structure your data depending on your use case.
-    //debugger;
     let rows = props.items
 
     //let ids = rows.map((obj, index) => index)
@@ -117,6 +108,15 @@ class Feed extends React.Component {
     return this.dataSource.cloneWithRows(rows, ids)
   }
 
+
+  componentWillReceiveProps (nextProps) {
+    // Trigger a re-render when receiving new props (when redux has more data).
+    this.dataSource = this.getUpdatedDataSource(nextProps)
+    this.props.nextUrl = nextProps.nextPageUrl
+    //this.setState({
+    //  dataSource: this.getUpdatedDataSource(nextProps)
+    //})
+  }
 
   renderRow (data) {
     return (
@@ -136,7 +136,7 @@ class Feed extends React.Component {
         dataSource={this.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={this.props.nextPageUrl != 'LastPage'}
+        canLoadMore={this.props.nextUrl != 'LastPage'}
         onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
       />
     )
@@ -146,7 +146,7 @@ class Feed extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     items: state.feed.items,
-    nextPageUrl: state.feed.nextPageUrl,
+    nextUrl: state.feed.nextPageUrl,
     searchText: ownProps.searchText,
     category: ownProps.category
 
