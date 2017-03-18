@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import I18n from 'react-native-i18n'
 import { Colors, Metrics } from '../Themes/'
 import * as Animatable from 'react-native-animatable'
@@ -24,15 +24,22 @@ export default class ServiceFeed extends React.Component {
 
   render () {
     const { data } = this.props
+    const card  = {card: {width: 320}};
     return (
-      <View >
+      <View style={styles.container}>
 
-      <Card>
+      <Card styles={card}>
+              <CardImage>
+                <Image
+                  style={{width: 300, height: 200}}
+                  source={{ uri: data.photos[0]["photo"] }}
+                />
+              </CardImage>
               <CardTitle>
-                <Text style={styles.title}>Card Title</Text>
+                <Text style={styles.title}>{data.title}</Text>
               </CardTitle>
               <CardContent>
-                <Text>Content</Text>
+                <Text>{data.description}</Text>
               </CardContent>
               <CardAction >
                 <Button
@@ -48,11 +55,7 @@ export default class ServiceFeed extends React.Component {
               </CardAction>
             </Card>
 
-        <Text>{data.uuid}</Text>
-        <Text>{data.title}</Text>
-        <Text>{data.title}</Text>
-        <Text>{data.title}</Text>
-      </View >
+     </View >
     )
   }
 }
@@ -60,12 +63,20 @@ export default class ServiceFeed extends React.Component {
 
 
 const styles = StyleSheet.create({
+    container: {
+          flex: 1,
+          marginTop: 0,
+          marginBottom: 0,
+          backgroundColor: 'green',
+          justifyContent: 'center',
+          alignItems: 'center'
+    },
     title: {
           fontSize: 38,
           backgroundColor: 'transparent'
         },
     button: {
           marginRight: 10
-        }
+        },
 });
 
