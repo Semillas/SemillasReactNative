@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react'
 import {
   ListView,
-  Text,
-  View,
   RefreshControl
 } from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
@@ -10,8 +8,7 @@ import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
 
-import styles from './Styles/FeedStyle'
-
+// import styles from './Styles/FeedStyle'
 
 class Feed extends React.Component {
   static propTypes = {
