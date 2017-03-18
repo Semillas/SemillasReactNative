@@ -30,17 +30,19 @@ export const INITIAL_STATE = Immutable({
 
 // request the feed with a given url.
 export const request = (state: Object, { nextPageUrl }: Object) => {
-  if (nextPageUrl == 'LastPage') {
+  if (nextPageUrl === 'LastPage') {
     return Object.assign({}, state, { fetching: false })
   }
-  return Object.assign({}, state, { fetching: true, nextPageUrl})
+  return Object.assign({}, state, { fetching: true, nextPageUrl })
 }
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { items } = action;
+  const { items } = action
 
-  var nextUrl = null;
+  var nextUrl = null
+  var newItems = {}
+  var allItems
   if ('nextPageUrl' in action) {
     if ('next' in action.nextPageUrl) {
       nextUrl = action.nextPageUrl.next.url
@@ -50,15 +52,13 @@ export const success = (state: Object, action: Object) => {
     }
   }
 
-  var nextUrl;
   if ((action.nextPageUrl == null) || (action.nextPageUrl.next == null)) {
     nextUrl = null
   } else {
     nextUrl = action.nextPageUrl.next.url
   }
-  newItems = {}
   for (var id in items) {
-    newItems[items[id]["uuid"]] = items[id]
+    newItems[items[id]['uuid']] = items[id]
   }
   allItems = Object.assign({}, state.items, newItems)
 
@@ -77,7 +77,7 @@ export const clear = (state: Object) => {
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.FEED_CLEAR]:   clear,
+  [Types.FEED_CLEAR]: clear,
   [Types.FEED_REQUEST]: request,
   [Types.FEED_SUCCESS]: success,
   [Types.FEED_FAILURE]: failure

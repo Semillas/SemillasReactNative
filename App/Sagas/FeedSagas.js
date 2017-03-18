@@ -13,7 +13,7 @@ export function * getFeed (api, action) {
   // success?
   if (response.ok) {
     const items = path(['data'], response)
-    const nextUrl = parse(path(['headers', "link"], response))
+    const nextUrl = parse(path(['headers', 'link'], response))
     yield put(FeedActions.feedSuccess(nextUrl, items))
   } else {
     yield put(FeedActions.feedFailure())

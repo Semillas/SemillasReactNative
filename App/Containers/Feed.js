@@ -31,7 +31,7 @@ class Feed extends React.Component {
       fetching: false
     }
 
-    this. dataSource = new ListView.DataSource({
+    this.dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
     })
 
@@ -63,13 +63,13 @@ class Feed extends React.Component {
     this.props.dispatch(FeedActions.feedRequest(null))
   }
 
-  async loadMoreContentAsync() {
+  async loadMoreContentAsync () {
     // In this example, we're assuming cursor-based pagination, where any
     // additional data can be accessed at this.props.feed.nextUrl.
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    if (this.props.nextUrl != 'LastPage'){
+    if (this.props.nextUrl !== 'LastPage') {
       this.props.dispatch(FeedActions.feedRequest(this.props.nextUrl))
     }
   }
@@ -78,13 +78,9 @@ class Feed extends React.Component {
     // See the ListView.DataSource documentation for more information on
     // how to properly structure your data depending on your use case.
     let rows = props.items
-
-    //let ids = rows.map((obj, index) => index)
     let ids = Object.keys(rows)
-
     return this.dataSource.cloneWithRows(rows, ids)
   }
-
 
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
@@ -105,7 +101,7 @@ class Feed extends React.Component {
         dataSource={this.dataSource}
         renderRow={this.renderRow}
         refreshControl={this._renderRefreshControl()}
-        canLoadMore={this.props.nextUrl != 'LastPage'}
+        canLoadMore={this.props.nextUrl !== 'LastPage'}
         onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
         distanceToLoadMore={3}
       />
