@@ -8,8 +8,9 @@ import {
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
+import ServiceFeed from '../Components/ServiceFeed'
 
-import styles from './Styles/UsageExamplesScreenStyle'
+import styles from './Styles/FeedStyle'
 
 
 class Feed extends React.Component {
@@ -96,12 +97,7 @@ class Feed extends React.Component {
 
   renderRow (data) {
     return (
-      <View >
-      <Text>{data.uuid}</Text>
-      <Text>{data.title}</Text>
-      <Text>{data.title}</Text>
-      <Text>{data.title}</Text>
-      </View >
+      <ServiceFeed data={data} />
     )
   }
 
