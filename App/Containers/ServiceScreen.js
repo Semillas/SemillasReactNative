@@ -1,10 +1,17 @@
 // @flow
 
 import React, { PropTypes } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Image } from 'react-native'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
 
+import {
+  Card,
+  CardImage,
+  CardTitle,
+  CardContent,
+  CardAction
+} from 'react-native-card-view'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
 
@@ -32,16 +39,23 @@ class ServiceScreen extends React.Component {
         </View>
       )
     } else {
+      const card = {card: {width: 320}}
       return (
         <View style={styles.mainContainer}>
-          <Text>Loaded</Text>
-          <View style={styles.section}>
-            <Text>{service.title}</Text>
-          </View>
-          <View style={styles.section}>
-            <Text>ServiceScreen Container</Text>
-            <Text>uuid: {this.props.uuid}</Text>
-          </View>
+          <Card styles={card}>
+            <CardImage>
+              <Image
+                style={{width: 300, height: 200}}
+                source={{ uri: service.photos[0]['photo'] }}
+              />
+            </CardImage>
+            <CardTitle>
+              <Text style={styles.title}>{service.title}</Text>
+            </CardTitle>
+            <CardContent>
+              <Text>{service.description}</Text>
+            </CardContent>
+          </Card>
         </View>
       )
     }
