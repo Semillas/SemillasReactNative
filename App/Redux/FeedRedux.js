@@ -75,7 +75,6 @@ export const failure = (state: Object) =>
 
 /* ------------- Reducers ------------- */
 
-
 // request the service with a given url.
 export const serviceRequest = (state: Object, { uuid }: Object) =>
   Object.assign({}, state, { fetchingService: true })
@@ -83,10 +82,10 @@ export const serviceRequest = (state: Object, { uuid }: Object) =>
 // successful service lookup
 export const serviceSuccess = (state: Object, action: Object) => {
   const { service } = action
-  currentItems = {}
+  var currentItems = {}
   currentItems[service.uuid] = service
 
-  allItems = Object.assign({}, currentItems, state.items)
+  var allItems = Object.assign({}, currentItems, state.items)
 
   return Object.assign({}, state, { fetchingService: false, error: null, items: allItems })
 }
