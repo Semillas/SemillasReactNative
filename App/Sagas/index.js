@@ -20,6 +20,7 @@ import { login } from './LoginSagas'
 import { getTemperature } from './TemperatureSagas'
 import { getUser } from './UsersSagas'
 import { getFeed } from './FeedSagas'
+import { getService } from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -41,6 +42,7 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
     takeLatest(TemperatureTypes.TEMPERATURE_REQUEST, getTemperature, api),
     takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
-    takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi)
+    takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi),
+    takeLatest(FeedTypes.SERVICE_REQUEST, getService, semillasApi)
   ]
 }

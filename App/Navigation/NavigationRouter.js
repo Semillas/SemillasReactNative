@@ -11,6 +11,7 @@ import CustomNavBar from '../Navigation/CustomNavBar'
 import PresentationScreen from '../Containers/PresentationScreen'
 import FeedScreen from '../Containers/FeedScreen'
 import UserScreen from '../Containers/UserScreen'
+import ServiceScreen from '../Containers/ServiceScreen'
 import AllComponentsScreen from '../Containers/AllComponentsScreen'
 import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
 import LoginScreen from '../Containers/LoginScreen'
@@ -36,6 +37,7 @@ class NavigationRouter extends Component {
             <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
             <Scene key='feed' component={FeedScreen} title='Feed' />
             <Scene key='user' component={UserScreen} uuid='6753fa19-1c54-4f4e-b4ec-5caa3e0dc184' title='User' />
+            <Scene key='service' component={ServiceScreen} uuid='48769dac-71ac-415e-b6f4-d4c1bed4d493' title='Service' />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
             <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />

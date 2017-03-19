@@ -9,6 +9,9 @@ const { Types, Creators } = createActions({
   feedRequest: ['nextPageUrl', 'searchText', 'category'],
   feedSuccess: ['nextPageUrl', 'items'],
   feedFailure: null,
+  serviceRequest: ['uuid'],
+  serviceSuccess: ['service'],
+  serviceFailure: null,
   feedClear: null
 })
 
@@ -20,6 +23,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   items: {},
   fetching: null,
+  fetchingService: null,
   error: null,
   nextPageUrl: null,
   searchText: null,
@@ -69,6 +73,28 @@ export const success = (state: Object, action: Object) => {
 export const failure = (state: Object) =>
   Object.assign({}, state, { fetching: false, error: true, nextPageUrl: null })
 
+/* ------------- Reducers ------------- */
+
+
+// request the service with a given url.
+export const serviceRequest = (state: Object, { uuid }: Object) =>
+  Object.assign({}, state, { fetchingService: true })
+
+// successful service lookup
+export const serviceSuccess = (state: Object, action: Object) => {
+  const { service } = action
+  currentItems = {}
+  currentItems[service.uuid] = service
+
+  allItems = Object.assign({}, currentItems, state.items)
+
+  return Object.assign({}, state, { fetchingService: false, error: null, items: allItems })
+}
+
+// failed to get the service
+export const serviceFailure = (state: Object) =>
+  Object.assign({}, state, { fetchingService: false, error: true })
+
 export const clear = (state: Object) => {
   var newState = Object.assign({}, state, { fetching: false, items: {}, nextPageUrl: null })
   return newState
@@ -80,6 +106,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FEED_CLEAR]: clear,
   [Types.FEED_REQUEST]: request,
   [Types.FEED_SUCCESS]: success,
-  [Types.FEED_FAILURE]: failure
-
+  [Types.FEED_FAILURE]: failure,
+  [Types.SERVICE_REQUEST]: serviceRequest,
+  [Types.SERVICE_SUCCESS]: serviceSuccess,
+  [Types.SERVICE_FAILURE]: serviceFailure
 })
