@@ -1,9 +1,15 @@
 // @flow
 
 import React, { PropTypes } from 'react'
-import { Text, View, Image } from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableHighlight,
+} from 'react-native'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
+import RoundedButton from '../Components/RoundedButton'
 
 import {
   Card,
@@ -12,6 +18,7 @@ import {
   CardContent,
   CardAction
 } from 'react-native-card-view'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
 
@@ -56,6 +63,24 @@ class ServiceScreen extends React.Component {
               <Text>{service.description}</Text>
             </CardContent>
           </Card>
+          <TouchableHighlight
+            onPress={ () => {
+              NavigationActions.user({uuid: service.author.uuid});
+            }}
+          >
+          <View>
+           <CardTitle>
+              <Text >Usuario: {service.author.name}</Text>
+            </CardTitle>
+            <RoundedButton
+              onPress={ () => {
+                NavigationActions.user({uuid: service.author.uuid});
+              }}
+            >
+              Lo quiero!
+            </RoundedButton>
+          </View>
+          </TouchableHighlight>
         </View>
       )
     }
