@@ -69,9 +69,7 @@ class ServiceScreen extends React.Component {
             }}
           >
           <View>
-           <CardTitle>
-              <Text >Usuario: {service.author.name}</Text>
-            </CardTitle>
+            <Text >Usuario: {service.author.name || service.author.email || service.author.username }</Text>
             <RoundedButton
               onPress={ () => {
                 NavigationActions.user({uuid: service.author.uuid});
