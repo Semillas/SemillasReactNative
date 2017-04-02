@@ -5,7 +5,7 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
@@ -63,7 +63,7 @@ class ServiceScreen extends React.Component {
               <Text>{service.description}</Text>
             </CardContent>
           </Card>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={ () => {
               NavigationActions.user({uuid: service.author.uuid});
             }}
@@ -78,7 +78,7 @@ class ServiceScreen extends React.Component {
               Lo quiero!
             </RoundedButton>
           </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       )
     }
