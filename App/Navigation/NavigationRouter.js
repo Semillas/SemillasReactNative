@@ -33,8 +33,8 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
-            <Scene key='feed' component={FeedScreen} title='Feed' />
+            <Scene key='presentationScreen' component={PresentationScreen} title='Ignite' renderLeftButton={NavItems.hamburgerButton} />
+            <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
             <Scene key='user' component={UserScreen} title='User' />
             <Scene key='service' component={ServiceScreen} title='Service' />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
