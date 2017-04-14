@@ -120,7 +120,6 @@ class UsageExamplesScreen extends React.Component {
         <RoundedButton text='Listview Searching' onPress={NavigationActions.listviewSearchingExample} />
         <RoundedButton text='User View' onPress={NavigationActions.user} uuid='6753fa19-1c54-4f4e-b4ec-5caa3e0dc184' />
         <RoundedButton text='Service View' onPress={NavigationActions.service} />
-        <RoundedButton text='Mapview' onPress={NavigationActions.mapviewExample} />
       </View>
     )
   }
