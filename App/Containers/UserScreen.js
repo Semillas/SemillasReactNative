@@ -2,28 +2,14 @@
 
 import React, { PropTypes } from 'react'
 import { Text,
-          View,
-          StyleSheet
+          View
 } from 'react-native'
 import { connect } from 'react-redux'
 import UserActions from '../Redux/UsersRedux.js'
-import MapView from 'react-native-maps';
+import MapView from 'react-native-maps'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
-
-const mapStyles = StyleSheet.create({
-    container: {
-          ...StyleSheet.absoluteFillObject,
-          height: 400,
-          width: 400,
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        },
-    map: {
-          ...StyleSheet.absoluteFillObject,
-        },
-});
 
 class UserScreen extends React.Component {
 
@@ -48,7 +34,6 @@ class UserScreen extends React.Component {
         </View>
       )
     } else {
-      //debugger;
       return (
         <View style={styles.mainContainer}>
           <View style={styles.mapSection}>
@@ -58,7 +43,7 @@ class UserScreen extends React.Component {
                 latitude: parseFloat(user.location.latitude),
                 longitude: parseFloat(user.location.longitude),
                 latitudeDelta: 0.0032,
-                longitudeDelta: 0.0031,
+                longitudeDelta: 0.0031
               }}
             />
           </View>
@@ -71,7 +56,7 @@ class UserScreen extends React.Component {
             <Text>UserScreen Container</Text>
             <Text>uuid: {this.props.uuid}</Text>
           </View>
-       </View>
+        </View>
       )
     }
   }

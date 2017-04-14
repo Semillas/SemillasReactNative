@@ -27,8 +27,8 @@ export default class ServiceFeed extends React.Component {
     const card = {card: {width: 320}}
     return (
       <TouchableHighlight
-        onPress={ () => {
-          NavigationActions.service({uuid: data.uuid});
+        onPress={() => {
+          NavigationActions.service({uuid: data.uuid})
         }}
       >
         <View style={styles.container}>

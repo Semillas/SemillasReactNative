@@ -6,12 +6,11 @@ import { ApplicationStyles, Metrics, Colors } from '../../Themes/'
 export default StyleSheet.create({
 
   mapSection: {
-        height: 350,
-        width: 300,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        //...StyleSheet.absoluteFillObject,
-      },
+    height: 350,
+    width: 300,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
   map: {
     height: 300,
     borderRadius: 5,
@@ -19,7 +18,7 @@ export default StyleSheet.create({
     marginVertical: Metrics.baseMargin,
     backgroundColor: Colors.fire,
     alignItems: 'center',
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   ...ApplicationStyles.screen
 

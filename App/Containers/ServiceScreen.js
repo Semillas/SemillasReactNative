@@ -5,7 +5,7 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
@@ -15,8 +15,7 @@ import {
   Card,
   CardImage,
   CardTitle,
-  CardContent,
-  CardAction
+  CardContent
 } from 'react-native-card-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 // Styles
@@ -64,20 +63,20 @@ class ServiceScreen extends React.Component {
             </CardContent>
           </Card>
           <TouchableOpacity
-            onPress={ () => {
-              NavigationActions.user({uuid: service.author.uuid});
+            onPress={() => {
+              NavigationActions.user({uuid: service.author.uuid})
             }}
           >
-          <View>
-            <Text >Usuario: {service.author.name || service.author.email || service.author.username }</Text>
-            <RoundedButton
-              onPress={ () => {
-                NavigationActions.user({uuid: service.author.uuid});
-              }}
-            >
-              Lo quiero!
-            </RoundedButton>
-          </View>
+            <View>
+              <Text >Usuario: {service.author.name || service.author.email || service.author.username }</Text>
+              <RoundedButton
+                onPress={() => {
+                  NavigationActions.user({uuid: service.author.uuid})
+                }}
+              >
+                Lo quiero!
+              </RoundedButton>
+            </View>
           </TouchableOpacity>
         </View>
       )
