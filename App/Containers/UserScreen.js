@@ -8,7 +8,6 @@ import { Text,
 import { connect } from 'react-redux'
 import UserActions from '../Redux/UsersRedux.js'
 import MapView from 'react-native-maps';
-import { calculateRegion } from '../Lib/MapHelpers'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -25,16 +24,6 @@ const mapStyles = StyleSheet.create({
           ...StyleSheet.absoluteFillObject,
         },
 });
-
-
-
-const locations = [
-      { title: 'Location A', latitude: 37.78825, longitude: -122.4324 },
-      { title: 'Location B', latitude: 37.75825, longitude: -122.4624 }
-    ]
-
-const region = calculateRegion(locations, { latPadding: 0.05, longPadding: 0.05 })
-
 
 class UserScreen extends React.Component {
 
