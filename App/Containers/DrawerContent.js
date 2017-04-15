@@ -58,12 +58,21 @@ class DrawerContent extends Component {
     NavigationActions.deviceInfo()
   }
 
+  walletButtonText () {
+    return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
+  }
+
   render () {
     if (this.props.user) {
       return (
         <ScrollView style={styles.container}>
           <Image source={Images.logo} style={styles.logo} />
+          <DrawerButton
+            text={this.props.user.name ? this.props.user.name : this.props.user.username}
+            onPress={this.handlePressFeed}
+          />
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
+          <DrawerButton text={this.walletButtonText()} onPress={this.handlePressFeed} />
           <DrawerButton text='Logout' onPress={this.props.logout} />
         </ScrollView>
       )
