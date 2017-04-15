@@ -5,6 +5,7 @@ import Drawer from 'react-native-drawer'
 import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
 import DrawerContent from '../Containers/DrawerContent'
 import { connect } from 'react-redux'
+import LoginActions from '../Redux/LoginRedux'
 import Styles from './Styles/NavigationDrawerStyle'
 
 /* *******************
@@ -22,7 +23,7 @@ class NavigationDrawer extends Component {
         open={state.open}
         onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
         onClose={() => NavigationActions.refresh({key: state.key, open: false})}
-        content={<DrawerContent user={this.props.user}/>}
+        content={<DrawerContent user={this.props.user} logout={this.props.logout} />}
         styles={Styles}
         tapToClose
         openDrawerOffset={0.2}
@@ -39,7 +40,8 @@ class NavigationDrawer extends Component {
 }
 
 NavigationDrawer.propTypes = {
-  navigationState: PropTypes.object
+  navigationState: PropTypes.object,
+  logout: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -50,6 +52,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    logout: () => dispatch(LoginActions.logout())
   }
 }
 

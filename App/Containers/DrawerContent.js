@@ -6,7 +6,6 @@ import styles from './Styles/DrawerContentStyle'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import { isLoggedIn } from '../Redux/LoginRedux'
 
 class DrawerContent extends Component {
 
@@ -65,7 +64,7 @@ class DrawerContent extends Component {
         <ScrollView style={styles.container}>
           <Image source={Images.logo} style={styles.logo} />
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
-          <DrawerButton text='Logout' onPress={this.handlePressLogin} />
+          <DrawerButton text='Logout' onPress={this.props.logout} />
         </ScrollView>
       )
     } else {
@@ -75,12 +74,12 @@ class DrawerContent extends Component {
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
           <DrawerButton text='Login' onPress={this.handlePressLogin} />
           <DrawerButton text='Registro' onPress={this.handlePressLogin} />
-        {/*
-          <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
-          <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
-          <DrawerButton text='API Testing' onPress={this.handlePressAPI} />
-          <DrawerButton text='Themes' onPress={this.handlePressTheme} />
-          <DrawerButton text='Device Info' onPress={this.handlePressDevice} />
+          {/*
+            <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
+            <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
+            <DrawerButton text='API Testing' onPress={this.handlePressAPI} />
+            <DrawerButton text='Themes' onPress={this.handlePressTheme} />
+            <DrawerButton text='Device Info' onPress={this.handlePressDevice} />
           */}
         </ScrollView>
       )
@@ -90,7 +89,8 @@ class DrawerContent extends Component {
 
 DrawerContent.contextTypes = {
   drawer: React.PropTypes.object,
-  user: React.PropTypes.object
+  user: React.PropTypes.object,
+  logout: React.PropTypes.func
 }
 
 export default DrawerContent
