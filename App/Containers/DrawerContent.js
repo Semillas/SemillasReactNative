@@ -28,6 +28,11 @@ class DrawerContent extends Component {
     NavigationActions.feed()
   }
 
+  handlePressLogin= () => {
+    this.toggleDrawer()
+    NavigationActions.login()
+  }
+
   handlePressComponents = () => {
     this.toggleDrawer()
     NavigationActions.componentExamples()
@@ -57,7 +62,8 @@ class DrawerContent extends Component {
     return (
       <ScrollView style={styles.container}>
         <Image source={Images.logo} style={styles.logo} />
-        <DrawerButton text='Feed' onPress={this.handlePressFeed} />
+        <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
+        <DrawerButton text='Login' onPress={this.handlePressLogin} />
         <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
         <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
         <DrawerButton text='API Testing' onPress={this.handlePressAPI} />

@@ -13,7 +13,7 @@ export function * login (api, { email, password }) {
   // success?
   if (response.ok) {
     api.setHeader('Authorization', 'token ' + response.data.key)
-    yield put(LoginActions.loginSuccess(response.data.key))
+    yield put(LoginActions.loginSuccess(response.data.key, response.data.user))
   } else {
     yield put(LoginActions.loginFailure('Credentials not correct'))
   }
