@@ -10,11 +10,9 @@ import {
   Card,
   CardImage,
   CardTitle,
-  CardContent,
-  CardAction
+  CardContent
 } from 'react-native-card-view'
 import { Colors } from '../Themes/'
-import Button from 'react-native-button'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 export default class ServiceFeed extends React.Component {
@@ -46,18 +44,6 @@ export default class ServiceFeed extends React.Component {
             <CardContent>
               <Text>{data.description}</Text>
             </CardContent>
-            <CardAction >
-              <Button
-                style={styles.button}
-                onPress={() => {}}>
-                Button 1
-              </Button>
-              <Button
-                style={styles.button}
-                onPress={() => {}}>
-                Button 2
-              </Button>
-            </CardAction>
           </Card>
         </View >
       </TouchableHighlight>
