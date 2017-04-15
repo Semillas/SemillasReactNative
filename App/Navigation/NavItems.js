@@ -31,9 +31,9 @@ export default {
     return (
       <TouchableOpacity onPress={openDrawer}>
         <Icon name='bars'
-          size={Metrics.icons.medium}
-          color={Colors.snow}
-          style={styles.navButtonLeft}
+          size={Metrics.icons.small}
+          color={Colors.cta}
+          style={styles.hamburgerButton}
         />
       </TouchableOpacity>
     )
@@ -44,7 +44,7 @@ export default {
       <TouchableOpacity onPress={callback}>
         <Icon name='search'
           size={Metrics.icons.small}
-          color={Colors.snow}
+          color={Colors.cta}
           style={styles.searchButton}
         />
       </TouchableOpacity>

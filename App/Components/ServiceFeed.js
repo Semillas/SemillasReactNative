@@ -13,6 +13,7 @@ import {
   CardContent,
   CardAction
 } from 'react-native-card-view'
+import { Colors } from '../Themes/'
 import Button from 'react-native-button'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: 'green',
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center'
   },

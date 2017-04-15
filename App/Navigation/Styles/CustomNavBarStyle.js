@@ -9,14 +9,14 @@ export default {
     height: Metrics.navBarHeight,
     paddingTop: Metrics.smallMargin,
     paddingHorizontal: 5,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.snow,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   title: {
     flex: 1,
     textAlign: 'center',
-    color: Colors.snow,
+    color: Colors.cta,
     marginTop: Metrics.doubleBaseMargin,
     backgroundColor: Colors.transparent,
     fontWeight: 'bold',
@@ -24,7 +24,7 @@ export default {
   },
   logo: {
     alignSelf: 'center',
-    marginTop: Metrics.baseMargin,
+    marginTop: 0, // Metrics.smallMargin,
     height: Metrics.icons.large,
     width: Metrics.icons.large
   },

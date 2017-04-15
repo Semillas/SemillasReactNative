@@ -58,7 +58,7 @@ class CustomNavBar extends React.Component {
     } else {
       return (
         <View style={styles.leftButtons}>
-          {NavItems.backButton()}
+          {NavItems.hamburgerButton()}
         </View>
       )
     }

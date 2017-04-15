@@ -19,15 +19,15 @@ export default StyleSheet.create({
     fontSize: Fonts.size.instructions,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Colors.snow,
+    borderColor: Colors.cta,
     paddingLeft: 30,
-    color: Colors.snow,
+    color: Colors.cta,
     flexDirection: 'row'
   },
   searchIcon: {
     left: Metrics.doubleBaseMargin,
     alignSelf: 'center',
-    color: Colors.snow,
+    color: Colors.cta,
     backgroundColor: Colors.transparent
   },
   cancelButton: {
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     marginHorizontal: Metrics.baseMargin
   },
   buttonLabel: {
-    color: Colors.snow,
+    color: Colors.cta,
     fontFamily: Fonts.type.base,
     fontSize: Fonts.size.regular
   }
