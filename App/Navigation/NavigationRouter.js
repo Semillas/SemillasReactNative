@@ -12,6 +12,8 @@ import PresentationScreen from '../Containers/PresentationScreen'
 import FeedScreen from '../Containers/FeedScreen'
 import UserScreen from '../Containers/UserScreen'
 import ServiceScreen from '../Containers/ServiceScreen'
+import ProfileScreen from '../Containers/ProfileScreen'
+import CurrencyScreen from '../Containers/CurrencyScreen'
 import AllComponentsScreen from '../Containers/AllComponentsScreen'
 import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
 import LoginScreen from '../Containers/LoginScreen'
@@ -37,6 +39,8 @@ class NavigationRouter extends Component {
             <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
             <Scene key='user' component={UserScreen} title='User' />
             <Scene key='service' component={ServiceScreen} title='Service' />
+            <Scene key='profile' component={ProfileScreen} title='Perfil' />
+            <Scene key='currency' component={CurrencyScreen} title='Semillas' />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
             <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />

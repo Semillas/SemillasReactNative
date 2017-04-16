@@ -40,7 +40,7 @@ const ApplicationStyles = {
       fontWeight: 'bold'
     },
     subtitle: {
-      color: Colors.snow,
+      color: Colors.cta,
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin

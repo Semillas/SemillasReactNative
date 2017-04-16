@@ -33,6 +33,16 @@ class DrawerContent extends Component {
     NavigationActions.login()
   }
 
+  handlePressCurrency= () => {
+    this.toggleDrawer()
+    NavigationActions.currency()
+  }
+
+  handlePressProfile= () => {
+    this.toggleDrawer()
+    NavigationActions.profile()
+  }
+
   handlePressComponents = () => {
     this.toggleDrawer()
     NavigationActions.componentExamples()
@@ -69,10 +79,10 @@ class DrawerContent extends Component {
           <Image source={Images.logo} style={styles.logo} />
           <DrawerButton
             text={this.props.user.name ? this.props.user.name : this.props.user.username}
-            onPress={this.handlePressFeed}
+            onPress={this.handlePressProfile}
           />
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
-          <DrawerButton text={this.walletButtonText()} onPress={this.handlePressFeed} />
+          <DrawerButton text={this.walletButtonText()} onPress={this.handlePressCurrency} />
           <DrawerButton text='Logout' onPress={this.props.logout} />
         </ScrollView>
       )
