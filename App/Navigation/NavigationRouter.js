@@ -13,6 +13,8 @@ import FeedScreen from '../Containers/FeedScreen'
 import UserScreen from '../Containers/UserScreen'
 import ServiceScreen from '../Containers/ServiceScreen'
 import ProfileScreen from '../Containers/ProfileScreen'
+import EditServiceScreen from '../Containers/EditServiceScreen'
+import EditProfileScreen from '../Containers/EditProfileScreen'
 import CurrencyScreen from '../Containers/CurrencyScreen'
 import AllComponentsScreen from '../Containers/AllComponentsScreen'
 import UsageExamplesScreen from '../Containers/UsageExamplesScreen'
@@ -40,6 +42,8 @@ class NavigationRouter extends Component {
             <Scene key='user' component={UserScreen} title='User' />
             <Scene key='service' component={ServiceScreen} title='Service' />
             <Scene key='profile' component={ProfileScreen} title='Perfil' />
+            <Scene key='editService' component={EditServiceScreen} title='Service' />
+            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' />
             <Scene key='currency' component={CurrencyScreen} title='Semillas' />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
             <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />

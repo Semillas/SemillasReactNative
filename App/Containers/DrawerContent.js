@@ -43,6 +43,11 @@ class DrawerContent extends Component {
     NavigationActions.profile()
   }
 
+  handlePressNewService= () => {
+    this.toggleDrawer()
+    NavigationActions.editService()
+  }
+
   handlePressComponents = () => {
     this.toggleDrawer()
     NavigationActions.componentExamples()
@@ -93,6 +98,7 @@ class DrawerContent extends Component {
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
           <DrawerButton text='Login' onPress={this.handlePressLogin} />
           <DrawerButton text='Registro' onPress={this.handlePressLogin} />
+          <DrawerButton text='Añadir Servicio' onPress={this.handlePressNewService} />
           {/*
             <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
             <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
