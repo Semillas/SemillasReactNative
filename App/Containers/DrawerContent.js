@@ -86,6 +86,7 @@ class DrawerContent extends Component {
             text={this.props.user.name ? this.props.user.name : this.props.user.username}
             onPress={this.handlePressProfile}
           />
+          <DrawerButton text='Añadir Servicio' onPress={this.handlePressNewService} />
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
           <DrawerButton text={this.walletButtonText()} onPress={this.handlePressCurrency} />
           <DrawerButton text='Logout' onPress={this.props.logout} />
@@ -98,7 +99,6 @@ class DrawerContent extends Component {
           <DrawerButton text='Servicios' onPress={this.handlePressFeed} />
           <DrawerButton text='Login' onPress={this.handlePressLogin} />
           <DrawerButton text='Registro' onPress={this.handlePressLogin} />
-          <DrawerButton text='Añadir Servicio' onPress={this.handlePressNewService} />
           {/*
             <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
             <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
