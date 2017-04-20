@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, KeyboardAvoidingView, View } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -9,6 +9,7 @@ import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
+import EditServiceForm from './EditServiceForm'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
@@ -21,11 +22,20 @@ class EditServiceScreen extends React.Component {
 
   render () {
     return (
+      <View >
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
           <Text>EditServiceScreen Container</Text>
         </KeyboardAvoidingView>
       </ScrollView>
+
+          <Text>EditServiceScreen Container</Text>
+          <Text>EditServiceScreen Container</Text>
+          <Text>EditServiceScreen Container</Text>
+          <Text>EditServiceScreen Container</Text>
+          <Text>EditServiceScreen Container</Text>
+          <EditServiceForm />
+      </View >
     )
   }
 

@@ -1,6 +1,7 @@
 // @flow
 
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas/'
 
@@ -11,7 +12,8 @@ export default () => {
     login: require('./LoginRedux').reducer,
     search: require('./SearchRedux').reducer,
     users: require('./UsersRedux').reducer,
-    feed: require('./FeedRedux').reducer
+    feed: require('./FeedRedux').reducer,
+    form: formReducer
   })
 
   return configureStore(rootReducer, rootSaga)
