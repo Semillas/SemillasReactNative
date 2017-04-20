@@ -27,12 +27,13 @@ class ProfileScreen extends React.Component {
           <KeyboardAvoidingView behavior='position'>
             <Text>ProfileScreen Container</Text>
           </KeyboardAvoidingView>
-        </ScrollView>
           <Text>ProfileScreen Container</Text>
           <Text>ProfileScreen Container</Text>
           <Text>ProfileScreen Container</Text>
         <RoundedButton text='Editar Perfil' onPress={NavigationActions.editProfile} />
-      </View >
+
+        </ScrollView>
+     </View >
     )
   }
 
