@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { Field, reduxForm } from 'redux-form'
 
+import styles from './Styles/GenericFormStyle'
 
 
 const required = value => value ? undefined : 'Required'
@@ -26,8 +27,8 @@ const submit = values => {
     console.log('Submitting form', values)
 }
 
-const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType}) => {
-  debugger;
+const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType,
+                    type, meta: { touched, error, warning } }) => {
   return (
     <View>
     <Text>{label}</Text>
@@ -38,24 +39,15 @@ const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType}) 
       placeholder={label}
       {...restInput}
     />
+    {touched && ((error && <Text>{error}</Text>) || (warning && <Text>{warning}</Text>))}
     </View>
 
   )
 }
 
-const renderNumericInput = ({ input: { onChange, ...restInput }}) => {
-  return (
-    <TextInput
-      style={styles.input}
-      onChangeText={onChange}
-      {...restInput}
-    />
-  )
-}
-
 
 const EditServiceForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { error, handleSubmit, pristine, reset, submitting } = props
 
   return (
     <View style={styles.container}>
@@ -79,34 +71,14 @@ const EditServiceForm = props => {
           validate={[ required, number ]}
         />
 
+        {error && <Text>{error}</Text>}
+
         <TouchableOpacity onPress={handleSubmit(submit)}>
           <Text style={styles.button}>Submit</Text>
         </TouchableOpacity>
       </View>
    )
 }
-
-//export default EditServiceForm
-const styles = StyleSheet.create({
-    button: {
-          backgroundColor: 'blue',
-          color: 'white',
-          height: 30,
-          lineHeight: 30,
-          marginTop: 10,
-          textAlign: 'center',
-          width: 250
-        },
-    container: {
-
-        },
-    input: {
-          borderColor: 'black',
-          borderWidth: 1,
-          height: 37,
-          width: 250
-        }
-})
 
 export default reduxForm({
     form: 'editService'

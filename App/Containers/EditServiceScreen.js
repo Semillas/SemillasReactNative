@@ -23,18 +23,7 @@ class EditServiceScreen extends React.Component {
   render () {
     return (
       <View >
-      <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='position'>
-          <Text>EditServiceScreen Container</Text>
-        </KeyboardAvoidingView>
-      </ScrollView>
-
-          <Text>EditServiceScreen Container</Text>
-          <Text>EditServiceScreen Container</Text>
-          <Text>EditServiceScreen Container</Text>
-          <Text>EditServiceScreen Container</Text>
-          <Text>EditServiceScreen Container</Text>
-          <EditServiceForm />
+        <EditServiceForm />
       </View >
     )
   }
