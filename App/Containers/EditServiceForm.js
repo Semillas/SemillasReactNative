@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import {
     StyleSheet,
     Text,
@@ -25,7 +25,7 @@ const email = value =>
 
 const submit = values => {
   console.log('Submitting form', values)
-  this.props.dispatch(ServiceFormActions.PostRequest(values))
+  //this.props.dispatch(ServiceFormActions.PostRequest(values))
   //TODO: Find where to put errors. http://redux-form.com/6.6.3/docs/api/SubmissionError.md/
 }
 
@@ -50,67 +50,73 @@ const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType,
 }
 
 
-//class EditServiceForm extends React.Component {
-//  static propTypes = {
-//    // {items: ["item1", "item2"], nextUrl: null, fetching: false}
-//    items: PropTypes.object,
-//    nextUrl: PropTypes.string,
-////    category: Proptypes.number,
-////    searchText: Proptypes.string,
-//
-//    // dispatch is automatically provided by react-redux, and is used to
-//    // interact with the store.
-//    dispatch: PropTypes.func.isRequired
-//  };
-//
-//  constructor (props, context) {
-//    super(props, context)
-//    this.state = {
-//      items: {},
-//      nextUrl: null,
-//      fetching: false
-//    }
-//
+class EditServiceForm extends React.Component {
+  static propTypes = {
+    // dispatch is automatically provided by react-redux, and is used to
+    // interact with the store.
+    error: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    //submitToRedux: PropTypes.func.isRequired
+  };
+
+  submit (values) {
+    console.log('Submitting form', values)
+    //this.props.submitToRedux(values)
+    //this.props.dispatch(ServiceFormActions.PostRequest(values))
+    //TODO: Find where to put errors. http://redux-form.com/6.6.3/docs/api/SubmissionError.md/
+  }
 
 
+  render () {
+    debugger;
+    return (
+      <View style={styles.container}>
+          <Field
+            name="title"
+            label="Título"
+            component={renderInput}
+            validate={[ required, maxLength35 ]}
+          />
+          <Field
+            name="description"
+            label="Descripción"
+            component={renderInput}
+            validate={[ required ]}
+          />
+          <Field
+            label="Precio en Semillas"
+            name="seed_price"
+            keyboardType="numeric"
+           component={renderInput}
+            validate={[ required, number ]}
+          />
 
-const EditServiceForm = props => {
-  const { error, handleSubmit, pristine, reset, submitting } = props
+          {this.props.error && <Text>{this.props.error}</Text>}
 
-
-
-
-  return (
-    <View style={styles.container}>
-        <Field
-          name="title"
-          label="Título"
-          component={renderInput}
-          validate={[ required, maxLength35 ]}
-        />
-        <Field
-          name="description"
-          label="Descripción"
-          component={renderInput}
-          validate={[ required ]}
-        />
-        <Field
-          label="Precio en Semillas"
-          name="seed_price"
-          keyboardType="numeric"
-         component={renderInput}
-          validate={[ required, number ]}
-        />
-
-        {error && <Text>{error}</Text>}
-
-        <TouchableOpacity onPress={handleSubmit(submit)}>
-          <Text style={styles.button}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-   )
+          <TouchableOpacity onPress={this.props.handleSubmit(submit)}>
+            <Text style={styles.button}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+     )
+  }
 }
 
-export default reduxForm({
-    form: 'editService'
-})(EditServiceForm)
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitToRedux: (values) => dispatch(ServiceFormActions.PostRequest(values))
+  }
+}
+
+export default reduxForm(
+  {
+      form: 'editService'
+  },
+
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditServiceForm)
