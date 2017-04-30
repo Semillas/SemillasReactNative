@@ -7,7 +7,7 @@ import {
     View
 } from 'react-native'
 import { Field, reduxForm } from 'redux-form'
-
+import ServiceFormActions from '../Redux/ServiceFormRedux.js'
 import styles from './Styles/GenericFormStyle'
 
 
@@ -24,8 +24,12 @@ const email = value =>
       'Invalid email address' : undefined
 
 const submit = values => {
-    console.log('Submitting form', values)
+  console.log('Submitting form', values)
+  this.props.dispatch(ServiceFormActions.PostRequest(values))
+  //TODO: Find where to put errors. http://redux-form.com/6.6.3/docs/api/SubmissionError.md/
 }
+
+
 
 const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType,
                     type, meta: { touched, error, warning } }) => {
@@ -41,13 +45,40 @@ const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType,
     />
     {touched && ((error && <Text>{error}</Text>) || (warning && <Text>{warning}</Text>))}
     </View>
-
   )
+
 }
+
+
+//class EditServiceForm extends React.Component {
+//  static propTypes = {
+//    // {items: ["item1", "item2"], nextUrl: null, fetching: false}
+//    items: PropTypes.object,
+//    nextUrl: PropTypes.string,
+////    category: Proptypes.number,
+////    searchText: Proptypes.string,
+//
+//    // dispatch is automatically provided by react-redux, and is used to
+//    // interact with the store.
+//    dispatch: PropTypes.func.isRequired
+//  };
+//
+//  constructor (props, context) {
+//    super(props, context)
+//    this.state = {
+//      items: {},
+//      nextUrl: null,
+//      fetching: false
+//    }
+//
+
 
 
 const EditServiceForm = props => {
   const { error, handleSubmit, pristine, reset, submitting } = props
+
+
+
 
   return (
     <View style={styles.container}>
@@ -67,7 +98,7 @@ const EditServiceForm = props => {
           label="Precio en Semillas"
           name="seed_price"
           keyboardType="numeric"
-          component={renderInput}
+         component={renderInput}
           validate={[ required, number ]}
         />
 

@@ -61,6 +61,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
   const getServiceDetail = (uuid) => api.get('/api/v1/service/' + uuid + '/')
 
+  const postService = (values) => api.post('/api/v1/service/', values)
+
   const setHeader = api.setHeader
 
   // ------
@@ -81,7 +83,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     getUserDetail,
     setHeader,
     getServiceDetail,
-    getFeed
+    getFeed,
+    postService
   }
 }
 

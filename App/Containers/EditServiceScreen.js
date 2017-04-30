@@ -27,7 +27,6 @@ class EditServiceScreen extends React.Component {
       </View >
     )
   }
-
 }
 
 const mapStateToProps = (state) => {
