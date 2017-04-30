@@ -23,31 +23,7 @@ const email = value =>
     value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
       'Invalid email address' : undefined
 
-const submit = values => {
-  console.log('Submitting form', values)
-  //this.props.dispatch(ServiceFormActions.PostRequest(values))
-  //TODO: Find where to put errors. http://redux-form.com/6.6.3/docs/api/SubmissionError.md/
-}
 
-
-
-const renderInput = ({ input: { onChange, ...restInput }, label, keyboardType,
-                    type, meta: { touched, error, warning } }) => {
-  return (
-    <View>
-    <Text>{label}</Text>
-    <TextInput
-      style={styles.input}
-      onChangeText={onChange}
-      keyboardType = {((keyboardType && keyboardType) || "default")}
-      placeholder={label}
-      {...restInput}
-    />
-    {touched && ((error && <Text>{error}</Text>) || (warning && <Text>{warning}</Text>))}
-    </View>
-  )
-
-}
 
 
 class EditServiceForm extends React.Component {
@@ -59,41 +35,59 @@ class EditServiceForm extends React.Component {
     //submitToRedux: PropTypes.func.isRequired
   };
 
-  submit (values) {
+  submit (values, dispatch, props) {
     console.log('Submitting form', values)
+    this.props.submitToRedux(values)
     //this.props.submitToRedux(values)
     //this.props.dispatch(ServiceFormActions.PostRequest(values))
     //TODO: Find where to put errors. http://redux-form.com/6.6.3/docs/api/SubmissionError.md/
   }
 
+  renderInput ({ input: { onChange, ...restInput }, label, keyboardType,
+                      type, meta: { touched, error, warning } }) {
+    return (
+      <View>
+      <Text>{label}</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChange}
+        keyboardType = {((keyboardType && keyboardType) || "default")}
+        placeholder={label}
+        {...restInput}
+      />
+      {touched && ((error && <Text>{error}</Text>) || (warning && <Text>{warning}</Text>))}
+      </View>
+    )
+
+  }
+
 
   render () {
-    debugger;
     return (
       <View style={styles.container}>
           <Field
             name="title"
             label="Título"
-            component={renderInput}
+            component={this.renderInput}
             validate={[ required, maxLength35 ]}
           />
           <Field
             name="description"
             label="Descripción"
-            component={renderInput}
+            component={this.renderInput}
             validate={[ required ]}
           />
           <Field
             label="Precio en Semillas"
             name="seed_price"
             keyboardType="numeric"
-           component={renderInput}
+           component={this.renderInput}
             validate={[ required, number ]}
           />
 
           {this.props.error && <Text>{this.props.error}</Text>}
 
-          <TouchableOpacity onPress={this.props.handleSubmit(submit)}>
+          <TouchableOpacity onPress={this.props.handleSubmit(this.submit)}>
             <Text style={styles.button}>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -108,7 +102,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitToRedux: (values) => dispatch(ServiceFormActions.PostRequest(values))
+    submitToRedux: (values) => dispatch(ServiceFormActions.servicePostRequest(values))
   }
 }
 
