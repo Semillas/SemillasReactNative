@@ -13,6 +13,7 @@ export default () => {
     search: require('./SearchRedux').reducer,
     users: require('./UsersRedux').reducer,
     feed: require('./FeedRedux').reducer,
+    servicePost: require('./ServicePostRedux').reducer,
     form: formReducer
   })
 

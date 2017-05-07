@@ -61,7 +61,15 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
   const getServiceDetail = (uuid) => api.get('/api/v1/service/' + uuid + '/')
 
-  const postService = (values) => api.post('/api/v1/service/', values)
+  const postService = (title, description, category, seeds_price) =>
+    api.post('/api/v1/service/',
+      {
+        'title': title,
+        'description': description,
+        'category': category,
+        'seeds_price': seeds_price
+      }
+    )
 
   const setHeader = api.setHeader
 

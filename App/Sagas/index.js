@@ -12,7 +12,7 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { UsersTypes } from '../Redux/UsersRedux'
 import { FeedTypes } from '../Redux/FeedRedux'
-import { ServiceFormTypes } from '../Redux/ServiceFormRedux'
+import { ServicePostTypes } from '../Redux/ServicePostRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -45,6 +45,6 @@ export default function * root () {
     takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
     takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi),
     takeLatest(FeedTypes.SERVICE_REQUEST, getService, semillasApi),
-    takeLatest(ServiceFormTypes.SERVICE_POST_REQUEST, postService, semillasApi)
+    takeLatest(ServicePostTypes.SERVICE_POST_REQUEST, postService, semillasApi)
   ]
 }
