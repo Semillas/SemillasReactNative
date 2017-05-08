@@ -23,7 +23,7 @@ class EditServiceScreen extends React.Component {
   render () {
     return (
       <View >
-        <EditServiceForm />
+        <EditServiceForm uuid={'ec0be0c5-9540-4f65-9a83-97b49777742e'} />
       </View >
     )
   }

@@ -17,12 +17,16 @@ import Styles from './Styles/LoginScreenStyle'
 import {Images, Metrics} from '../Themes'
 import ServicePostActions from '../Redux/ServicePostRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import FeedActions from '../Redux/FeedRedux.js'
 import I18n from 'react-native-i18n'
 
 type ServicePostProps = {
   dispatch: () => any,
   fetching: boolean,
-  attemptServicePost: () => void
+  uuid: string,
+  attemptServicePost: () => void,
+  retrieveService: () => void,
+  service: object
 }
 
 class EditServiceForm extends React.Component {
@@ -35,6 +39,7 @@ class EditServiceForm extends React.Component {
     category: integer,
     seed_price: integer,
     visibleHeight: number,
+    uuid: string,
     topLogo: {
       width: number
     },
@@ -58,7 +63,21 @@ class EditServiceForm extends React.Component {
     this.isAttempting = false
   }
 
+  assignServiceToState (service) {
+    this.state.title = service.title
+    this.state.description = service.description
+    this.state.seeds_price = String(service.seeds_price)
+    this.state.category = service.category
+  }
+
   componentWillReceiveProps (newProps) {
+    debugger;
+    if (newProps.service) {
+      // Update form with service values
+      this.assignServiceToState(newProps.service)
+    }
+
+
     this.forceUpdate()
     // Did the login attempt complete?
     if (this.isAttempting && !newProps.fetching) {
@@ -71,6 +90,18 @@ class EditServiceForm extends React.Component {
     // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
+
+    if (this.props.uuid) {
+      // Editing a service
+      if (this.props.service){
+        debugger;
+        this.assignServiceToState(this.props.service)
+      }
+
+      // TODO Check the service is not already loaded
+      this.props.retrieveService(this.props.uuid)
+    }
+
   }
 
   componentWillUnmount () {
@@ -196,15 +227,18 @@ class EditServiceForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    fetching: state.servicePost.fetching
+    fetching: state.servicePost.fetching,
+    uuid: ownProps.uuid,
+    service: state.feed.items[ownProps.uuid]
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptServicePost: (title, description, category, seeds_price) => dispatch(ServicePostActions.servicePostRequest(title, description, category, seeds_price))
+    attemptServicePost: (title, description, category, seeds_price) => dispatch(ServicePostActions.servicePostRequest(title, description, category, seeds_price)),
+    retrieveService: (uuid) => dispatch(FeedActions.serviceRequest(uuid))
   }
 }
 
