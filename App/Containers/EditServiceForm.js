@@ -58,7 +58,8 @@ class EditServiceForm extends React.Component {
       category: 1,
       seeds_price: '1',
       visibleHeight: Metrics.screenHeight,
-      fetching: false
+      fetching: false,
+      uuid: null
     }
     this.isAttempting = false
   }
@@ -68,10 +69,10 @@ class EditServiceForm extends React.Component {
     this.state.description = service.description
     this.state.seeds_price = String(service.seeds_price)
     this.state.category = service.category
+    this.state.uuid = service.uuid
   }
 
   componentWillReceiveProps (newProps) {
-    debugger;
     if (newProps.service) {
       // Update form with service values
       this.assignServiceToState(newProps.service)
@@ -81,7 +82,7 @@ class EditServiceForm extends React.Component {
     this.forceUpdate()
     // Did the login attempt complete?
     if (this.isAttempting && !newProps.fetching) {
-      NavigationActions.pop()
+     NavigationActions.pop()
     }
   }
 
@@ -94,14 +95,11 @@ class EditServiceForm extends React.Component {
     if (this.props.uuid) {
       // Editing a service
       if (this.props.service){
-        debugger;
         this.assignServiceToState(this.props.service)
+      } else {
+        this.props.retrieveService(this.props.uuid)
       }
-
-      // TODO Check the service is not already loaded
-      this.props.retrieveService(this.props.uuid)
     }
-
   }
 
   componentWillUnmount () {
@@ -129,10 +127,10 @@ class EditServiceForm extends React.Component {
   }
 
   handlePressPost = () => {
-    const { title, description, category, seeds_price } = this.state
+    const { title, description, category, seeds_price, uuid } = this.state
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
-    this.props.attemptServicePost(title, description, category, seeds_price)
+    this.props.attemptServicePost(title, description, category, seeds_price, uuid)
   }
 
   handleChangeTitle = (text) => {
@@ -237,7 +235,16 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptServicePost: (title, description, category, seeds_price) => dispatch(ServicePostActions.servicePostRequest(title, description, category, seeds_price)),
+    attemptServicePost:
+      (title, description, category, seeds_price, uuid) => dispatch(
+        ServicePostActions.servicePostRequest(
+          title,
+          description,
+          category,
+          seeds_price,
+          uuid
+        )
+      ),
     retrieveService: (uuid) => dispatch(FeedActions.serviceRequest(uuid))
   }
 }

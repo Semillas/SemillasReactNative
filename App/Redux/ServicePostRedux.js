@@ -6,7 +6,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  servicePostRequest: ['title', 'description', 'category', 'seeds_price'],
+  servicePostRequest: ['title', 'description', 'category', 'seeds_price', 'uuid'],
   servicePostSuccess: [],
   servicePostFailure: null
 })

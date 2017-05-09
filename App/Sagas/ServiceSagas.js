@@ -18,7 +18,7 @@ export function * getService (api, action) {
 }
 
 export function * postService (api, action) {
-  const { title, description, category, seeds_price } = action
+  const { title, description, category, seeds_price, uuid } = action
   // make the call to the api
   const response = yield call(api.postService, title, description, category, seeds_price)
 

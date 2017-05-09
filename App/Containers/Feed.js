@@ -103,7 +103,7 @@ class Feed extends React.Component {
         refreshControl={this._renderRefreshControl()}
         canLoadMore={this.props.nextUrl !== 'LastPage'}
         onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-        distanceToLoadMore={3}
+        distanceToLoadMore={10}
       />
     )
   }
