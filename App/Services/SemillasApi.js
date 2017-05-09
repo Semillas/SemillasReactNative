@@ -71,6 +71,17 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
       }
     )
 
+  const putService = (title, description, category, seeds_price, uuid) =>
+    api.patch('/api/v1/service/edit/' + uuid + '/',
+      {
+        'title': title,
+        'description': description,
+        'category': category,
+        'seeds_price': seeds_price
+      }
+    )
+
+
   const setHeader = api.setHeader
 
   // ------
@@ -92,7 +103,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     setHeader,
     getServiceDetail,
     getFeed,
-    postService
+    postService,
+    putService
   }
 }
 

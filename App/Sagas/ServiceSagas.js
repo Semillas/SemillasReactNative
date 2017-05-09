@@ -20,7 +20,20 @@ export function * getService (api, action) {
 export function * postService (api, action) {
   const { title, description, category, seeds_price, uuid } = action
   // make the call to the api
-  const response = yield call(api.postService, title, description, category, seeds_price)
+  if (!!uuid) {
+    // uuid is provided
+    response = yield call(
+      api.putService,
+      title,
+      description,
+      category,
+      seeds_price,
+      uuid
+    )
+  } else {
+    // uuid not provided
+    response = yield call(api.postService, title, description, category, seeds_price)
+  }
 
   // success?
   if (response.ok) {

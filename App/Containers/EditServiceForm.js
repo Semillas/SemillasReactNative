@@ -68,7 +68,7 @@ class EditServiceForm extends React.Component {
     this.state.title = service.title
     this.state.description = service.description
     this.state.seeds_price = String(service.seeds_price)
-    this.state.category = service.category
+    this.state.category = service.category.id
     this.state.uuid = service.uuid
   }
 
@@ -131,6 +131,8 @@ class EditServiceForm extends React.Component {
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
     this.props.attemptServicePost(title, description, category, seeds_price, uuid)
+    this.props.feedClear()
+    this.props.feedRequest()
   }
 
   handleChangeTitle = (text) => {
@@ -245,6 +247,8 @@ const mapDispatchToProps = (dispatch) => {
           uuid
         )
       ),
+    feedClear: () => dispatch(FeedActions.feedClear()),
+    feedRequest: () => dispatch(FeedActions.feedRequest(undefined)),
     retrieveService: (uuid) => dispatch(FeedActions.serviceRequest(uuid))
   }
 }
