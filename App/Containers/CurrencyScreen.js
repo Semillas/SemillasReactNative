@@ -28,7 +28,6 @@ class CurrencyScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

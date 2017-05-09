@@ -21,22 +21,19 @@ type DrawerButtonProps = {
   onPress: () => void
 }
 
-
-
 class DrawerButton extends Component {
   props: DrawerButtonProps
   renderIcon (props) {
-    var icon;
+    var icon
     if ('icon' in props) {
       icon = props.icon
     } else {
       icon = 'eercast'
     }
     return (
-           <Icon name={icon} size={Metrics.icons.small} color={Colors.cta} style={{marginVertical: 2}} />
+      <Icon name={icon} size={Metrics.icons.small} color={Colors.cta} style={{marginVertical: 2}} />
     )
   }
-
 
   render () {
     return (

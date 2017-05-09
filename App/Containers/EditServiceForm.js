@@ -26,7 +26,7 @@ type ServicePostProps = {
   uuid: string,
   attemptServicePost: () => void,
   retrieveService: () => void,
-  service: object
+  service: Object
 }
 
 class EditServiceForm extends React.Component {
@@ -36,8 +36,8 @@ class EditServiceForm extends React.Component {
   state: {
     title: string,
     description: string,
-    category: integer,
-    seed_price: integer,
+    category: number,
+    seed_price: number,
     visibleHeight: number,
     uuid: string,
     topLogo: {
@@ -50,13 +50,13 @@ class EditServiceForm extends React.Component {
   keyboardDidShowListener: Object
   keyboardDidHideListener: Object
 
-  constructor (props: ServicePostScreenProps) {
+  constructor (props: ServicePostProps) {
     super(props)
     this.state = {
       title: '',
       description: '',
       category: 1,
-      seeds_price: '1',
+      seedsPrice: '1',
       visibleHeight: Metrics.screenHeight,
       fetching: false,
       uuid: null
@@ -67,7 +67,7 @@ class EditServiceForm extends React.Component {
   assignServiceToState (service) {
     this.state.title = service.title
     this.state.description = service.description
-    this.state.seeds_price = String(service.seeds_price)
+    this.state.seedsPrice = String(service.seedsPrice)
     this.state.category = service.category.id
     this.state.uuid = service.uuid
   }
@@ -78,11 +78,10 @@ class EditServiceForm extends React.Component {
       this.assignServiceToState(newProps.service)
     }
 
-
     this.forceUpdate()
     // Did the login attempt complete?
     if (this.isAttempting && !newProps.fetching) {
-     NavigationActions.pop()
+      NavigationActions.pop()
     }
   }
 
@@ -94,7 +93,7 @@ class EditServiceForm extends React.Component {
 
     if (this.props.uuid) {
       // Editing a service
-      if (this.props.service){
+      if (this.props.service) {
         this.assignServiceToState(this.props.service)
       } else {
         this.props.retrieveService(this.props.uuid)
@@ -127,10 +126,10 @@ class EditServiceForm extends React.Component {
   }
 
   handlePressPost = () => {
-    const { title, description, category, seeds_price, uuid } = this.state
+    const { title, description, category, seedsPrice, uuid } = this.state
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
-    this.props.attemptServicePost(title, description, category, seeds_price, uuid)
+    this.props.attemptServicePost(title, description, category, seedsPrice, uuid)
     this.props.feedClear()
     this.props.feedRequest()
   }
@@ -144,84 +143,84 @@ class EditServiceForm extends React.Component {
   }
 
   handleChangeSeedsPrice = (text) => {
-    this.setState({ seeds_price: text })
+    this.setState({ seedsPrice: text })
   }
 
   render () {
-    const { title, description, category, seeds_price } = this.state
+    const { title, description, category, seedsPrice } = this.state
     const { fetching } = this.state
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <KeyboardAvoidingView behavior="padding">
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps="always">
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-        <View style={Styles.form}>
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Title')}</Text>
-            <TextInput
-              ref='title'
-              style={textInputStyle}
-              value={title}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              autoCorrect={false}
-              onChangeText={this.handleChangeTitle}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.description.focus()}
-              placeholder={I18n.t('Title')} />
-          </View>
+      <KeyboardAvoidingView behavior='padding'>
+        <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+          <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+          <View style={Styles.form}>
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('Title')}</Text>
+              <TextInput
+                ref='title'
+                style={textInputStyle}
+                value={title}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='next'
+                autoCapitalize='sentences'
+                autoCorrect={false}
+                onChangeText={this.handleChangeTitle}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.description.focus()}
+                placeholder={I18n.t('Title')} />
+            </View>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Description')}</Text>
-            <TextInput
-              ref='description'
-              style={textInputStyle}
-              value={description}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              autoCorrect={true}
-              onChangeText={this.handleChangeDescription}
-              numberOfLines={8}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.seeds_price.focus()}
-              placeholder={I18n.t('description')} />
-          </View>
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('Description')}</Text>
+              <TextInput
+                ref='description'
+                style={textInputStyle}
+                value={description}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='next'
+                autoCapitalize='sentences'
+                autoCorrect
+                onChangeText={this.handleChangeDescription}
+                numberOfLines={8}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.seedsPrice.focus()}
+                placeholder={I18n.t('description')} />
+            </View>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Seeds Price')}</Text>
-            <TextInput
-              ref='seeds_price'
-              style={textInputStyle}
-              value={seeds_price}
-              editable={editable}
-              keyboardType='numeric'
-              returnKeyType='next'
-              autoCorrect={false}
-              onChangeText={this.handleChangeSeedsPrice}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={this.handlePressPost}
-              placeholder={''} />
-          </View>
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('Seeds Price')}</Text>
+              <TextInput
+                ref='seedsPrice'
+                style={textInputStyle}
+                value={seedsPrice}
+                editable={editable}
+                keyboardType='numeric'
+                returnKeyType='next'
+                autoCorrect={false}
+                onChangeText={this.handleChangeSeedsPrice}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={this.handlePressPost}
+                placeholder={''} />
+            </View>
 
-          <View style={[Styles.loginRow]}>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
-              <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>{I18n.t('Publish')}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
-              <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
-              </View>
-            </TouchableOpacity>
+            <View style={[Styles.loginRow]}>
+              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
+                <View style={Styles.loginButton}>
+                  <Text style={Styles.loginText}>{I18n.t('Publish')}</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
+                <View style={Styles.loginButton}>
+                  <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
     )
   }
@@ -238,12 +237,12 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptServicePost:
-      (title, description, category, seeds_price, uuid) => dispatch(
+      (title, description, category, seedsPrice, uuid) => dispatch(
         ServicePostActions.servicePostRequest(
           title,
           description,
           category,
-          seeds_price,
+          seedsPrice,
           uuid
         )
       ),

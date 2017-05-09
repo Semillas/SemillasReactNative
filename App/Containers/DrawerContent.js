@@ -48,7 +48,6 @@ class DrawerContent extends Component {
     NavigationActions.editService()
   }
 
-
   walletButtonText () {
     return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
   }

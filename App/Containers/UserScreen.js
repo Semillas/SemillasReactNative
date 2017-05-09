@@ -18,30 +18,27 @@ class UserScreen extends React.Component {
     dispatch(UserActions.usersRequest(this.props.uuid))
   }
 
-  renderMap(user) {
+  renderMap (user) {
     if (user.location) {
       return (
-          <View style={styles.mapSection}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: parseFloat(user.location.latitude),
-                longitude: parseFloat(user.location.longitude),
-                latitudeDelta: 0.0032,
-                longitudeDelta: 0.0031
-              }}
-            />
-          </View>
+        <View style={styles.mapSection}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: parseFloat(user.location.latitude),
+              longitude: parseFloat(user.location.longitude),
+              latitudeDelta: 0.0032,
+              longitudeDelta: 0.0031
+            }}
+          />
+        </View>
       )
     } else {
-      return(
+      return (
         <Text>Location Not Available</Text>
       )
     }
   }
-
-
-
 
   render (uuid) {
     const { user } = this.props

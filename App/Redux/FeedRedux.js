@@ -108,5 +108,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FEED_FAILURE]: failure,
   [Types.SERVICE_REQUEST]: serviceRequest,
   [Types.SERVICE_SUCCESS]: serviceSuccess,
-  [Types.SERVICE_FAILURE]: serviceFailure,
+  [Types.SERVICE_FAILURE]: serviceFailure
 })

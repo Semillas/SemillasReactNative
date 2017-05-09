@@ -6,7 +6,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  servicePostRequest: ['title', 'description', 'category', 'seeds_price', 'uuid'],
+  servicePostRequest: ['title', 'description', 'category', 'seedsPrice', 'uuid'],
   servicePostSuccess: [],
   servicePostFailure: null
 })
@@ -23,23 +23,6 @@ export const INITIAL_STATE = Immutable({
 })
 
 /* ------------- Reducers ------------- */
-
-//// request the user for a uuid
-//export const request = (state: Object, { uuid }: Object) =>
-//  state.merge({ fetching: true, uuid })
-//
-//// successful user lookup
-//export const success = (state: Object, action: Object) => {
-//  const { user } = action
-//  const entities = {}
-//  entities[user['uuid']] = user
-//  return state.merge({ fetching: false, error: null, entities: entities })
-//}
-//
-//// failed to get the user
-//export const failure = (state: Object) =>
-//  state.merge({ fetching: false, error: true })
-//
 
 // request the service with a given url.
 export const servicePostRequest = (state: Object, { uuid }: Object) =>

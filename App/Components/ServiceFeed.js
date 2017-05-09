@@ -35,7 +35,7 @@ export default class ServiceFeed extends React.Component {
             <CardImage>
               <Image
                 style={{width: 300, height: 200}}
-                source={data.photos.length ?  { uri: data.photos[0]['photo'] } : Images.placeholder }
+                source={data.photos.length ? { uri: data.photos[0]['photo'] } : Images.placeholder}
               />
             </CardImage>
             <CardTitle>
