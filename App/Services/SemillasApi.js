@@ -58,6 +58,15 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
       return api.get('/api/v1/service/feed', {category: category, search: searchText})
     }
   }
+
+  const getUserServices = function (nextPageUrl, userUuid) {
+    if (nextPageUrl != null) {
+      return api.get(nextPageUrl)
+    } else {
+      return api.get('/api/v1/user/' + userUuid + '/services')
+    }
+  }
+
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
   const getServiceDetail = (uuid) => api.get('/api/v1/service/' + uuid + '/')
 
@@ -92,7 +101,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     setHeader,
     getServiceDetail,
     getFeed,
-    postService
+    postService,
+    getUserServices
   }
 }
 

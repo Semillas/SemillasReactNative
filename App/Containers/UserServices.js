@@ -1,22 +1,24 @@
 import React, { PropTypes } from 'react'
 import {
   ListView,
-  RefreshControl
+  RefreshControl,
+  Text,
+  View
 } from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { connect } from 'react-redux'
-import FeedActions from '../Redux/FeedRedux.js'
+import UserServicesActions from '../Redux/UserServicesRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
 
 // import styles from './Styles/FeedStyle'
 
-class Feed extends React.Component {
+class UserServices extends React.Component {
   static propTypes = {
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
     items: PropTypes.object,
     nextUrl: PropTypes.string,
 //    category: Proptypes.number,
-//    searchText: Proptypes.string,
+    userUuid: PropTypes.string,
 
     // dispatch is automatically provided by react-redux, and is used to
     // interact with the store.
@@ -34,6 +36,8 @@ class Feed extends React.Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
     })
+
+    //this.dataSource = this.getUpdatedDataSource(props)
   }
 
   _rowHasChanged (r1, r2) {
@@ -52,13 +56,13 @@ class Feed extends React.Component {
   }
 
   refresh () {
-    this.props.dispatch(FeedActions.feedClear())
-    this.props.dispatch(FeedActions.feedRequest(undefined))
+    this.props.dispatch(UserServicesActions.userServicesClear())
+    this.props.dispatch(UserServicesActions.userServicesRequest(undefined))
   }
 
   async componentWillMount () {
-    // Initial fetch for data, assuming that feed is not yet populated.
-    this.props.dispatch(FeedActions.feedRequest(null))
+    // Initial fetch for data, assuming that userServices is not yet populated.
+    this.props.dispatch(UserServicesActions.userServicesRequest(null, this.props.userUuid))
   }
 
   async loadMoreContentAsync () {
@@ -68,7 +72,7 @@ class Feed extends React.Component {
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
     if (this.props.nextUrl !== 'LastPage') {
-      this.props.dispatch(FeedActions.feedRequest(this.props.nextUrl))
+      this.props.dispatch(UserServicesActions.userServicesRequest(this.props.nextUrl))
     }
   }
 
@@ -87,6 +91,7 @@ class Feed extends React.Component {
   }
 
   renderRow (data) {
+    debugger;
     return (
       <ServiceFeed data={data} />
     )
@@ -94,6 +99,7 @@ class Feed extends React.Component {
 
   render () {
     return (
+      <View>
       <ListView
         renderScrollComponent={props => <InfiniteScrollView {...props} />}
         dataSource={this.dataSource}
@@ -103,17 +109,17 @@ class Feed extends React.Component {
         onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
         distanceToLoadMore={3}
       />
+      </View>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    items: state.feed.items,
-    nextUrl: state.feed.nextPageUrl,
-    searchText: ownProps.searchText,
-    category: ownProps.category
+    items: state.userServices.items,
+    nextUrl: state.userServices.nextPageUrl,
+    userUuid: ownProps.userUuid,
   }
 }
 
-export default connect(mapStateToProps)(Feed)
+export default connect(mapStateToProps)(UserServices)
