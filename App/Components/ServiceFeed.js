@@ -14,6 +14,7 @@ import {
 } from 'react-native-card-view'
 import { Colors, Images, Metrics } from '../Themes/'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import styles from './Styles/ServiceFeedStyles'
 
 export default class ServiceFeed extends React.Component {
 
@@ -65,26 +66,3 @@ export default class ServiceFeed extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 0,
-    marginBottom: 0,
-    backgroundColor: Colors.background,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 38,
-    backgroundColor: 'transparent'
-  },
-  button: {
-    marginRight: 10
-  },
-  image: {
-    marginTop: Metrics.smallMargin,
-    width: 300,
-    height: 200
-  }
-})
