@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react'
 import {
   Text,
   View,
+  ScrollView,
   Image,
   TouchableOpacity
 } from 'react-native'
@@ -21,6 +22,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
+import Swiper from 'react-native-swiper';
 
 class ServiceScreen extends React.Component {
 
@@ -32,11 +34,27 @@ class ServiceScreen extends React.Component {
 
   renderPhotos(data) {
     if (data.photos.length) {
+      photoViews = []
+      for (var i=0; i < data.photos.length; i++) {
+        photoViews.push(
+          <View key={i}>
+            <Image
+              style={styles.picture}
+              source={{ uri: data.photos[i]['photo'] }}
+            />
+          </View>
+        )
+      }
       return (
-        <Image
-          style={{width: 300, height: 200}}
-          source={{ uri: data.photos[0]['photo'] }}
-        />
+        <Swiper
+          width={350}
+          height={300}
+          showsButtons={true}
+          showsPagination
+          automaticallyAdjustContentInsets>
+
+          {photoViews}
+        </Swiper>
       )
     } else {
       return (
@@ -52,7 +70,7 @@ class ServiceScreen extends React.Component {
     const { service } = this.props
     if (!service) {
       return (
-        <View style={styles.mainContainer}>
+        <View style={styles.container}>
           <Text>Loading</Text>
           <View style={styles.section}>
             <Text>ServiceScreen Container</Text>
@@ -66,11 +84,9 @@ class ServiceScreen extends React.Component {
     } else {
       const card = {card: {width: 320}}
       return (
-        <View style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer}>
+          {this.renderPhotos(service)}
           <Card styles={card}>
-            <CardImage>
-              {this.renderPhotos(service)}
-            </CardImage>
             <CardTitle>
               <Text style={styles.title}>{service.title}</Text>
             </CardTitle>
@@ -94,7 +110,7 @@ class ServiceScreen extends React.Component {
               </RoundedButton>
             </View>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       )
     }
   }

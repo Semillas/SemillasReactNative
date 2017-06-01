@@ -49,9 +49,9 @@ export default class ServiceFeed extends React.Component {
         }}
       >
         <View style={styles.container}>
+          {this.renderPhotos(data)}
           <Card styles={card}>
             <CardImage>
-              {this.renderPhotos(data)}
             </CardImage>
             <CardTitle>
               <Text style={styles.title}>{data.title}</Text>
