@@ -59,7 +59,7 @@ class ServiceScreen extends React.Component {
     } else {
       return (
         <Image
-          style={{width: 300, height: 200}}
+          style={styles.picture}
           source={Images.servicePlaceholder}
         />
       )
