@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import {
   ListView,
-  RefreshControl,
   Text,
   View
 } from 'react-native'
@@ -45,21 +44,6 @@ class UserServices extends React.Component {
     return JSON.stringify(r1) !== JSON.stringify(r2)
   }
 
-  _renderRefreshControl () {
-    // Reload all data
-    return (
-      <RefreshControl
-        refreshing={this.state.fetching}
-        onRefresh={this.refresh.bind(this)}
-      />
-    )
-  }
-
-  refresh () {
-    this.props.dispatch(UserServicesActions.userServicesClear())
-    this.props.dispatch(UserServicesActions.userServicesRequest(undefined))
-  }
-
   async componentWillMount () {
     // Initial fetch for data, assuming that userServices is not yet populated.
     this.props.dispatch(UserServicesActions.userServicesRequest(null, this.props.userUuid))
@@ -90,6 +74,10 @@ class UserServices extends React.Component {
     this.props.nextUrl = nextProps.nextPageUrl
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(UserServicesActions.userServicesClear())
+  }
+
   renderRow (data) {
     return (
       <ServiceFeed data={data} />
@@ -103,7 +91,6 @@ class UserServices extends React.Component {
         renderScrollComponent={props => <InfiniteScrollView {...props} />}
         dataSource={this.dataSource}
         renderRow={this.renderRow}
-        refreshControl={this._renderRefreshControl()}
         canLoadMore={this.props.nextUrl !== 'LastPage'}
         onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
         distanceToLoadMore={3}
