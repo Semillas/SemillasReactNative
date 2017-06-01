@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import UserScreen from './UserScreen'
 
 // Styles
 import styles from './Styles/ProfileScreenStyle'
@@ -22,15 +23,7 @@ class ProfileScreen extends React.Component {
 
   render () {
     return (
-      <View style={{paddingTop:150}}>
-        <ScrollView style={styles.container}>
-          <KeyboardAvoidingView behavior='position'>
-            <Text>ProfileScreen Container</Text>
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <RoundedButton text='Editar Perfil' onPress={NavigationActions.editProfile} />
-
-     </View >
+      <UserScreen uuid={this.props.userUuid} />
     )
   }
 
@@ -38,6 +31,7 @@ class ProfileScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    userUuid: state.login.user.uuid
   }
 }
 

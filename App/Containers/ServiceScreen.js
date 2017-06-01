@@ -18,6 +18,7 @@ import {
   CardContent
 } from 'react-native-card-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
 
@@ -27,6 +28,24 @@ class ServiceScreen extends React.Component {
     const { dispatch } = this.props
     // TODO: Check if the service is not loaded.
     dispatch(FeedActions.serviceRequest(this.props.uuid))
+  }
+
+  renderPhotos(data) {
+    if (data.photos.length) {
+      return (
+        <Image
+          style={{width: 300, height: 200}}
+          source={{ uri: data.photos[0]['photo'] }}
+        />
+      )
+    } else {
+      return (
+        <Image
+          style={{width: 300, height: 200}}
+          source={Images.servicePlaceholder}
+        />
+      )
+    }
   }
 
   render (uuid) {
@@ -50,10 +69,7 @@ class ServiceScreen extends React.Component {
         <View style={styles.mainContainer}>
           <Card styles={card}>
             <CardImage>
-              <Image
-                style={{width: 300, height: 200}}
-                source={{ uri: service.photos[0]['photo'] }}
-              />
+              {this.renderPhotos(service)}
             </CardImage>
             <CardTitle>
               <Text style={styles.title}>{service.title}</Text>

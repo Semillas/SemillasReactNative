@@ -91,7 +91,6 @@ class UserServices extends React.Component {
   }
 
   renderRow (data) {
-    debugger;
     return (
       <ServiceFeed data={data} />
     )

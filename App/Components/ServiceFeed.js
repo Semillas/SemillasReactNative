@@ -12,13 +12,31 @@ import {
   CardTitle,
   CardContent
 } from 'react-native-card-view'
-import { Colors } from '../Themes/'
+import { Colors, Images } from '../Themes/'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 export default class ServiceFeed extends React.Component {
 
   static propTypes = {
     data: React.PropTypes.object.isRequired
+  }
+
+  renderPhotos(data) {
+    if (data.photos.length) {
+      return (
+        <Image
+          style={{width: 300, height: 200}}
+          source={{ uri: data.photos[0]['photo'] }}
+        />
+      )
+    } else {
+      return (
+        <Image
+          style={{width: 300, height: 200}}
+          source={Images.servicePlaceholder}
+        />
+      )
+    }
   }
 
   render () {
@@ -33,10 +51,7 @@ export default class ServiceFeed extends React.Component {
         <View style={styles.container}>
           <Card styles={card}>
             <CardImage>
-              <Image
-                style={{width: 300, height: 200}}
-                source={{ uri: data.photos[0]['photo'] }}
-              />
+              {this.renderPhotos(data)}
             </CardImage>
             <CardTitle>
               <Text style={styles.title}>{data.title}</Text>
