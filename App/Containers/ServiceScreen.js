@@ -23,6 +23,7 @@ import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
 import Swiper from 'react-native-swiper';
+import I18n from 'react-native-i18n'
 
 class ServiceScreen extends React.Component {
 
@@ -66,6 +67,30 @@ class ServiceScreen extends React.Component {
     }
   }
 
+  renderCallToAction(service) {
+    if ((this.props.loggedUser) && (this.props.loggedUser.uuid == service.author.uuid)){
+      return (
+        <RoundedButton
+          onPress={() => {
+            NavigationActions.editService({uuid: service.uuid})
+          }}
+        >
+          {I18n.t('Edit')}
+        </RoundedButton>
+      )
+    } else {
+      return (
+        <RoundedButton
+          onPress={() => {
+            NavigationActions.user({uuid: service.author.uuid})
+          }}
+        >
+          {I18n.t('Get it')}
+        </RoundedButton>
+      )
+    }
+  }
+
   render (uuid) {
     const { service } = this.props
     if (!service) {
@@ -101,13 +126,7 @@ class ServiceScreen extends React.Component {
           >
             <View>
               <Text >Usuario: {service.author.name || service.author.email || service.author.username }</Text>
-              <RoundedButton
-                onPress={() => {
-                  NavigationActions.user({uuid: service.author.uuid})
-                }}
-              >
-                Lo quiero!
-              </RoundedButton>
+              {this.renderCallToAction(service)}
             </View>
           </TouchableOpacity>
         </ScrollView>
@@ -125,7 +144,8 @@ ServiceScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     uuid: ownProps.uuid,
-    service: state.feed.items[ownProps.uuid]
+    service: state.feed.items[ownProps.uuid],
+    loggedUser: state.login.user
   }
 }
 
