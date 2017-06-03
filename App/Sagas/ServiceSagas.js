@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
-import FeedActions from '../Redux/FeedRedux'
+import GetServiceActions from '../Redux/GetServiceRedux'
 import PostServiceActions from '../Redux/ServicePostRedux'
 
 export function * getService (api, action) {
@@ -11,9 +11,9 @@ export function * getService (api, action) {
   // success?
   if (response.ok) {
     const user = path(['data'], response)
-    yield put(FeedActions.serviceSuccess(user))
+    yield put(GetServiceActions.serviceSuccess(user))
   } else {
-    yield put(FeedActions.serviceFailure())
+    yield put(GetServiceActions.serviceFailure())
   }
 }
 
