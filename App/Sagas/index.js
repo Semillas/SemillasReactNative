@@ -6,7 +6,7 @@ import DebugSettings from '../Config/DebugSettings'
 
 /* ------------- Types ------------- */
 
-import { StartupTypes } from '../Redux/StartupRedux'
+// import { StartupTypes } from '../Redux/StartupRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { UsersTypes } from '../Redux/UsersRedux'
@@ -16,7 +16,7 @@ import { UserServicesTypes } from '../Redux/UserServicesRedux'
 
 /* ------------- Sagas ------------- */
 
-import { startup } from './StartupSagas'
+// import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getUser } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
@@ -36,7 +36,7 @@ const semillasApi = SemillasApi.create()
 export default function * root () {
   yield [
     // some sagas only receive an action
-    takeLatest(StartupTypes.STARTUP, startup),
+    // takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
 
     // some sagas receive extra parameters in addition to an action
