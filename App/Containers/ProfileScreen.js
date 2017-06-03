@@ -5,6 +5,7 @@ import { ScrollView, Text, KeyboardAvoidingView, View } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import UserScreen from './UserScreen'
 
 // Styles
 import styles from './Styles/ProfileScreenStyle'
@@ -29,6 +30,7 @@ class ProfileScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    userUuid: state.login.user.uuid
   }
 }
 

@@ -7,7 +7,8 @@ const images = {
   ignite: require('../Images/ignite_logo.png'),
   tileBg: require('../Images/tile_bg.png'),
   background: require('../Images/BG.png'),
-  placeholder: require('../Images/placeholder.jpg')
+  servicePlaceholder: require('../Images/service_placeholder.jpg'),
+  profilePlaceholder: require('../Images/profile_placeholder.png')
 }
 
 export default images

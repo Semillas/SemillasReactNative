@@ -1,12 +1,14 @@
 // @flow
 
 import React, { PropTypes } from 'react'
-import { Text,
-          View
+import {  Text,
+          View,
+          ScrollView
 } from 'react-native'
 import { connect } from 'react-redux'
 import UserActions from '../Redux/UsersRedux.js'
 import MapView from 'react-native-maps'
+import UserServices from './UserServices'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -57,17 +59,14 @@ class UserScreen extends React.Component {
       )
     } else {
       return (
-        <View style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer}>
           {this.renderMap(user)}
-          <Text>Loaded</Text>
           <View style={styles.section}>
             <Text>{user.name}</Text>
           </View>
-          <View style={styles.section}>
-            <Text>UserScreen Container</Text>
-            <Text>uuid: {this.props.uuid}</Text>
-          </View>
-        </View>
+          <Text>I18n.t('Services being offered')</Text>
+          <UserServices userUuid={this.props.uuid} />
+        </ScrollView>
       )
     }
   }

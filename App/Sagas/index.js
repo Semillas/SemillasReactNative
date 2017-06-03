@@ -13,6 +13,7 @@ import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { UsersTypes } from '../Redux/UsersRedux'
 import { FeedTypes } from '../Redux/FeedRedux'
 import { ServicePostTypes } from '../Redux/ServicePostRedux'
+import { UserServicesTypes } from '../Redux/UserServicesRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -20,6 +21,7 @@ import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getTemperature } from './TemperatureSagas'
 import { getUser } from './UsersSagas'
+import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getService, postService } from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
@@ -45,6 +47,7 @@ export default function * root () {
     takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
     takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi),
     takeLatest(FeedTypes.SERVICE_REQUEST, getService, semillasApi),
-    takeLatest(ServicePostTypes.SERVICE_POST_REQUEST, postService, semillasApi)
+    takeLatest(ServicePostTypes.SERVICE_POST_REQUEST, postService, semillasApi),
+    takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
   ]
 }
