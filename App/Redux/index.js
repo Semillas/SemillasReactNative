@@ -16,9 +16,7 @@ const entities = (state = { users: {}, services: {} }, action) => {
 export default () => {
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
-    temperature: require('./TemperatureRedux').reducer,
     login: require('./LoginRedux').reducer,
-    search: require('./SearchRedux').reducer,
     users: require('./UsersRedux').reducer,
     feed: require('./FeedRedux').reducer,
     servicePost: require('./ServicePostRedux').reducer,
