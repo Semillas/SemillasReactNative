@@ -11,18 +11,9 @@ import UserScreen from './UserScreen'
 import styles from './Styles/ProfileScreenStyle'
 
 class ProfileScreen extends React.Component {
-
   render () {
     return (
-      <View style={{paddingTop: 150}}>
-        <ScrollView style={styles.container}>
-          <KeyboardAvoidingView behavior='position'>
-            <Text>ProfileScreen Container</Text>
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <RoundedButton text='Editar Perfil' onPress={NavigationActions.editProfile} />
-
-      </View >
+      <UserScreen uuid={this.props.userUuid} />
     )
   }
 

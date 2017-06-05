@@ -112,7 +112,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     getServiceDetail,
     getFeed,
     postService,
-    putService
+    putService,
     getUserServices
   }
 }
