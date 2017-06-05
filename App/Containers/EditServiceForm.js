@@ -17,7 +17,7 @@ import Styles from './Styles/LoginScreenStyle'
 import {Images, Metrics} from '../Themes'
 import ServicePostActions from '../Redux/ServicePostRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import FeedActions from '../Redux/FeedRedux.js'
+import GetServiceActions from '../Redux/GetServiceRedux.js'
 import I18n from 'react-native-i18n'
 
 type ServicePostProps = {
@@ -77,17 +77,11 @@ class EditServiceForm extends React.Component {
       // Update form with service values
       this.assignServiceToState(newProps.service)
     }
-
-    this.forceUpdate()
-    // Did the login attempt complete?
-    if (this.isAttempting && !newProps.fetching) {
-      NavigationActions.pop()
-    }
   }
 
   componentWillMount () {
     // Using keyboardWillShow/Hide looks 1,000 times better, but doesn't work on Android
-    // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468
+    // TODO: Revisit this if Android begins to support - https://github.com/facebook/react-native/issues/3468 or https://github.com/facebook/react-native/issues/14275
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
 
@@ -130,8 +124,12 @@ class EditServiceForm extends React.Component {
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
     this.props.attemptServicePost(title, description, category, seedsPrice, uuid)
-    this.props.feedClear()
-    this.props.feedRequest()
+//    this.props.feedClear()
+//    this.props.feedRequest()
+
+    // With this it gets updated on Service success.
+    //this.props.retrieveService(this.props.uuid)
+    //Solution: Update right away the service redux
   }
 
   handleChangeTitle = (text) => {
@@ -230,7 +228,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     fetching: state.servicePost.fetching,
     uuid: ownProps.uuid,
-    service: state.feed.items[ownProps.uuid]
+    service: state.services.items[ownProps.uuid]
   }
 }
 
@@ -246,9 +244,7 @@ const mapDispatchToProps = (dispatch) => {
           uuid
         )
       ),
-    feedClear: () => dispatch(FeedActions.feedClear()),
-    feedRequest: () => dispatch(FeedActions.feedRequest(undefined)),
-    retrieveService: (uuid) => dispatch(FeedActions.serviceRequest(uuid))
+    retrieveService: (uuid) => dispatch(GetServiceActions.serviceRequest(uuid))
   }
 }
 

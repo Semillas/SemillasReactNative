@@ -21,6 +21,7 @@ export default () => {
     feed: require('./FeedRedux').reducer,
     servicePost: require('./ServicePostRedux').reducer,
     userServices: require('./UserServicesRedux').reducer,
+    services: require('./GetServiceRedux').reducer,
     form: formReducer,
     entities
   })

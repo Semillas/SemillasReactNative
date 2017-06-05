@@ -91,7 +91,7 @@ class ServiceScreen extends React.Component {
     }
   }
 
-  render (uuid) {
+  render () {
     const { service } = this.props
     if (!service) {
       return (
@@ -144,7 +144,7 @@ ServiceScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     uuid: ownProps.uuid,
-    service: state.feed.items[ownProps.uuid],
+    service: state.services.items[ownProps.uuid],
     loggedUser: state.login.user
   }
 }

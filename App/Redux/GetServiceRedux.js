@@ -34,7 +34,7 @@ export const serviceSuccess = (state: Object, action: Object) => {
   var currentItems = {}
   currentItems[service.uuid] = service
 
-  var allItems = Object.assign({}, currentItems, state.items)
+  var allItems = Object.assign({}, state.items, currentItems)
 
   return Object.assign({}, state, { fetchingService: false, error: null, items: allItems })
 }

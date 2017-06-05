@@ -10,14 +10,15 @@ class EditServiceScreen extends React.Component {
   render () {
     return (
       <View >
-        <EditServiceForm />
+        <EditServiceForm uuid={this.props.uuid} />
       </View >
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
+    uuid: ownProps.uuid,
   }
 }
 
