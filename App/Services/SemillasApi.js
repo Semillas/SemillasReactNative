@@ -76,7 +76,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
         'title': title,
         'description': description,
         'category': category,
-        'seedsPrice': seedsPrice
+        'seeds_price': seedsPrice
       }
     )
 
@@ -86,7 +86,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
         'title': title,
         'description': description,
         'category': category,
-        'seedsPrice': seedsPrice
+        'seeds_price': seedsPrice
       }
     )
 

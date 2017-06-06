@@ -66,7 +66,7 @@ class EditServiceForm extends React.Component {
   assignServiceToState (service) {
     this.state.title = service.title
     this.state.description = service.description
-    this.state.seedsPrice = String(service.seedsPrice)
+    this.state.seedsPrice = String(service.seeds_price)
     this.state.category = service.category.id
     this.state.uuid = service.uuid
   }
@@ -208,11 +208,6 @@ class EditServiceForm extends React.Component {
               <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
                 <View style={Styles.loginButton}>
                   <Text style={Styles.loginText}>{I18n.t('Publish')}</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
-                <View style={Styles.loginButton}>
-                  <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
                 </View>
               </TouchableOpacity>
             </View>

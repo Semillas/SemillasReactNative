@@ -33,8 +33,13 @@ export const INITIAL_STATE = Immutable({
 // request the service with a given url.
 export const servicePostRequest = (state: Object, action : Object) =>
 {
-  debugger;
-  return Object.assign({}, state, { fetching: true })
+  updatedItems = Object.assign({}, state.items)
+  if (action.uuid) {
+    updatedItems[action.uuid].title = action.title
+    updatedItems[action.uuid].description = action.description
+    updatedItems[action.uuid].seeds_price = action.seedsPrice
+  }
+  return Object.assign({}, state, { fetching: true, items:updatedItems })
 }
 // successful service lookup
 export const servicePostSuccess = (state: Object, action: Object) => {
