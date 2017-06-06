@@ -15,9 +15,8 @@ import {
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'
 import {Images, Metrics} from '../Themes'
-import ServicePostActions from '../Redux/ServicePostRedux'
+import ServiceActions from '../Redux/ServiceRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import GetServiceActions from '../Redux/GetServiceRedux.js'
 import I18n from 'react-native-i18n'
 
 type ServicePostProps = {
@@ -226,7 +225,7 @@ class EditServiceForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    fetching: state.servicePost.fetching,
+    fetching: state.services.fetching,
     uuid: ownProps.uuid,
     service: state.services.items[ownProps.uuid]
   }
@@ -236,7 +235,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptServicePost:
       (title, description, category, seedsPrice, uuid) => dispatch(
-        ServicePostActions.servicePostRequest(
+        ServiceActions.servicePostRequest(
           title,
           description,
           category,
@@ -244,7 +243,7 @@ const mapDispatchToProps = (dispatch) => {
           uuid
         )
       ),
-    retrieveService: (uuid) => dispatch(GetServiceActions.serviceRequest(uuid))
+    retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid))
   }
 }
 

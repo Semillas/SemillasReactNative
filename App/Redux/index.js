@@ -19,9 +19,8 @@ export default () => {
     login: require('./LoginRedux').reducer,
     users: require('./UsersRedux').reducer,
     feed: require('./FeedRedux').reducer,
-    servicePost: require('./ServicePostRedux').reducer,
     userServices: require('./UserServicesRedux').reducer,
-    services: require('./GetServiceRedux').reducer,
+    services: require('./ServiceRedux').reducer,
     form: formReducer,
     entities
   })

@@ -1,7 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
-import GetServiceActions from '../Redux/GetServiceRedux'
-import PostServiceActions from '../Redux/ServicePostRedux'
+import ServiceActions from '../Redux/ServiceRedux'
 
 export function * getService (api, action) {
   const { uuid } = action
@@ -11,9 +10,9 @@ export function * getService (api, action) {
   // success?
   if (response.ok) {
     const user = path(['data'], response)
-    yield put(GetServiceActions.serviceSuccess(user))
+    yield put(ServiceActions.serviceSuccess(user))
   } else {
-    yield put(GetServiceActions.serviceFailure())
+    yield put(ServiceActions.serviceFailure())
   }
 }
 
@@ -39,8 +38,8 @@ export function * postService (api, action) {
   // success?
   if (response.ok) {
     const uuid = path(['uuid'], response)
-    yield put(PostServiceActions.servicePostSuccess(uuid))
+    yield put(ServiceActions.servicePostSuccess(uuid))
   } else {
-    yield put(PostServiceActions.servicePostFailure())
+    yield put(ServiceActions.servicePostFailure())
   }
 }

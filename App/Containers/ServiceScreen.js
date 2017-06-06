@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
-import GetServiceActions from '../Redux/GetServiceRedux.js'
+import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
 
 import {
@@ -30,7 +30,7 @@ class ServiceScreen extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
     // TODO: Check if the service is not loaded.
-    dispatch(GetServiceActions.serviceRequest(this.props.uuid))
+    dispatch(ServiceActions.serviceRequest(this.props.uuid))
   }
 
   renderPhotos(data) {
