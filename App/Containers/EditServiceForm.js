@@ -28,8 +28,11 @@ type ServicePostProps = {
   service: Object
 }
 
-class EditServiceForm extends React.Component {
+var MessageBarAlert = require('react-native-message-bar').MessageBar;
+var MessageBarManager = require('react-native-message-bar').MessageBarManager;
 
+
+class EditServiceForm extends React.Component {
   props: ServicePostProps
 
   state: {
@@ -76,6 +79,28 @@ class EditServiceForm extends React.Component {
       // Update form with service values
       this.assignServiceToState(newProps.service)
     }
+    // Handle notification bar
+    if ((this.props != newProps.fetching) && (newProps.fetching == false)){
+      // Post Request has finished
+      if (newProps.error) {
+				MessageBarManager.showAlert({
+					title: 'Hubo un Error',
+					message: 'El campo Precio en Semillas debe ser un número',
+					alertType: 'error',
+					// See Properties section for full customization
+					// Or check `index.ios.js` or `index.android.js` for a complete example
+				});
+      } else {
+				MessageBarManager.showAlert({
+					title: 'Publicado',
+					message: 'El servicio se ha publicado correctamente',
+					alertType: 'success',
+					// See Properties section for full customization
+					// Or check `index.ios.js` or `index.android.js` for a complete example
+				});
+      }
+
+    }
   }
 
   componentWillMount () {
@@ -94,9 +119,20 @@ class EditServiceForm extends React.Component {
     }
   }
 
+	componentDidMount() {
+		// Register the alert located on this master page
+		// This MessageBar will be accessible from the current (same) component, and from its child component
+		// The MessageBar is then declared only once, in your main component.
+		MessageBarManager.registerMessageBar(this.refs.alert);
+	}
+
   componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
+
+		// Remove the alert located on this master page from the manager
+		MessageBarManager.unregisterMessageBar();
+
   }
 
   keyboardDidShow = (e) => {
@@ -152,6 +188,7 @@ class EditServiceForm extends React.Component {
       <KeyboardAvoidingView behavior='padding'>
         <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
           <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+					<MessageBarAlert ref="alert" />
           <View style={Styles.form}>
             <View style={Styles.row}>
               <Text style={Styles.rowLabel}>{I18n.t('Title')}</Text>
@@ -221,6 +258,7 @@ class EditServiceForm extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     fetching: state.services.fetching,
+    error: state.services.error,
     uuid: ownProps.uuid,
     service: state.services.items[ownProps.uuid]
   }
