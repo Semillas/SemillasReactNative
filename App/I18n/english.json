@@ -22,5 +22,13 @@
    "themeSettings": "Theme Settings",
    "deviceDetails": "Device Details",
    "noItems": "No Items",
-   "search": "Search"
+   "search": "Search",
+   "Title": "Title",
+   "Description": "Description",
+   "Seeds Price": "Seeds Price",
+   "Edit": "Edit",
+   "Publish": "Publish",
+   "Services being offered": "Services being offered:",
+   "Get it": "Get it",
+   "email": "E-mail",
 }
