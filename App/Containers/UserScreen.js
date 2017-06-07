@@ -43,6 +43,17 @@ class UserScreen extends React.Component {
   }
 
   render (uuid) {
+    if (!this.props.loggedIn) {
+      return (
+        <View style={styles.mainContainer}>
+          <Text> You Need to Log In to log in first</Text>
+          <View style={styles.section}>
+            <Text>UserScreen Container</Text>
+            <Text>uuid: {this.props.uuid}</Text>
+          </View>
+        </View>
+      )
+    }
     const { user } = this.props
     if (!user) {
       return (
@@ -81,6 +92,7 @@ UserScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     uuid: ownProps.uuid,
+    loggedIn: state.login.key,
     user: state.users['entities'][ownProps.uuid]
   }
 }
