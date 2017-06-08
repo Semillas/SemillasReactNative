@@ -13,7 +13,7 @@ import {
   KeyboardAvoidingView
 } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/LoginScreenStyle'
+import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
 import ServiceActions from '../Redux/ServiceRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -74,9 +74,6 @@ class EditServiceForm extends React.Component {
     this.state.category = service.category.id
     this.state.uuid = service.uuid
   }
-
-
-
 
 
   componentWillReceiveProps (newProps) {
@@ -237,10 +234,9 @@ class EditServiceForm extends React.Component {
 
 
     return (
-      <KeyboardAvoidingView behavior='padding'>
-        <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
-          <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-					<MessageBarAlert ref="alert" />
+        <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
+         <MessageBarAlert ref="alert" />
+         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
           <View style={Styles.form}>
             <View style={Styles.row}>
               <Text style={Styles.rowLabel}>{I18n.t('Title')}</Text>
@@ -292,7 +288,6 @@ class EditServiceForm extends React.Component {
                 onSubmitEditing={this.handlePressPost}
                 placeholder={''} />
             </View>
-
             <View style={[Styles.loginRow]}>
               <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
                 <View style={Styles.loginButton}>
@@ -300,7 +295,6 @@ class EditServiceForm extends React.Component {
                 </View>
               </TouchableOpacity>
             </View>
-
             <View style={[Styles.loginRow]}>
               <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.selectPhoto}>
                 <View style={Styles.loginButton}>
@@ -308,10 +302,8 @@ class EditServiceForm extends React.Component {
                 </View>
               </TouchableOpacity>
             </View>
-
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
     )
   }
 }
