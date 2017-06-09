@@ -19,6 +19,8 @@ import ServiceActions from '../Redux/ServiceRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 import ImagePicker from 'react-native-image-picker';
+import { create } from 'apisauce'
+
 
 type ServicePostProps = {
   dispatch: () => any,
@@ -26,6 +28,7 @@ type ServicePostProps = {
   uuid: string,
   attemptServicePost: () => void,
   retrieveService: () => void,
+  clearNewService: () => void,
   service: Object
 }
 
@@ -101,7 +104,6 @@ class EditServiceForm extends React.Component {
 					// Or check `index.ios.js` or `index.android.js` for a complete example
 				});
       }
-
     }
   }
 
@@ -132,6 +134,8 @@ class EditServiceForm extends React.Component {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
 
+    this.props.clearNewService()
+
 		// Remove the alert located on this master page from the manager
 		MessageBarManager.unregisterMessageBar();
 
@@ -157,9 +161,13 @@ class EditServiceForm extends React.Component {
   }
 
   handlePressPost = () => {
-    const { title, description, category, seedsPrice, uuid } = this.state
+    var { title, description, category, seedsPrice, uuid } = this.state
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
+
+    if (!uuid) {
+      uuid = this.props.newService
+    }
     this.props.attemptServicePost(title, description, category, seedsPrice, uuid)
 //    this.props.feedClear()
 //    this.props.feedRequest()
@@ -180,6 +188,46 @@ class EditServiceForm extends React.Component {
   handleChangeSeedsPrice = (text) => {
     this.setState({ seedsPrice: text })
   }
+
+
+	upload = (photo) => {
+		// create api.
+		const api = create({
+			baseURL: 'http://localhost:3000',
+		})
+
+		// create formdata
+		const data = new FormData();
+				data.append('name', 'testName');
+				photos.forEach((photo, index) => {
+					data.append('photos', {
+						uri: photo.uri,
+						type: 'image/jpeg',
+						name: 'image'+index
+					});
+				});
+
+		// post your data.
+		api.post('/array', data, {
+					onUploadProgress: (e) => {
+						console.log(e)
+						const progress = e.loaded / e.total;
+						console.log(progress);
+						this.setState({
+							progress: progress
+						});
+					}
+				})
+					.then((res) => console.log(res))
+
+		// if you want to add DonwloadProgress, use onDownloadProgress
+		onDownloadProgress: (e) => {
+			const progress = e.loaded / e.total;
+		}
+	}
+
+
+
 
   selectPhoto() {
     // More info on all the options is below in the README...just some common use cases shown here
@@ -212,17 +260,17 @@ class EditServiceForm extends React.Component {
       }
       else {
         let source = { uri: response.uri };
+				this.upload(source)
 
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
-        this.setState({
-          avatarSource: source
-        });
+        //this.setState({
+        //  avatarSource: source
+        //});
       }
     });
   }
-
 
 
   render () {
@@ -313,7 +361,8 @@ const mapStateToProps = (state, ownProps) => {
     fetching: state.services.fetching,
     error: state.services.error,
     uuid: ownProps.uuid,
-    service: state.services.items[ownProps.uuid]
+    service: state.services.items[ownProps.uuid],
+    newService: state.services.newService
   }
 }
 
@@ -329,7 +378,8 @@ const mapDispatchToProps = (dispatch) => {
           uuid
         )
       ),
-    retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid))
+    retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid)),
+    clearNewService: () => dispatch(ServiceActions.clearNewService())
   }
 }
 

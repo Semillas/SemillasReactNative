@@ -37,8 +37,8 @@ export function * postService (api, action) {
 
   // success?
   if (response.ok) {
-    const uuid = path(['uuid'], response)
-    yield put(ServiceActions.servicePostSuccess(uuid))
+    service = response.data
+    yield put(ServiceActions.servicePostSuccess(service))
   } else {
     yield put(ServiceActions.servicePostFailure())
   }

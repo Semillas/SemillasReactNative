@@ -7,11 +7,12 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   servicePostRequest: ['title', 'description', 'category', 'seedsPrice', 'uuid'],
-  servicePostSuccess: [],
+  servicePostSuccess: ['service'],
   servicePostFailure: null,
   serviceRequest: ['uuid'],
   serviceSuccess: ['service'],
   serviceFailure: null,
+  clearNewService: null,
 
 })
 
@@ -26,6 +27,10 @@ export const INITIAL_STATE = Immutable({
   uuid: null,
   items: {},
   fetchingService: null,
+  // The reason of newService is to tell the Form there is an item already
+  // created. It is used when the user clicks on publish twice. Maybe by
+  // mistake, maybe to update it
+  newService: null,
 })
 
 /* ------------- Reducers ------------- */
@@ -41,9 +46,22 @@ export const servicePostRequest = (state: Object, action : Object) =>
   }
   return Object.assign({}, state, { fetching: true, items:updatedItems })
 }
+
 // successful service lookup
 export const servicePostSuccess = (state: Object, action: Object) => {
-  return Object.assign({}, state, { fetching: false, error: null })
+  newItems = Object.assign({}, state.items)
+  newItems[action.service.uuid] = action.service
+  return Object.assign(
+    {},
+    state,
+    {
+      fetching: false,
+      error: null,
+      //NewService: The service just created. Is updated so the form edit and stop creating.
+      newService: action.service.uuid,
+      items: newItems
+    }
+  )
 }
 
 // failed to get the service
@@ -70,6 +88,12 @@ export const serviceFailure = (state: Object) =>
   Object.assign({}, state, { fetchingService: false, error: true })
 
 
+// Clear new Service stored.
+// This is called every time the component is umount.
+export const clearNewService = (state: Object) => {
+  return Object.assign({}, state, { newService: false })
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -78,6 +102,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_POST_FAILURE]: servicePostFailure,
   [Types.SERVICE_REQUEST]: serviceRequest,
   [Types.SERVICE_SUCCESS]: serviceSuccess,
-  [Types.SERVICE_FAILURE]: serviceFailure
+  [Types.SERVICE_FAILURE]: serviceFailure,
+  [Types.CLEAR_NEW_SERVICE]: clearNewService
 
 })

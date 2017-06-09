@@ -34,7 +34,7 @@ class ServiceScreen extends React.Component {
   }
 
   renderPhotos(data) {
-    if (data.photos.length) {
+    if ((data.photos) && (data.photos.length)) {
       photoViews = []
       for (var i=0; i < data.photos.length; i++) {
         photoViews.push(
