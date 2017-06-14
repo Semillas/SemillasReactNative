@@ -18,8 +18,7 @@ import {Images, Metrics} from '../Themes'
 import ServiceActions from '../Redux/ServiceRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
-import ImagePicker from 'react-native-image-picker';
-import { create } from 'apisauce'
+import ServicePhotos from './ServicePhotoUploader'
 
 
 type ServicePostProps = {
@@ -189,97 +188,11 @@ class EditServiceForm extends React.Component {
     this.setState({ seedsPrice: text })
   }
 
-
-	upload = (photo) => {
-		// create api.
-		const api = create({
-			baseURL: 'http://localhost:3000',
-		})
-
-		// create formdata
-		const data = new FormData();
-				data.append('name', 'testName');
-				photos.forEach((photo, index) => {
-					data.append('photos', {
-						uri: photo.uri,
-						type: 'image/jpeg',
-						name: 'image'+index
-					});
-				});
-
-		// post your data.
-		api.post('/array', data, {
-					onUploadProgress: (e) => {
-						console.log(e)
-						const progress = e.loaded / e.total;
-						console.log(progress);
-						this.setState({
-							progress: progress
-						});
-					}
-				})
-					.then((res) => console.log(res))
-
-		// if you want to add DonwloadProgress, use onDownloadProgress
-		onDownloadProgress: (e) => {
-			const progress = e.loaded / e.total;
-		}
-	}
-
-
-
-
-  selectPhoto() {
-    // More info on all the options is below in the README...just some common use cases shown here
-    var options = {
-      title: 'Select Avatar',
-      customButtons: [
-        {name: 'fb', title: 'Choose Photo from Facebook'},
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images'
-      }
-    };
-
-    /**
-     * The first arg is the options object for customization (it can also be null or omitted for default options),
-     * The second arg is the callback which sends object: response (more info below in README)
-     */
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-				this.upload(source)
-
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        //this.setState({
-        //  avatarSource: source
-        //});
-      }
-    });
-  }
-
-
   render () {
     const { title, description, category, seedsPrice } = this.state
     const { fetching } = this.state
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
-
-
 
     return (
         <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
@@ -344,11 +257,7 @@ class EditServiceForm extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={[Styles.loginRow]}>
-              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.selectPhoto}>
-                <View style={Styles.loginButton}>
-                  <Text style={Styles.loginText}>{I18n.t('Add Photo')}</Text>
-                </View>
-              </TouchableOpacity>
+              <ServicePhotos />
             </View>
           </View>
         </ScrollView>
