@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux'
 import {
   AppRegistry,
   StyleSheet,
@@ -8,14 +9,15 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import ServiceActions from '../Redux/ServiceRedux'
 
 import ImagePicker from 'react-native-image-picker';
 
-export default class App extends React.Component {
+
+class ServicePhotoUploader extends React.Component {
 
   state = {
     avatarSource: null,
-    videoSource: null
   };
 
   selectPhotoTapped() {
@@ -42,65 +44,85 @@ export default class App extends React.Component {
       }
       else {
         let source = { uri: response.uri };
+        // Display the image and start upload
+        this.props.attemptPhotoPost(source, this.props.service.uuid)
 
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        //this.setState({
+        //  avatarSource: source
+        //});
+        //
+        //call request reducer
+        // 1 put the image throught a reducer
 
-        this.setState({
-          avatarSource: source
-        });
+
+
+        // 2 upload the image
+        // 3 put the spinner and report status
+        // 4 Add delete button
+
       }
     });
   }
 
-	upload (photo) {
-		// create api.
-		const api = create({
-			baseURL: 'http://localhost:3000',
-		})
+//	upload (photo) {
+//		// create api.
+//		const api = create({
+//			baseURL: 'http://localhost:3000',
+//		})
+//
+//		// create formdata
+//		const data = new FormData();
+//
+//				data.append('name', 'testName');
+//				photos.forEach((photo, index) => {
+//					data.append('photos', {
+//						uri: photo.uri,
+//						type: 'image/jpeg',
+//						name: 'image'+index
+//					});
+//				});
+//
+//		// post your data.
+//		api.post('/array', data, {
+//					onUploadProgress: (e) => {
+//						console.log(e)
+//						const progress = e.loaded / e.total;
+//						console.log(progress);
+//						this.setState({
+//							progress: progress
+//						});
+//					}
+//				})
+//					.then((res) => console.log(res))
+//
+//		// if you want to add DonwloadProgress, use onDownloadProgress
+//		onDownloadProgress: (e) => {
+//			const progress = e.loaded / e.total;
+//		}
+//	}
 
-		// create formdata
-		const data = new FormData();
+	renderCurrentPhotos (service) {
 
-				data.append('name', 'testName');
-				photos.forEach((photo, index) => {
-					data.append('photos', {
-						uri: photo.uri,
-						type: 'image/jpeg',
-						name: 'image'+index
-					});
-				});
 
-		// post your data.
-		api.post('/array', data, {
-					onUploadProgress: (e) => {
-						console.log(e)
-						const progress = e.loaded / e.total;
-						console.log(progress);
-						this.setState({
-							progress: progress
-						});
-					}
-				})
-					.then((res) => console.log(res))
-
-		// if you want to add DonwloadProgress, use onDownloadProgress
-		onDownloadProgress: (e) => {
-			const progress = e.loaded / e.total;
-		}
 	}
 
+	renderNewPhotoUploader () {
+    return (
+    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+      <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+      { this.props.currentPhotoUpload === null ? <Text>Select a Photo</Text> :
+        <Image style={styles.avatar} source={this.props.currentPhotoUpload} />
+      }
+      </View>
+    </TouchableOpacity>
+    )
+	}
 
-  render() {
+  render(service) {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-          <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-          { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-            <Image style={styles.avatar} source={this.state.avatarSource} />
-          }
-          </View>
-        </TouchableOpacity>
+      {this.renderNewPhotoUploader()}
+
       </View>
     );
   }
@@ -125,3 +147,36 @@ const styles = StyleSheet.create({
     height: 150
   }
 });
+
+
+
+ServicePhotoUploader.propTypes = {
+  attemptPhotoPost: PropTypes.func,
+  service: PropTypes.object,
+  currentPhotoUpload: PropTypes.string
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    service: ownProps.service,
+    currentPhotoUpload: state.services.currentPhotoUpload
+  }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    attemptPhotoPost:
+      (photoUrl, serviceUuid) => dispatch(
+        ServiceActions.servicePhotoPostRequest(
+          photoUrl,
+          serviceUuid
+        )
+      ),
+    //clearNewService: () => dispatch(ServiceActions.clearNewService())
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServicePhotoUploader)

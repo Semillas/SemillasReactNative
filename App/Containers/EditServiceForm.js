@@ -193,7 +193,6 @@ class EditServiceForm extends React.Component {
     const { fetching } = this.state
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
-
     return (
         <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
          <MessageBarAlert ref="alert" />
@@ -257,7 +256,7 @@ class EditServiceForm extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={[Styles.loginRow]}>
-              <ServicePhotos />
+              <ServicePhotos service={this.props.service} />
             </View>
           </View>
         </ScrollView>

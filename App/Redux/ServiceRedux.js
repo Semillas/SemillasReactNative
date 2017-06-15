@@ -13,6 +13,10 @@ const { Types, Creators } = createActions({
   serviceSuccess: ['service'],
   serviceFailure: null,
   clearNewService: null,
+  servicePhotoPostRequest: ['photoUrl', 'serviceUuid'],
+  servicePhotoPostSuccess: ['service'],
+  servicePhotoPostFailure: null,
+
 
 })
 
@@ -31,6 +35,9 @@ export const INITIAL_STATE = Immutable({
   // created. It is used when the user clicks on publish twice. Maybe by
   // mistake, maybe to update it
   newService: null,
+  postingPhoto: null,
+  photoPostError: null,
+  currentPhotoUpload: null
 })
 
 /* ------------- Reducers ------------- */
@@ -94,6 +101,50 @@ export const clearNewService = (state: Object) => {
   return Object.assign({}, state, { newService: false })
 }
 
+
+//
+// Reducer:
+// {'photos':
+//    { serviceUuid:
+//      [
+//        { 'uploading': boolean,
+//         'uploaded': boolean,
+//         'url' string
+//         }
+//      ]
+//    }
+//  }
+//
+//
+// Update the state to show the photo and start the Post
+export const servicePhotoPostRequest = (state: Object, action : Object) =>
+{
+  const { photoUrl, serviceUuid } = action
+  return Object.assign({}, state, { postingPhoto: true, currentPhotoUpload: photoUrl })
+}
+
+// successful service lookup
+export const servicePhotoPostSuccess = (state: Object, action: Object) => {
+  newItems = Object.assign({}, state.items)
+  newItems[action.service.uuid] = action.service
+  return Object.assign(
+    {},
+    state,
+    {
+      postingPhoto: false,
+      photoPostError: null,
+      //NewService: The service just created. Is updated so the form edit and stop creating.
+      newService: action.service.uuid,
+      items: newItems
+    }
+  )
+}
+
+// failed to get the service
+export const servicePhotoPostFailure = (state: Object) =>
+  Object.assign({}, state, { postingPhoto: false, photoPostError: true })
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -103,6 +154,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_REQUEST]: serviceRequest,
   [Types.SERVICE_SUCCESS]: serviceSuccess,
   [Types.SERVICE_FAILURE]: serviceFailure,
-  [Types.CLEAR_NEW_SERVICE]: clearNewService
+  [Types.CLEAR_NEW_SERVICE]: clearNewService,
+  [Types.SERVICE_PHOTO_POST_REQUEST]: servicePhotoPostRequest,
+  [Types.SERVICE_PHOTO_POST_SUCCESS]: servicePhotoPostSuccess,
+  [Types.SERVICE_PHOTO_POST_FAILURE]: servicePhotoPostFailure,
 
 })
