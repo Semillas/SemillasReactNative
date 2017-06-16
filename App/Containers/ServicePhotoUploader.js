@@ -64,6 +64,11 @@ class ServicePhotoUploader extends React.Component {
     });
   }
 
+
+  componentWillUnmount() {
+    this.props.servicePhotoClear()
+  }
+
 //	upload (photo) {
 //		// create api.
 //		const api = create({
@@ -105,6 +110,7 @@ class ServicePhotoUploader extends React.Component {
 
 
 	}
+
 
 	renderNewPhotoUploader () {
     return (
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
 ServicePhotoUploader.propTypes = {
   attemptPhotoPost: PropTypes.func,
   service: PropTypes.object,
-  currentPhotoUpload: PropTypes.string
+  currentPhotoUpload: PropTypes.object
 }
 
 
@@ -174,7 +180,7 @@ const mapDispatchToProps = (dispatch) => {
           serviceUuid
         )
       ),
-    //clearNewService: () => dispatch(ServiceActions.clearNewService())
+    servicePhotoClear: () => dispatch(ServiceActions.servicePhotoClear())
   }
 }
 

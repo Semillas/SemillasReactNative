@@ -16,7 +16,7 @@ const { Types, Creators } = createActions({
   servicePhotoPostRequest: ['photoUrl', 'serviceUuid'],
   servicePhotoPostSuccess: ['service'],
   servicePhotoPostFailure: null,
-
+  servicePhotoClear: null,
 
 })
 
@@ -144,6 +144,13 @@ export const servicePhotoPostSuccess = (state: Object, action: Object) => {
 export const servicePhotoPostFailure = (state: Object) =>
   Object.assign({}, state, { postingPhoto: false, photoPostError: true })
 
+// Update the state to show the photo and start the Post
+export const clearUploadingPhoto = (state: Object, action : Object) =>
+{
+  return Object.assign({}, state, { currentPhotoUpload: null})
+}
+
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -157,6 +164,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CLEAR_NEW_SERVICE]: clearNewService,
   [Types.SERVICE_PHOTO_POST_REQUEST]: servicePhotoPostRequest,
   [Types.SERVICE_PHOTO_POST_SUCCESS]: servicePhotoPostSuccess,
-  [Types.SERVICE_PHOTO_POST_FAILURE]: servicePhotoPostFailure,
+  [Types.SERVICE_PHOTO_CLEAR]: clearUploadingPhoto,
 
 })
