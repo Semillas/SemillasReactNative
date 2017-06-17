@@ -22,6 +22,21 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     timeout: 10000
   })
 
+  baseURL = 'https://requestb.in'
+  const requestBin = apisauce.create({
+    // base URL is read from the "constructor"
+    baseURL,
+    // here are some default headers
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    // 10 second timeout...
+    timeout: 10000
+  })
+
+
   // Force OpenWeather API Key on all requests
   // api.addRequestTransform((request) => {
   // request.params['APPID'] = '0e44183e8d1018fc92eb3307d885379c'
@@ -92,6 +107,40 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
 
   const setHeader = api.setHeader
 
+
+  const photoPostService = (photoUrl, serviceUuid) => {
+
+		// create formdata
+		const data = new FormData();
+    data.append('photo', {
+      uri: photoUrl,
+      type: 'image/jpeg',
+      //name: ''
+    });
+
+		// post your data.
+		return requestBin.post('1azgo7d1', data)
+
+//      , {
+//					onUploadProgress: (e) => {
+//						console.log(e)
+//						const progress = e.loaded / e.total;
+//						console.log(progress);
+//						//this.setState({
+//						//	progress: progress
+//						//});
+//					}
+//				})
+
+    //   .then((res) => console.log(res))
+
+		// if you want to add DonwloadProgress, use onDownloadProgress
+		//onDownloadProgress: (e) => {
+		//	const progress = e.loaded / e.total;
+		//}
+	}
+
+
   // ------
   // STEP 3
   // ------
@@ -113,7 +162,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     getFeed,
     postService,
     putService,
-    getUserServices
+    getUserServices,
+    photoPostService
   }
 }
 

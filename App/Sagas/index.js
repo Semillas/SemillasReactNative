@@ -21,7 +21,7 @@ import { login } from './LoginSagas'
 import { getUser } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
-import { getService, postService } from './ServiceSagas'
+import { getService, postService, photoPostService } from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -46,5 +46,6 @@ export default function * root () {
     takeLatest(ServiceTypes.SERVICE_REQUEST, getService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_POST_REQUEST, postService, semillasApi),
     takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
+    takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
   ]
 }
