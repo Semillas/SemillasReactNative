@@ -115,13 +115,13 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     data.append('photo', {
       uri: photoUrl,
       type: 'image/jpeg',
-      //name: ''
+      name: 'placeholder.jpg'
     });
 
-    api.setHeader('Content-Disposition', "Content-Disposition: attachment; filename*=UTF-8''placeholder.jpg")
+    //api.setHeader('Content-Disposition', "Content-Disposition: attachment; filename*=UTF-8''placeholder.jpg")
 
     // post your data.
-    return api.put(
+    return api.post(
       '/api/v1/service/photo_upload/'.concat(serviceUuid, '/'),
       data
     )

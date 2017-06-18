@@ -77,7 +77,6 @@ class EditServiceForm extends React.Component {
     this.state.uuid = service.uuid
   }
 
-
   componentWillReceiveProps (newProps) {
     if (newProps.service) {
       // Update form with service values
