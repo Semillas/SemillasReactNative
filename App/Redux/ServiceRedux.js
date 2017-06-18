@@ -126,15 +126,13 @@ export const servicePhotoPostRequest = (state: Object, action : Object) =>
 // successful service lookup
 export const servicePhotoPostSuccess = (state: Object, action: Object) => {
   newItems = Object.assign({}, state.items)
-  newItems[action.service.uuid] = action.service
+  newItems[action.service.updated_service.uuid] = action.service.updated_service
   return Object.assign(
     {},
     state,
     {
       postingPhoto: false,
       photoPostError: null,
-      //NewService: The service just created. Is updated so the form edit and stop creating.
-      newService: action.service.uuid,
       items: newItems
     }
   )
