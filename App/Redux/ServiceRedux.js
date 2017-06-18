@@ -120,7 +120,11 @@ export const clearNewService = (state: Object) => {
 export const servicePhotoPostRequest = (state: Object, action : Object) =>
 {
   const { photoUrl, serviceUuid } = action
-  return Object.assign({}, state, { postingPhoto: true, currentPhotoUpload: photoUrl })
+  return Object.assign({}, state, {
+    postingPhoto: true,
+    currentPhotoUpload: photoUrl,
+    photoPostError: null,
+  })
 }
 
 // successful service lookup

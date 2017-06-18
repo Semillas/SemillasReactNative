@@ -8,6 +8,7 @@ import {
   PixelRatio,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import ServiceActions from '../Redux/ServiceRedux'
 
@@ -112,13 +113,23 @@ class ServicePhotoUploader extends React.Component {
 	}
 
 
+  renderUploadingStatus () {
+    if (this.props.currentPhotoUpload === null) {
+      return (<Text>Select a Photo</Text>)
+    } else if (this.props.postingPhoto === true) {
+      return <ActivityIndicator />
+    } else if (this.props.photoPostError === true){
+      return (<Text>There was a problem with the upload, Retry.</Text>)
+    } else {
+      return (<Image style={styles.avatar} source={this.props.currentPhotoUpload} />)
+    }
+  }
+
 	renderNewPhotoUploader () {
     return (
     <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
       <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-      { this.props.currentPhotoUpload === null ? <Text>Select a Photo</Text> :
-        <Image style={styles.avatar} source={this.props.currentPhotoUpload} />
-      }
+        { this.renderUploadingStatus() }
       </View>
     </TouchableOpacity>
     )
@@ -159,14 +170,18 @@ const styles = StyleSheet.create({
 ServicePhotoUploader.propTypes = {
   attemptPhotoPost: PropTypes.func,
   service: PropTypes.object,
-  currentPhotoUpload: PropTypes.object
+  currentPhotoUpload: PropTypes.object,
+  postingPhoto: PropTypes.bool,
+  photoPostError: PropTypes.bool
 }
 
 
 const mapStateToProps = (state, ownProps) => {
   return {
     service: ownProps.service,
-    currentPhotoUpload: state.services.currentPhotoUpload
+    currentPhotoUpload: state.services.currentPhotoUpload,
+    postingPhoto: state.services.postingPhoto,
+    photoPostError: state.services.photoPostError
   }
 }
 
