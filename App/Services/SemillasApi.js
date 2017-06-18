@@ -22,19 +22,19 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     timeout: 10000
   })
 
-  baseURL = 'https://requestb.in'
-  const requestBin = apisauce.create({
-    // base URL is read from the "constructor"
-    baseURL,
-    // here are some default headers
-    headers: {
-      'Cache-Control': 'no-cache',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    // 10 second timeout...
-    timeout: 10000
-  })
+  //baseURL = 'https://requestb.in'
+  //const requestBin = apisauce.create({
+  //  // base URL is read from the "constructor"
+  //  baseURL,
+  //  // here are some default headers
+  //  headers: {
+  //    'Cache-Control': 'no-cache',
+  //    'Content-Type': 'application/json',
+  //    'Accept': 'application/json'
+  //  },
+  //  // 10 second timeout...
+  //  timeout: 10000
+  //})
 
 
   // Force OpenWeather API Key on all requests
@@ -110,16 +110,21 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
 
   const photoPostService = (photoUrl, serviceUuid) => {
 
-		// create formdata
-		const data = new FormData();
+    // create formdata
+    const data = new FormData();
     data.append('photo', {
       uri: photoUrl,
       type: 'image/jpeg',
       //name: ''
     });
 
-		// post your data.
-		return requestBin.post('1azgo7d1', data)
+    api.setHeader('Content-Disposition', "Content-Disposition: attachment; filename*=UTF-8''placeholder.jpg")
+
+    // post your data.
+    return api.put(
+      '/api/v1/service/photo_upload/'.concat(serviceUuid, '/'),
+      data
+    )
 
 //      , {
 //					onUploadProgress: (e) => {

@@ -57,7 +57,7 @@ export const servicePostRequest = (state: Object, action : Object) =>
 // successful service lookup
 export const servicePostSuccess = (state: Object, action: Object) => {
   newItems = Object.assign({}, state.items)
-  newItems[action.service.uuid] = action.service
+  newItems[action.service.uuid] = action.service.service
   return Object.assign(
     {},
     state,
