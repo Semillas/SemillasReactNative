@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
 import ServiceActions from '../Redux/ServiceRedux.js'
@@ -96,14 +97,7 @@ class ServiceScreen extends React.Component {
     if (!service) {
       return (
         <View style={styles.container}>
-          <Text>Loading</Text>
-          <View style={styles.section}>
-            <Text>ServiceScreen Container</Text>
-          </View>
-          <View style={styles.section}>
-            <Text>ServiceScreen Container</Text>
-            <Text>uuid: {this.props.uuid}</Text>
-          </View>
+          <ActivityIndicator />
         </View>
       )
     } else {
