@@ -175,6 +175,16 @@ class EditServiceForm extends React.Component {
     //Solution: Update right away the service redux
   }
 
+  handlePressDelete = () => {
+    if (this.props.uuid) {
+      this.props.attemptServiceDelete(this.props.uuid)
+    }
+    else if (this.props.newService) {
+      this.props.attemptServiceDelete(this.props.newService)
+    }
+    NavigationActions.feed()
+  }
+
   handleChangeTitle = (text) => {
     this.setState({ title: text })
   }
@@ -186,6 +196,22 @@ class EditServiceForm extends React.Component {
   handleChangeSeedsPrice = (text) => {
     this.setState({ seedsPrice: text })
   }
+
+  renderDeleteButton() {
+    if ((this.props.uuid) || (this.props.newService)){
+      return(
+        <TouchableOpacity
+          style={Styles.button}
+          onPress={this.handlePressDelete}
+        >
+         <Text style={Styles.buttonText}>{I18n.t('Delete Service')}</Text>
+        </TouchableOpacity>
+      )
+    } else {
+      return (<View />)
+    }
+  }
+
 
   render () {
     const { title, description, category, seedsPrice } = this.state
@@ -247,16 +273,17 @@ class EditServiceForm extends React.Component {
                 onSubmitEditing={this.handlePressPost}
                 placeholder={''} />
             </View>
-            <View style={[Styles.loginRow]}>
-              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
-                <View style={Styles.loginButton}>
-                  <Text style={Styles.loginText}>{I18n.t('Publish')}</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+
             <View style={[Styles.loginRow]}>
               <ServicePhotos serviceUuid={this.props.uuid ? this.props.uuid : this.props.newService} />
             </View>
+            {this.renderDeleteButton()}
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
+              <View style={Styles.buttonCta}>
+                <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
+              </View>
+            </TouchableOpacity>
+
           </View>
         </ScrollView>
     )
@@ -269,7 +296,8 @@ const mapStateToProps = (state, ownProps) => {
     error: state.services.error,
     uuid: ownProps.uuid,
     service: state.services.items[ownProps.uuid],
-    newService: state.services.newService
+    newService: state.services.newService,
+    deleting: state.services.deleting,
   }
 }
 
@@ -285,6 +313,8 @@ const mapDispatchToProps = (dispatch) => {
           uuid
         )
       ),
+    attemptServiceDelete:
+      (uuid) => dispatch(ServiceActions.serviceDeletionRequest(uuid)),
     retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid)),
     clearNewService: () => dispatch(ServiceActions.clearNewService())
   }

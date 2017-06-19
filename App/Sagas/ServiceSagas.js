@@ -54,12 +54,24 @@ export function * photoPostService (api, action) {
     photoUrl.uri,
     serviceUuid,
   )
-
   // success?
   if (response.ok) {
     service = response.data
     yield put(ServiceActions.servicePhotoPostSuccess(service))
   } else {
     yield put(ServiceActions.servicePhotoPostFailure())
+  }
+}
+
+export function * deleteService (api, action) {
+  const { uuid } = action
+  // make the call to the api
+  const response = yield call(api.deleteService, uuid)
+
+  // success?
+  if (response.ok) {
+    yield put(ServiceActions.serviceDeletionSuccess())
+  } else {
+    yield put(ServiceActions.serviceDeletionFailure())
   }
 }

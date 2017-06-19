@@ -17,6 +17,10 @@ const { Types, Creators } = createActions({
   servicePhotoPostSuccess: ['service'],
   servicePhotoPostFailure: null,
   servicePhotoClear: null,
+  serviceDeletionRequest: ['uuid'],
+  serviceDeletionSuccess: null,
+  serviceDeletionFailure: null,
+
 
 })
 
@@ -27,6 +31,8 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   fetching: null,
+  deletionError: null,
+  deleting: null,
   error: null,
   uuid: null,
   items: {},
@@ -101,21 +107,6 @@ export const clearNewService = (state: Object) => {
   return Object.assign({}, state, { newService: false })
 }
 
-
-//
-// Reducer:
-// {'photos':
-//    { serviceUuid:
-//      [
-//        { 'uploading': boolean,
-//         'uploaded': boolean,
-//         'url' string
-//         }
-//      ]
-//    }
-//  }
-//
-//
 // Update the state to show the photo and start the Post
 export const servicePhotoPostRequest = (state: Object, action : Object) =>
 {
@@ -152,7 +143,24 @@ export const clearUploadingPhoto = (state: Object, action : Object) =>
   return Object.assign({}, state, { currentPhotoUpload: null})
 }
 
+// request the service with a given url.
+export const serviceDeletionRequest = (state: Object, action : Object) =>
+{
+  return Object.assign({}, state, { deleting: true , deletionError: false})
+}
 
+// successful service lookup
+export const serviceDeletionSuccess = (state: Object, action: Object) => {
+  // TODO: Should delete the current service from the state.
+  return Object.assign({}, state, {
+      deleting: false,
+    }
+  )
+}
+
+// failed to get the service
+export const serviceDeletionFailure = (state: Object) =>
+  Object.assign({}, state, { deleting: false, deletionError: true })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -167,5 +175,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_PHOTO_POST_REQUEST]: servicePhotoPostRequest,
   [Types.SERVICE_PHOTO_POST_SUCCESS]: servicePhotoPostSuccess,
   [Types.SERVICE_PHOTO_CLEAR]: clearUploadingPhoto,
+  [Types.SERVICE_DELETION_REQUEST]: serviceDeletionRequest,
+  [Types.SERVICE_DELETION_SUCCESS]: serviceDeletionSuccess,
+  [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure,
 
 })

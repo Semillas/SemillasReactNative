@@ -16,9 +16,7 @@ export default StyleSheet.create({
     fontSize: 38,
     backgroundColor: 'transparent'
   },
-  button: {
-    marginRight: 10
-  },
+
   picture: {
     width: 320,
     height: 280,
@@ -27,7 +25,6 @@ export default StyleSheet.create({
     marginTop: Metrics.smallMargin
 
   },
-
 
   ...ApplicationStyles.screen
 })

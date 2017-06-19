@@ -31,7 +31,7 @@ export const request = (state: Object, { nextPageUrl, userUuid }: Object) => {
   if (nextPageUrl === 'LastPage') {
     return Object.assign({}, state, { fetching: false })
   }
-  return Object.assign({}, state, { fetching: true, nextPageUrl })
+  return Object.assign({}, state, { fetching: true, items:{}, nextPageUrl })
 }//
 
 // successful user lookup
