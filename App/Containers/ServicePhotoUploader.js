@@ -107,11 +107,15 @@ class ServicePhotoUploader extends React.Component {
 //		}
 //	}
 
-	renderCurrentPhotos (service) {
-
-
+	renderCurrentPhotos () {
+    return(
+      <View >
+        { this.props.service.photos.map(function(object, i){
+          return <Image key={i} style={styles.avatar} source={{uri: object.photo}} />
+        })}
+      </View>
+      )
 	}
-
 
   renderUploadingStatus () {
     if (this.props.currentPhotoUpload === null) {
@@ -127,21 +131,27 @@ class ServicePhotoUploader extends React.Component {
 
 	renderNewPhotoUploader () {
     return (
-    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-      <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-        { this.renderUploadingStatus() }
-      </View>
-    </TouchableOpacity>
+      <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+          { this.renderUploadingStatus() }
+        </View>
+      </TouchableOpacity>
     )
 	}
 
-  render(service) {
-    return (
-      <View style={styles.container}>
-      {this.renderNewPhotoUploader()}
+  render() {
+    if (this.props.service) {
+      return (
+        <View style={styles.container}>
 
-      </View>
-    );
+        {this.renderCurrentPhotos()}
+        {this.renderNewPhotoUploader()}
+
+        </View>
+      );
+    } else {
+      return (<View />)
+    }
   }
 }
 
@@ -178,7 +188,7 @@ ServicePhotoUploader.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    service: ownProps.service,
+    service: state.services.items[ownProps.serviceUuid],
     currentPhotoUpload: state.services.currentPhotoUpload,
     postingPhoto: state.services.postingPhoto,
     photoPostError: state.services.photoPostError

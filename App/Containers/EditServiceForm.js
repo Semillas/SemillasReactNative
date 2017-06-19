@@ -255,7 +255,7 @@ class EditServiceForm extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={[Styles.loginRow]}>
-              <ServicePhotos service={this.props.service} />
+              <ServicePhotos serviceUuid={this.props.uuid} />
             </View>
           </View>
         </ScrollView>
