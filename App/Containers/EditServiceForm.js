@@ -229,7 +229,7 @@ class EditServiceForm extends React.Component {
                 numberOfLines={8}
                 underlineColorAndroid='transparent'
                 onSubmitEditing={() => this.refs.seedsPrice.focus()}
-                placeholder={I18n.t('description')} />
+                placeholder={I18n.t('Description')} />
             </View>
 
             <View style={Styles.row}>

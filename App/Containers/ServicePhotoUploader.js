@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import ServiceActions from '../Redux/ServiceRedux'
+import I18n from 'react-native-i18n'
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -47,20 +48,6 @@ class ServicePhotoUploader extends React.Component {
         let source = { uri: response.uri };
         // Display the image and start upload
         this.props.attemptPhotoPost(source, this.props.service.uuid)
-
-        //this.setState({
-        //  avatarSource: source
-        //});
-        //
-        //call request reducer
-        // 1 put the image throught a reducer
-
-
-
-        // 2 upload the image
-        // 3 put the spinner and report status
-        // 4 Add delete button
-
       }
     });
   }
@@ -70,42 +57,6 @@ class ServicePhotoUploader extends React.Component {
     this.props.servicePhotoClear()
   }
 
-//	upload (photo) {
-//		// create api.
-//		const api = create({
-//			baseURL: 'http://localhost:3000',
-//		})
-//
-//		// create formdata
-//		const data = new FormData();
-//
-//				data.append('name', 'testName');
-//				photos.forEach((photo, index) => {
-//					data.append('photos', {
-//						uri: photo.uri,
-//						type: 'image/jpeg',
-//						name: 'image'+index
-//					});
-//				});
-//
-//		// post your data.
-//		api.post('/array', data, {
-//					onUploadProgress: (e) => {
-//						console.log(e)
-//						const progress = e.loaded / e.total;
-//						console.log(progress);
-//						this.setState({
-//							progress: progress
-//						});
-//					}
-//				})
-//					.then((res) => console.log(res))
-//
-//		// if you want to add DonwloadProgress, use onDownloadProgress
-//		onDownloadProgress: (e) => {
-//			const progress = e.loaded / e.total;
-//		}
-//	}
 
 	renderCurrentPhotos () {
     return(
@@ -118,14 +69,12 @@ class ServicePhotoUploader extends React.Component {
 	}
 
   renderUploadingStatus () {
-    if (this.props.currentPhotoUpload === null) {
-      return (<Text>Select a Photo</Text>)
-    } else if (this.props.postingPhoto === true) {
+    if (this.props.postingPhoto === true) {
       return <ActivityIndicator />
     } else if (this.props.photoPostError === true){
-      return (<Text>There was a problem with the upload, Retry.</Text>)
+      return (<Text>{I18n.t('There was a problem with the upload, Retry.')}</Text>)
     } else {
-      return (<Image style={styles.avatar} source={this.props.currentPhotoUpload} />)
+      return (<Text>{I18n.t('Select a Photo')}</Text>)
     }
   }
 
@@ -189,7 +138,6 @@ ServicePhotoUploader.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     service: state.services.items[ownProps.serviceUuid],
-    currentPhotoUpload: state.services.currentPhotoUpload,
     postingPhoto: state.services.postingPhoto,
     photoPostError: state.services.photoPostError
   }
@@ -208,6 +156,5 @@ const mapDispatchToProps = (dispatch) => {
     servicePhotoClear: () => dispatch(ServiceActions.servicePhotoClear())
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServicePhotoUploader)

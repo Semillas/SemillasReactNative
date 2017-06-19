@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import UserActions from '../Redux/UsersRedux.js'
 import MapView from 'react-native-maps'
 import UserServices from './UserServices'
+import I18n from 'react-native-i18n'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -75,7 +76,7 @@ class UserScreen extends React.Component {
           <View style={styles.section}>
             <Text>{user.name}</Text>
           </View>
-          <Text>I18n.t('Services being offered')</Text>
+          <Text>{I18n.t('Services being offered')}</Text>
           <UserServices userUuid={this.props.uuid} />
         </ScrollView>
       )
