@@ -34,5 +34,9 @@
    "There was a problem with the upload, Retry.": "There was a problem with the upload, Retry.",
    "Select a Photo": "Select a Photo",
    "Delete Service": "Delete Service",
-
+   "Add Service": "Add Service",
+   "Services": "Services",
+   "Sign Up": "Sign Up",
+   "Logout": "Logout",
+   "Login": "Login",
 }
