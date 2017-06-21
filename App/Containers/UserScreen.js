@@ -10,6 +10,7 @@ import UserActions from '../Redux/UsersRedux.js'
 import MapView from 'react-native-maps'
 import UserServices from './UserServices'
 import I18n from 'react-native-i18n'
+import LoginSignUpButtons from '../Components/LoginSignUpButtons'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -48,7 +49,9 @@ class UserScreen extends React.Component {
       return (
         <View style={styles.mainContainer}>
           <Text>{I18n.t('You need to be logged in')}</Text>
-
+          <View style={styles.section}>
+            <LoginSignUpButtons />
+          </View>
         </View>
       )
     }
