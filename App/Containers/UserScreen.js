@@ -47,11 +47,8 @@ class UserScreen extends React.Component {
     if (!this.props.loggedIn) {
       return (
         <View style={styles.mainContainer}>
-          <Text> You Need to Log In to log in first</Text>
-          <View style={styles.section}>
-            <Text>UserScreen Container</Text>
-            <Text>uuid: {this.props.uuid}</Text>
-          </View>
+          <Text>{I18n.t('You need to be logged in')}</Text>
+
         </View>
       )
     }

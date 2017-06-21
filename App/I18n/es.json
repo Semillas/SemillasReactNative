@@ -13,5 +13,6 @@
    "Services": "Servicios",
    "Sign Up": "Registro",
    "Logout": "Logout",
-   "Login": "Login"
+   "Login": "Iniciar Sesión",
+   "You need to be logged in": "Necesitas haber iniciado sesión para ver esto",
 }
