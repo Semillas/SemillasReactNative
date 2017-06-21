@@ -34,6 +34,11 @@ class DrawerContent extends Component {
     NavigationActions.login()
   }
 
+  handlePressSignup= () => {
+    this.toggleDrawer()
+    NavigationActions.signup()
+  }
+
   handlePressCurrency= () => {
     this.toggleDrawer()
     NavigationActions.currency()
@@ -75,7 +80,7 @@ class DrawerContent extends Component {
           <Image source={Images.logo} style={styles.logo} />
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
           <DrawerButton text={I18n.t('Login')} icon='sign-in' onPress={this.handlePressLogin} />
-          <DrawerButton text={I18n.t('Sign Up')} icon='hand-o-right' onPress={this.handlePressLogin} />
+          <DrawerButton text={I18n.t('Sign Up')} icon='hand-o-right' onPress={this.handlePressSignup} />
           {/*
             <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
             <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
