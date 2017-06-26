@@ -11,7 +11,7 @@
    "igniteGenerated": "Ignite Generate Screens",
    "forgotPassword": "Forgot Password",
    "username": "Username",
-   "password": "Password",
+   "Password": "Password",
    "cancel": "Cancel",
    "welcome": "Welcome",
    "login": "Login",
@@ -40,4 +40,5 @@
    "Logout": "Logout",
    "Login": "Login",
    "You need to be logged in": "You need to be logged in",
+   "Repeat Password": "Repeat Password",
 }

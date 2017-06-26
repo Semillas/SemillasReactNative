@@ -18,19 +18,20 @@ import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 
-type LoginScreenProps = {
+type SignupScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  attemptLogin: () => void
+  attemptSignup: () => void
 }
 
-class LoginScreen extends React.Component {
+class SignupScreen extends React.Component {
 
-  props: LoginScreenProps
+  props: SignupScreenProps
 
   state: {
     email: string,
-    password: string,
+    password1: string,
+    password2: string,
     visibleHeight: number,
     topLogo: {
       width: number
@@ -41,11 +42,12 @@ class LoginScreen extends React.Component {
   keyboardDidShowListener: Object
   keyboardDidHideListener: Object
 
-  constructor (props: LoginScreenProps) {
+  constructor (props: SignupScreenProps) {
     super(props)
     this.state = {
-      email: 'reactnative@infinite.red',
-      password: 'password',
+      email: '',
+      password1: '',
+      password2: '',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth }
     }
@@ -54,7 +56,6 @@ class LoginScreen extends React.Component {
 
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
-    // Did the login attempt complete?
     if (this.isAttempting && !newProps.fetching) {
       NavigationActions.pop()
     }
@@ -91,23 +92,26 @@ class LoginScreen extends React.Component {
     })
   }
 
-  handlePressLogin = () => {
-    const { email, password } = this.state
+  handlePressSignup= () => {
+    const { email, password1, password2 } = this.state
     this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
-    this.props.attemptLogin(email, password)
+    this.props.attemptSignup(email, password1, password2)
   }
 
   handleChangeEmail= (text) => {
     this.setState({ email: text })
   }
 
-  handleChangePassword = (text) => {
-    this.setState({ password: text })
+  handleChangePassword1 = (text) => {
+    this.setState({ password1: text })
+  }
+
+  handleChangePassword2 = (text) => {
+    this.setState({ password2: text })
   }
 
   render () {
-    const { email, password } = this.state
+    const { email, password1, password2 } = this.state
     const { fetching } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
@@ -128,30 +132,49 @@ class LoginScreen extends React.Component {
               autoCorrect={false}
               onChangeText={this.handleChangeEmail}
               underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.password.focus()}
+              onSubmitEditing={() => this.refs.password1.focus()}
               placeholder={I18n.t('email')} />
           </View>
 
           <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('password')}</Text>
+            <Text style={Styles.rowLabel}>{I18n.t('Password')}</Text>
             <TextInput
-              ref='password'
+              ref='password1'
               style={textInputStyle}
-              value={password}
+              value={password1}
               editable={editable}
               keyboardType='default'
               returnKeyType='go'
               autoCapitalize='none'
               autoCorrect={false}
               secureTextEntry
-              onChangeText={this.handleChangePassword}
+              onChangeText={this.handleChangePassword1}
               underlineColorAndroid='transparent'
-              onSubmitEditing={this.handlePressLogin}
-              placeholder={I18n.t('password')} />
+              onSubmitEditing={() => this.refs.password2.focus()}
+              placeholder={I18n.t('Password')} />
           </View>
 
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>{I18n.t('Repeat Password')}</Text>
+            <TextInput
+              ref='password2'
+              style={textInputStyle}
+              value={password2}
+              editable={editable}
+              keyboardType='default'
+              returnKeyType='go'
+              autoCapitalize='none'
+              autoCorrect={false}
+              secureTextEntry
+              onChangeText={this.handleChangePassword2}
+              underlineColorAndroid='transparent'
+              onSubmitEditing={this.handlePressLogin}
+              placeholder={I18n.t('Password')} />
+          </View>
+
+
           <View style={[Styles.loginRow]}>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLogin}>
+            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressSignup}>
               <View style={Styles.loginButton}>
                 <Text style={Styles.loginText}>{I18n.t('signIn')}</Text>
               </View>
@@ -167,7 +190,6 @@ class LoginScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {
@@ -178,8 +200,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (email, password) => dispatch(LoginActions.loginRequest(email, password))
+    attemptSignup: (email, password1, password2) => dispatch(LoginActions.signupRequest(email, password1, password2))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(SignupScreen)

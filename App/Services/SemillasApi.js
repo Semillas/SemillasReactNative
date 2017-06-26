@@ -64,6 +64,9 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   // way at this level.
   const login = (email, password) => api.post('/rest-auth/login/', {'email': email, 'password': password})
 
+  const signup = (email, password1, password2) => api.post('/rest-auth/registration/', {'email': email, 'password1': password1, 'password2': password2})
+
+
   // const logout = (email, password) => api.post('/rest-auth/logout/', {})
 
   const getFeed = function (nextPageUrl, category, searchText) {
@@ -162,6 +165,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   return {
     // a list of the API functions from step 2
     login,
+    signup,
     getUserDetail,
     setHeader,
     getServiceDetail,

@@ -9,6 +9,9 @@ const { Types, Creators } = createActions({
   loginRequest: ['email', 'password'],
   loginSuccess: ['key', 'user'],
   loginFailure: ['error'],
+  signupRequest: ['email', 'password1', 'password2'],
+  signupSuccess: ['key', 'user'],
+  signupFailure: ['error'],
   logout: null
 })
 
@@ -20,31 +23,47 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   email: null,
   error: null,
-  fetching: false
+  fetching: false,
+  signupError: null,
+  signupFetching: false
 })
 
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-export const request = (state: Object) => state.merge({ fetching: true })
+export const loginRequest = (state: Object) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const success = (state: Object, { key, user }: Object) =>
+export const loginSuccess = (state: Object, { key, user }: Object) =>
   state.merge({ fetching: false, error: null, key, user })
 
 // we've had a problem logging in
-export const failure = (state: Object, { error }: Object) =>
+export const loginFailure = (state: Object, { error }: Object) =>
   state.merge({ fetching: false, error })
 
 // we've logged out
 export const logout = (state: Object) => INITIAL_STATE
 
+// we're attempting to signup
+export const signupRequest = (state: Object) => state.merge({ fetching: true })
+
+export const signupSuccess = (state: Object, { key, user }: Object) =>
+  state.merge({ fetching: false, error: null, key, user })
+
+export const signupFailure = (state: Object, { error }: Object) =>
+  state.merge({ fetching: false, error })
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.LOGIN_REQUEST]: request,
-  [Types.LOGIN_SUCCESS]: success,
-  [Types.LOGIN_FAILURE]: failure,
+  [Types.LOGIN_REQUEST]: loginRequest,
+  [Types.LOGIN_SUCCESS]: loginSuccess,
+  [Types.LOGIN_FAILURE]: loginFailure,
+  [Types.SIGNUP_REQUEST]: signupRequest,
+  [Types.SIGNUP_SUCCESS]: signupSuccess,
+  [Types.SIGNUP_FAILURE]: signupFailure,
+
   [Types.LOGOUT]: logout
 })
 

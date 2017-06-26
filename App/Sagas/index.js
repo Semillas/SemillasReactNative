@@ -17,7 +17,7 @@ import { UserServicesTypes } from '../Redux/UserServicesRedux'
 /* ------------- Sagas ------------- */
 
 // import { startup } from './StartupSagas'
-import { login } from './LoginSagas'
+import { login, signup } from './LoginSagas'
 import { getUser } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
@@ -41,6 +41,7 @@ export default function * root () {
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
+    takeLatest(LoginTypes.SIGNUP_REQUEST, signup, semillasApi),
     takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
     takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi),
     takeLatest(ServiceTypes.SERVICE_REQUEST, getService, semillasApi),
