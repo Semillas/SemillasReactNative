@@ -12,7 +12,7 @@ import {
   LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/LoginScreenStyle'
+import Styles from './Styles/SignupScreenStyle'
 import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -21,6 +21,7 @@ import I18n from 'react-native-i18n'
 type SignupScreenProps = {
   dispatch: () => any,
   fetching: boolean,
+  error: object,
   attemptSignup: () => void
 }
 
@@ -55,8 +56,8 @@ class SignupScreen extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    this.forceUpdate()
-    if (this.isAttempting && !newProps.fetching) {
+    this.forceUpdate() // TODO check if really needed
+    if (this.isAttempting && !newProps.fetching && !newProps.error) {
       NavigationActions.pop()
     }
   }
@@ -116,7 +117,7 @@ class SignupScreen extends React.Component {
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
         <View style={Styles.form}>
           <View style={Styles.row}>
@@ -134,6 +135,9 @@ class SignupScreen extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.password1.focus()}
               placeholder={I18n.t('email')} />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+            </Text>
           </View>
 
           <View style={Styles.row}>
@@ -152,6 +156,9 @@ class SignupScreen extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.password2.focus()}
               placeholder={I18n.t('Password')} />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.password1) ? this.props.error['password1'][0] : ''}
+            </Text>
           </View>
 
           <View style={Styles.row}>
@@ -170,13 +177,15 @@ class SignupScreen extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressLogin}
               placeholder={I18n.t('Password')} />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.password2) ? this.props.error['password2'][0] : ''}
+            </Text>
           </View>
-
 
           <View style={[Styles.loginRow]}>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressSignup}>
               <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>{I18n.t('signIn')}</Text>
+                <Text style={Styles.loginText}>{I18n.t('Sign Up')}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
@@ -194,7 +203,8 @@ class SignupScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fetching: state.login.fetching
+    fetching: state.login.fetching,
+    error: state.login.signupError
   }
 }
 

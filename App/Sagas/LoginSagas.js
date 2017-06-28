@@ -33,6 +33,6 @@ export function * signup (api, { email, password1, password2 }) {
     api.setHeader('Authorization', 'token ' + response.data.key)
     yield put(LoginActions.signupSuccess(response.data.key, response.data.user))
   } else {
-    yield put(LoginActions.signupFailure('Credentials not correct'))
+    yield put(LoginActions.signupFailure(response.data))
   }
 }
