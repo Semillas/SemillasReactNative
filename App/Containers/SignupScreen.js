@@ -181,6 +181,9 @@ class SignupScreen extends React.Component {
               { (this.props.error && this.props.error.password2) ? this.props.error['password2'][0] : ''}
             </Text>
           </View>
+          <Text style={Styles.errorLabel}>
+            { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
+          </Text>
 
           <View style={[Styles.loginRow]}>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressSignup}>

@@ -8,7 +8,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   servicePostRequest: ['title', 'description', 'category', 'seedsPrice', 'uuid'],
   servicePostSuccess: ['service'],
-  servicePostFailure: null,
+  servicePostFailure: ['error'],
   serviceRequest: ['uuid'],
   serviceSuccess: ['service'],
   serviceFailure: null,
@@ -78,8 +78,8 @@ export const servicePostSuccess = (state: Object, action: Object) => {
 }
 
 // failed to get the service
-export const servicePostFailure = (state: Object) =>
-  Object.assign({}, state, { fetching: false, error: true })
+export const servicePostFailure = (state: Object, { error }: Object) =>
+  Object.assign({}, state, { fetching: false, error: error })
 
 // request the service with a given url.
 export const serviceRequest = (state: Object, { uuid }: Object) =>
@@ -97,8 +97,8 @@ export const serviceSuccess = (state: Object, action: Object) => {
 }
 
 // failed to get the service
-export const serviceFailure = (state: Object) =>
-  Object.assign({}, state, { fetchingService: false, error: true })
+export const serviceFailure = (state: Object, { error }: Object) =>
+  Object.assign({}, state, { fetchingService: false, error: error})
 
 
 // Clear new Service stored.

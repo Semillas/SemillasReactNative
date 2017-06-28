@@ -20,6 +20,9 @@ export default StyleSheet.create({
   rowLabel: {
     color: Colors.charcoal
   },
+  errorLabel: {
+    color: Colors.error
+  },
   textInput: {
     height: 40,
     color: Colors.coal

@@ -55,7 +55,7 @@ class LoginScreen extends React.Component {
   componentWillReceiveProps (newProps) {
     this.forceUpdate()
     // Did the login attempt complete?
-    if (this.isAttempting && !newProps.fetching) {
+    if (this.isAttempting && !newProps.fetching && !newProps.error) {
       NavigationActions.pop()
     }
   }
@@ -130,7 +130,10 @@ class LoginScreen extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.password.focus()}
               placeholder={I18n.t('email')} />
-          </View>
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+            </Text>
+           </View>
 
           <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('password')}</Text>
@@ -148,8 +151,13 @@ class LoginScreen extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressLogin}
               placeholder={I18n.t('password')} />
-          </View>
-
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.password) ? this.props.error['password'][0] : ''}
+            </Text>
+           </View>
+          <Text style={Styles.errorLabel}>
+            { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
+          </Text>
           <View style={[Styles.loginRow]}>
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLogin}>
               <View style={Styles.loginButton}>
@@ -172,7 +180,8 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fetching: state.login.fetching
+    fetching: state.login.fetching,
+    error: state.login.error
   }
 }
 

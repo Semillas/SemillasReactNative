@@ -40,7 +40,7 @@ export function * postService (api, action) {
     service = response.data
     yield put(ServiceActions.servicePostSuccess(service))
   } else {
-    yield put(ServiceActions.servicePostFailure())
+    yield put(ServiceActions.servicePostFailure(response.data))
   }
 }
 

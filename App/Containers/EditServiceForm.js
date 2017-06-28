@@ -31,10 +31,6 @@ type ServicePostProps = {
   service: Object
 }
 
-var MessageBarAlert = require('react-native-message-bar').MessageBar;
-var MessageBarManager = require('react-native-message-bar').MessageBarManager;
-
-
 class EditServiceForm extends React.Component {
   props: ServicePostProps
 
@@ -82,27 +78,6 @@ class EditServiceForm extends React.Component {
       // Update form with service values
       this.assignServiceToState(newProps.service)
     }
-    // Handle notification bar
-    if ((this.props != newProps.fetching) && (newProps.fetching == false)){
-      // Post Request has finished
-      if (newProps.error) {
-				MessageBarManager.showAlert({
-					title: 'Hubo un Error',
-					message: 'El campo Precio en Semillas debe ser un número',
-					alertType: 'error',
-					// See Properties section for full customization
-					// Or check `index.ios.js` or `index.android.js` for a complete example
-				});
-      } else {
-				MessageBarManager.showAlert({
-					title: 'Publicado',
-					message: 'El servicio se ha publicado correctamente',
-					alertType: 'success',
-					// See Properties section for full customization
-					// Or check `index.ios.js` or `index.android.js` for a complete example
-				});
-      }
-    }
   }
 
   componentWillMount () {
@@ -121,22 +96,11 @@ class EditServiceForm extends React.Component {
     }
   }
 
-	componentDidMount() {
-		// Register the alert located on this master page
-		// This MessageBar will be accessible from the current (same) component, and from its child component
-		// The MessageBar is then declared only once, in your main component.
-		MessageBarManager.registerMessageBar(this.refs.alert);
-	}
-
   componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
 
     this.props.clearNewService()
-
-		// Remove the alert located on this master page from the manager
-		MessageBarManager.unregisterMessageBar();
-
   }
 
   keyboardDidShow = (e) => {
@@ -220,7 +184,6 @@ class EditServiceForm extends React.Component {
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
         <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
-         <MessageBarAlert ref="alert" />
          <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
           <View style={Styles.form}>
             <View style={Styles.row}>
@@ -238,7 +201,10 @@ class EditServiceForm extends React.Component {
                 underlineColorAndroid='transparent'
                 onSubmitEditing={() => this.refs.description.focus()}
                 placeholder={I18n.t('Title')} />
-            </View>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.title) ? this.props.error['title'][0] : ''}
+              </Text>
+             </View>
 
             <View style={Styles.row}>
               <Text style={Styles.rowLabel}>{I18n.t('Description')}</Text>
@@ -256,7 +222,10 @@ class EditServiceForm extends React.Component {
                 underlineColorAndroid='transparent'
                 onSubmitEditing={() => this.refs.seedsPrice.focus()}
                 placeholder={I18n.t('Description')} />
-            </View>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.description) ? this.props.error['description'][0] : ''}
+              </Text>
+             </View>
 
             <View style={Styles.row}>
               <Text style={Styles.rowLabel}>{I18n.t('Seeds Price')}</Text>
@@ -272,7 +241,13 @@ class EditServiceForm extends React.Component {
                 underlineColorAndroid='transparent'
                 onSubmitEditing={this.handlePressPost}
                 placeholder={''} />
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.seeds_price) ? this.props.error['seeds_price'][0] : ''}
+              </Text>
             </View>
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
+            </Text>
 
             <View style={[Styles.loginRow]}>
               <ServicePhotos serviceUuid={this.props.uuid ? this.props.uuid : this.props.newService} />
@@ -283,7 +258,6 @@ class EditServiceForm extends React.Component {
                 <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
               </View>
             </TouchableOpacity>
-
           </View>
         </ScrollView>
     )

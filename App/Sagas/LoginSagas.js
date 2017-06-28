@@ -15,7 +15,7 @@ export function * login (api, { email, password }) {
     api.setHeader('Authorization', 'token ' + response.data.key)
     yield put(LoginActions.loginSuccess(response.data.key, response.data.user))
   } else {
-    yield put(LoginActions.loginFailure('Credentials not correct'))
+    yield put(LoginActions.loginFailure(response.data))
   }
 }
 
