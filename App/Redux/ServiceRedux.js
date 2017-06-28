@@ -31,6 +31,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   fetching: null,
+  posting: null,
   deletionError: null,
   deleting: null,
   error: null,
@@ -57,7 +58,7 @@ export const servicePostRequest = (state: Object, action : Object) =>
     updatedItems[action.uuid].description = action.description
     updatedItems[action.uuid].seeds_price = action.seedsPrice
   }
-  return Object.assign({}, state, { fetching: true, items:updatedItems })
+  return Object.assign({}, state, { posting: true, items:updatedItems })
 }
 
 // successful service lookup
@@ -68,7 +69,7 @@ export const servicePostSuccess = (state: Object, action: Object) => {
     {},
     state,
     {
-      fetching: false,
+      posting: false,
       error: null,
       //NewService: The service just created. Is updated so the form edit and stop creating.
       newService: action.service.uuid,
@@ -79,7 +80,7 @@ export const servicePostSuccess = (state: Object, action: Object) => {
 
 // failed to get the service
 export const servicePostFailure = (state: Object, { error }: Object) =>
-  Object.assign({}, state, { fetching: false, error: error })
+  Object.assign({}, state, { posting: false, error: error })
 
 // request the service with a given url.
 export const serviceRequest = (state: Object, { uuid }: Object) =>
@@ -104,7 +105,7 @@ export const serviceFailure = (state: Object, { error }: Object) =>
 // Clear new Service stored.
 // This is called every time the component is umount.
 export const clearNewService = (state: Object) => {
-  return Object.assign({}, state, { newService: false })
+  return Object.assign({}, state, { newService: false, posting: null })
 }
 
 // Update the state to show the photo and start the Post

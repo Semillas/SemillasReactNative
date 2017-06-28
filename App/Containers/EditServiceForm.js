@@ -176,6 +176,21 @@ class EditServiceForm extends React.Component {
     }
   }
 
+  renderPublishButtonText() {
+    if (this.props.posting) {
+      return (
+        <Text style={Styles.buttonText}>{I18n.t('Publishing')}</Text>
+      )
+    } else if (!(this.props.error) && (this.props.newService)) {
+      return (
+        <Text style={Styles.buttonText}>{I18n.t('Published')}</Text>
+      )
+    } else {
+       return (
+        <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
+      )
+    }
+  }
 
   render () {
     const { title, description, category, seedsPrice } = this.state
@@ -255,7 +270,7 @@ class EditServiceForm extends React.Component {
             {this.renderDeleteButton()}
             <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
               <View style={Styles.buttonCta}>
-                <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
+                {this.renderPublishButtonText()}
               </View>
             </TouchableOpacity>
           </View>
@@ -267,6 +282,7 @@ class EditServiceForm extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     fetching: state.services.fetching,
+    posting: state.services.posting,
     error: state.services.error,
     uuid: ownProps.uuid,
     service: state.services.items[ownProps.uuid],
