@@ -22,5 +22,9 @@ export default {
     marginTop: Metrics.smallMargin,
     width: 300,
     height: 200
+  },
+  distance: {
+    alignItems: 'right',
+    color: Colors.charcoal
   }
 }

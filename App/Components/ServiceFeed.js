@@ -40,6 +40,12 @@ export default class ServiceFeed extends React.Component {
     }
   }
 
+  renderDistance(data) {
+    if (data.distance) {
+      return (<Text style={styles.distance}>{data.distance} m</Text>)
+    }
+  }
+
   render () {
     const { data } = this.props
     const card = {card: {width: 320}}
