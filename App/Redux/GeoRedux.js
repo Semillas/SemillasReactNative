@@ -7,7 +7,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   geoRequest: null,
-  geoSuccess: ['lat', 'lon'],
+  geoSuccess: ['position'],
   geoFailure: null
 })
 
@@ -17,8 +17,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  lat: null,
-  lon: null,
+  position: null,
   fetching: null,
   error: null,
 })
@@ -31,12 +30,11 @@ export const request = (state: Object) =>
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { coords } = action
+  const { position } = action
   return state.merge({
     fetching: false,
     error: null,
-    lat: coords.latitude,
-    lon: coords.longitude
+    position: position.coords
   })
 }
 

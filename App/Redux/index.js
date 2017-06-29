@@ -21,6 +21,7 @@ export default () => {
     feed: require('./FeedRedux').reducer,
     userServices: require('./UserServicesRedux').reducer,
     services: require('./ServiceRedux').reducer,
+    location: require('./GeoRedux').reducer,
     form: formReducer,
     entities
   })

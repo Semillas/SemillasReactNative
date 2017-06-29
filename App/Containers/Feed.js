@@ -59,19 +59,13 @@ class Feed extends React.Component {
 
 	_geo_success(position){
     // Initial fetch for data, assuming that feed is not yet populated.
-		debugger;
-    this.props.dispatch(GeoActions.request(null))
+		return this.props.retrieveLocation
 	}
-
 
 	getPosition() {
 		var maximumAge = 60 * 60 * 3 // 3 hours
 		navigator.geolocation.getCurrentPosition(
-//			(position) => {
-//				var initialPosition = JSON.stringify(position);
-//				this.setState({initialPosition});
-//			},
-			this._geo_success,
+			this._geo_success(),
 			(error) => alert(error.message),
 			{enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
 		);
@@ -138,4 +132,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Feed)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    retrieveLocation: (position) => dispatch(GeoActions.geoSuccess(position)),
+		dispatch: dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)
