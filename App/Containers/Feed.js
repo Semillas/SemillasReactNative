@@ -6,6 +6,7 @@ import {
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { connect } from 'react-redux'
 import FeedActions from '../Redux/FeedRedux.js'
+import GeoActions from '../Redux/GeoRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
 
 // import styles from './Styles/FeedStyle'
@@ -56,9 +57,30 @@ class Feed extends React.Component {
     this.props.dispatch(FeedActions.feedRequest(undefined))
   }
 
+	_geo_success(position){
+    // Initial fetch for data, assuming that feed is not yet populated.
+		debugger;
+    this.props.dispatch(GeoActions.request(null))
+	}
+
+
+	getPosition() {
+		var maximumAge = 60 * 60 * 3 // 3 hours
+		navigator.geolocation.getCurrentPosition(
+//			(position) => {
+//				var initialPosition = JSON.stringify(position);
+//				this.setState({initialPosition});
+//			},
+			this._geo_success,
+			(error) => alert(error.message),
+			{enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
+		);
+  }
+
   async componentWillMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
     this.props.dispatch(FeedActions.feedRequest(null))
+		this.getPosition()
   }
 
   async loadMoreContentAsync () {
