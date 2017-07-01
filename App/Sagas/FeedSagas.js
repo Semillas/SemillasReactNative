@@ -4,11 +4,19 @@ import FeedActions from '../Redux/FeedRedux'
 import parse from 'parse-link-header'
 
 export function * getFeed (api, action) {
-  const { nextPageUrl } = action
+  const { nextPageUrl, category, searchText, position } = action
+  debugger;
   // make the call to the api
   // TODO: Add filters
   console.log(nextPageUrl)
-  const response = yield call(api.getFeed, nextPageUrl)
+  const response = yield call(
+    api.getFeed,
+    nextPageUrl,
+    category,
+    searchText,
+    position.latitude,
+    position.longitude
+  )
 
   // success?
   if (response.ok) {

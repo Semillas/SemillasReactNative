@@ -43,6 +43,8 @@ export default class ServiceFeed extends React.Component {
   renderDistance(data) {
     if (data.distance) {
       return (<Text style={styles.distance}>{data.distance} m</Text>)
+    } else {
+      return (<Text />)
     }
   }
 
@@ -63,6 +65,7 @@ export default class ServiceFeed extends React.Component {
             <CardTitle>
               <Text style={styles.title}>{data.title}</Text>
             </CardTitle>
+              {this.renderDistance(data)}
             <CardContent>
               <Text>{data.description}</Text>
             </CardContent>

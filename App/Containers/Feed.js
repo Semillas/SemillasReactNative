@@ -105,7 +105,9 @@ class Feed extends React.Component {
     // Trigger a re-render when receiving new props (when redux has more data).
     this.dataSource = this.getUpdatedDataSource(nextProps)
     this.props.nextUrl = nextProps.nextPageUrl
-    if ((nextProps.location) && (nextProps.location.requestFinished === true) &&(this.props.location.requestFinished === false) ) {
+    if ((nextProps.location) &&
+        (nextProps.location.requestFinished === true) &&
+        (this.props.location.requestFinished === false) ) {
       // The location retrieval is not happening now.
       this.props.dispatch(FeedActions.feedRequest(
         null, // nextPageUrl
