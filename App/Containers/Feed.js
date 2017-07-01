@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import {
   ListView,
+  ActivityIndicator,
   RefreshControl
 } from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
@@ -57,23 +58,27 @@ class Feed extends React.Component {
     this.props.dispatch(FeedActions.feedRequest(undefined))
   }
 
-	_geo_success(position){
+	_geo_success(){
     // Initial fetch for data, assuming that feed is not yet populated.
-		return this.props.retrieveLocation
+		return this.props.retrieveLocationSuccess
+	}
+
+	_geo_failure(){
+    // Initial fetch for data, assuming that feed is not yet populated.
+		return this.props.retrieveLocationFailure
 	}
 
 	getPosition() {
 		var maximumAge = 60 * 60 * 3 // 3 hours
 		navigator.geolocation.getCurrentPosition(
 			this._geo_success(),
-			(error) => alert(error.message),
+			this._geo_failure(),
 			{enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
 		);
   }
 
   async componentWillMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
-    this.props.dispatch(FeedActions.feedRequest(null))
 		this.getPosition()
   }
 
@@ -100,6 +105,15 @@ class Feed extends React.Component {
     // Trigger a re-render when receiving new props (when redux has more data).
     this.dataSource = this.getUpdatedDataSource(nextProps)
     this.props.nextUrl = nextProps.nextPageUrl
+    if ((nextProps.location) && (nextProps.location.requestFinished === true) &&(this.props.location.requestFinished === false) ) {
+      // The location retrieval is not happening now.
+      this.props.dispatch(FeedActions.feedRequest(
+        null, // nextPageUrl
+        null, // searchText
+        null, // category
+        nextProps.location.position // position
+      ))
+    }
   }
 
   renderRow (data) {
@@ -109,17 +123,21 @@ class Feed extends React.Component {
   }
 
   render () {
-    return (
-      <ListView
-        renderScrollComponent={props => <InfiniteScrollView {...props} />}
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
-        refreshControl={this._renderRefreshControl()}
-        canLoadMore={this.props.nextUrl !== 'LastPage'}
-        onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-        distanceToLoadMore={10}
-      />
-    )
+    if (this.props.location.fetching) {
+      return <ActivityIndicator />
+    } else {
+      return (
+        <ListView
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.dataSource}
+          renderRow={this.renderRow}
+          refreshControl={this._renderRefreshControl()}
+          canLoadMore={this.props.nextUrl !== 'LastPage'}
+          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
+          distanceToLoadMore={10}
+        />
+      )
+    }
   }
 }
 
@@ -128,13 +146,15 @@ const mapStateToProps = (state, ownProps) => {
     items: state.feed.items,
     nextUrl: state.feed.nextPageUrl,
     searchText: ownProps.searchText,
-    category: ownProps.category
+    category: ownProps.category,
+    location: state.location
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    retrieveLocation: (position) => dispatch(GeoActions.geoSuccess(position)),
+    retrieveLocationSuccess: (position) => dispatch(GeoActions.geoSuccess(position)),
+    retrieveLocationFailure: (error) => dispatch(GeoActions.geoFailure(error)),
 		dispatch: dispatch
   }
 }

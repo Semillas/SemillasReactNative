@@ -20,13 +20,14 @@ export const INITIAL_STATE = Immutable({
   position: null,
   fetching: null,
   error: null,
+  requestFinished: false
 })
 
 /* ------------- Reducers ------------- */
 
 // request the user for a uuid
 export const request = (state: Object) =>
-  state.merge({ fetching: true })
+  state.merge({ fetching: true, requestFinished: false })
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
@@ -34,13 +35,18 @@ export const success = (state: Object, action: Object) => {
   return state.merge({
     fetching: false,
     error: null,
+    requestFinished: true,
     position: position.coords
   })
 }
 
 // failed to get the user
 export const failure = (state: Object) =>
-  state.merge({ fetching: false, error: true })
+  state.merge({
+    fetching: false,
+    requestFinished: true,
+    error: true
+  })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
