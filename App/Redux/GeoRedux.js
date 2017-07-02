@@ -41,12 +41,14 @@ export const success = (state: Object, action: Object) => {
 }
 
 // failed to get the user
-export const failure = (state: Object) =>
-  state.merge({
+export const failure = (state: Object, action: Object) => {
+  const { error } = action
+  return state.merge({
     fetching: false,
     requestFinished: true,
-    error: true
+    error: error
   })
+}
 
 /* ------------- Hookup Reducers To Types ------------- */
 

@@ -11,6 +11,11 @@ import GeoActions from '../Redux/GeoRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
 
 // import styles from './Styles/FeedStyle'
+const STATUS_INITIAL = 0
+const STATUS_REQUESTED_LOCALIZATION = 1
+const STATUS_REQUESTED_FEED = 2
+const STATUS_FEED_RETRIEVED = 3
+
 
 class Feed extends React.Component {
   static propTypes = {
@@ -25,6 +30,7 @@ class Feed extends React.Component {
     dispatch: PropTypes.func.isRequired
   };
 
+
   constructor (props, context) {
     super(props, context)
     this.state = {
@@ -36,6 +42,8 @@ class Feed extends React.Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
     })
+
+    this.requestStatus = STATUS_INITIAL
   }
 
   _rowHasChanged (r1, r2) {
@@ -53,9 +61,10 @@ class Feed extends React.Component {
     )
   }
 
-  refresh () {
+ refresh () {
     this.props.dispatch(FeedActions.feedClear())
-    this.props.dispatch(FeedActions.feedRequest(undefined))
+		this.getPosition()
+
   }
 
 	_geo_success(){
@@ -70,6 +79,9 @@ class Feed extends React.Component {
 
 	getPosition() {
 		var maximumAge = 60 * 60 * 3 // 3 hours
+
+    this.requestStatus = STATUS_REQUESTED_LOCALIZATION
+
 		navigator.geolocation.getCurrentPosition(
 			this._geo_success(),
 			this._geo_failure(),
@@ -77,8 +89,29 @@ class Feed extends React.Component {
 		);
   }
 
+  feedRequest(refresh=false, position)
+  {
+    if (!position) {
+      position = this.props.location.position
+    }
+
+    nextUrl = refresh ? null : this.props.nextUrl
+
+    if (nextUrl !== 'LastPage') {
+      this.props.dispatch(FeedActions.feedRequest(
+        nextUrl,
+        this.props.searchText,
+        this.props.category,
+        position
+      ))
+    }
+
+    this.requestStatus = STATUS_REQUESTED_FEED
+  }
+
   async componentWillMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
+    this.requestStatus = STATUS_INITIAL
 		this.getPosition()
   }
 
@@ -88,9 +121,7 @@ class Feed extends React.Component {
     //
     // If nextUrl is set, that means there is more data. If nextUrl is unset,
     // then there is no existing data, and you should fetch from scratch.
-    if (this.props.nextUrl !== 'LastPage') {
-      this.props.dispatch(FeedActions.feedRequest(this.props.nextUrl))
-    }
+    this.feedRequest()
   }
 
   getUpdatedDataSource (props) {
@@ -104,17 +135,16 @@ class Feed extends React.Component {
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
     this.dataSource = this.getUpdatedDataSource(nextProps)
-    this.props.nextUrl = nextProps.nextPageUrl
-    if ((nextProps.location) &&
-        (nextProps.location.requestFinished === true) &&
-        (this.props.location.requestFinished === false) ) {
-      // The location retrieval is not happening now.
-      this.props.dispatch(FeedActions.feedRequest(
-        null, // nextPageUrl
-        null, // searchText
-        null, // category
-        nextProps.location.position // position
-      ))
+    if (this.requestStatus === STATUS_REQUESTED_FEED) {
+      this.requestStatus = STATUS_FEED_RETRIEVED
+    }
+    // Geolocation just arrived
+    if ((this.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
+      ((nextProps.location) && (nextProps.location.requestFinished === true))) {
+      this.feedRequest(
+        refresh=false,
+        position=nextProps.location.position,
+      )
     }
   }
 

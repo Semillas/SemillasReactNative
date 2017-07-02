@@ -5,17 +5,18 @@ import parse from 'parse-link-header'
 
 export function * getFeed (api, action) {
   const { nextPageUrl, category, searchText, position } = action
-  debugger;
   // make the call to the api
   // TODO: Add filters
   console.log(nextPageUrl)
+  latitude = position ? position.latitude : null
+  longitude = position ? position.longitude : null
   const response = yield call(
     api.getFeed,
     nextPageUrl,
     category,
     searchText,
-    position.latitude,
-    position.longitude
+    latitude,
+    longitude
   )
 
   // success?
