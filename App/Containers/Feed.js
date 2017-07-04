@@ -16,7 +16,6 @@ const STATUS_REQUESTED_LOCALIZATION = 1
 const STATUS_REQUESTED_FEED = 2
 const STATUS_FEED_RETRIEVED = 3
 
-
 class Feed extends React.Component {
   static propTypes = {
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
@@ -63,6 +62,11 @@ class Feed extends React.Component {
 
  refresh () {
     this.props.dispatch(FeedActions.feedClear())
+    this.feedRequest(
+      refresh=true,
+      position=this.props.location.position,
+    )
+
 		this.getPosition()
 
   }
@@ -105,7 +109,6 @@ class Feed extends React.Component {
         position
       ))
     }
-
     this.requestStatus = STATUS_REQUESTED_FEED
   }
 
@@ -134,8 +137,10 @@ class Feed extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
+    debugger;
     this.dataSource = this.getUpdatedDataSource(nextProps)
     if (this.requestStatus === STATUS_REQUESTED_FEED) {
+      this.dataSource = this.getUpdatedDataSource(nextProps)
       this.requestStatus = STATUS_FEED_RETRIEVED
     }
     // Geolocation just arrived
