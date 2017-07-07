@@ -21,7 +21,7 @@ class Feed extends React.Component {
     // {items: ["item1", "item2"], nextUrl: null, fetching: false}
     items: PropTypes.object,
     nextUrl: PropTypes.string,
-//    category: Proptypes.number,
+    requestStatus: PropTypes.number,
 //    searchText: Proptypes.string,
 
     // dispatch is automatically provided by react-redux, and is used to
@@ -42,7 +42,6 @@ class Feed extends React.Component {
       rowHasChanged: this._rowHasChanged.bind(this)
     })
 
-    this.requestStatus = STATUS_INITIAL
   }
 
   _rowHasChanged (r1, r2) {
@@ -84,17 +83,18 @@ class Feed extends React.Component {
 	getPosition() {
 		var maximumAge = 60 * 60 * 3 // 3 hours
 
-    this.requestStatus = STATUS_REQUESTED_LOCALIZATION
-
 		navigator.geolocation.getCurrentPosition(
 			this._geo_success(),
 			this._geo_failure(),
 			{enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
 		);
+
+    this.props.geolocationRequested()
   }
 
   feedRequest(refresh=false, position)
   {
+
     if (!position) {
       position = this.props.location.position
     }
@@ -109,12 +109,11 @@ class Feed extends React.Component {
         position
       ))
     }
-    this.requestStatus = STATUS_REQUESTED_FEED
   }
 
-  async componentWillMount () {
+  async componentDidMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
-    this.requestStatus = STATUS_INITIAL
+    this.props.dispatch(FeedActions.feedClear())
 		this.getPosition()
   }
 
@@ -137,14 +136,13 @@ class Feed extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
-    debugger;
-    this.dataSource = this.getUpdatedDataSource(nextProps)
-    if (this.requestStatus === STATUS_REQUESTED_FEED) {
+    //this.dataSource = this.getUpdatedDataSource(nextProps)
+    console.log('requestStatus: ', nextProps.requestStatus)
+    if (nextProps.requestStatus === STATUS_FEED_RETRIEVED) {
       this.dataSource = this.getUpdatedDataSource(nextProps)
-      this.requestStatus = STATUS_FEED_RETRIEVED
     }
     // Geolocation just arrived
-    if ((this.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
+    if ((nextProps.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
       ((nextProps.location) && (nextProps.location.requestFinished === true))) {
       this.feedRequest(
         refresh=false,
@@ -184,7 +182,8 @@ const mapStateToProps = (state, ownProps) => {
     nextUrl: state.feed.nextPageUrl,
     searchText: ownProps.searchText,
     category: ownProps.category,
-    location: state.location
+    location: state.location,
+    requestStatus: state.feed.requestStatus
   }
 }
 
@@ -192,6 +191,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     retrieveLocationSuccess: (position) => dispatch(GeoActions.geoSuccess(position)),
     retrieveLocationFailure: (error) => dispatch(GeoActions.geoFailure(error)),
+    geolocationRequested: () => dispatch(FeedActions.geolocationRequested()),
 		dispatch: dispatch
   }
 }

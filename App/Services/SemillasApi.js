@@ -47,6 +47,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   // if we've attached Reactotron to console (it isn't during unit tests).
   if (__DEV__ && console.tron) {
     api.addMonitor(console.tron.apisauce)
+    const naviMonitor = (response) => console.log('hey!  listen! ', response)
+    api.addMonitor(naviMonitor)
   }
 
   // ------
