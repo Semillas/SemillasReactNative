@@ -4,11 +4,13 @@ import {
   ActivityIndicator,
   RefreshControl
 } from 'react-native'
-import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { connect } from 'react-redux'
+import InfiniteScrollView from 'react-native-infinite-scroll-view'
+import Permissions from 'react-native-permissions'
 import FeedActions from '../Redux/FeedRedux.js'
 import GeoActions from '../Redux/GeoRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
+
 
 // import styles from './Styles/FeedStyle'
 const STATUS_INITIAL = 0
@@ -80,14 +82,21 @@ class Feed extends React.Component {
 		return this.props.retrieveLocationFailure
 	}
 
+	_geo_permission(){
+    // Initial fetch for data, assuming that feed is not yet populated.
+		return this.props.geolocationPermission
+	}
+
+
+
 	getPosition() {
 		var maximumAge = 60 * 60 * 3 // 3 hours
-
 		navigator.geolocation.getCurrentPosition(
 			this._geo_success(),
 			this._geo_failure(),
-			{enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
+			{ enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
 		);
+
 
     this.props.geolocationRequested()
   }
@@ -151,6 +160,11 @@ class Feed extends React.Component {
     }
   }
 
+  componentWillMount () {
+    Permissions.check('location')
+      .then(this._geo_permission());
+  }
+
   renderRow (data) {
     return (
       <ServiceFeed data={data} />
@@ -192,6 +206,7 @@ const mapDispatchToProps = (dispatch) => {
     retrieveLocationSuccess: (position) => dispatch(GeoActions.geoSuccess(position)),
     retrieveLocationFailure: (error) => dispatch(GeoActions.geoFailure(error)),
     geolocationRequested: () => dispatch(FeedActions.geolocationRequested()),
+		geolocationPermission: (response) => dispatch(GeoActions.geoPermission(response)),
 		dispatch: dispatch
   }
 }

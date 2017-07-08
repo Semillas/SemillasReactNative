@@ -22,15 +22,8 @@
     <string>????</string>
     <key>NSCameraUsageDescription</key>
     <string>Access camera to take photos of your service</string>
-
-    <!-- Include this only if you are planning to use the camera roll -->
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Access photo library to upload your services photos</string>
-
-    <!-- Include this only if you are planning to use the microphone for video recording
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Your message to user when the microsphone is accessed for the first time</string>
- -->
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>

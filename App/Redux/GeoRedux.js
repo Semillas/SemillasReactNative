@@ -8,7 +8,8 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   geoRequest: null,
   geoSuccess: ['position'],
-  geoFailure: null
+  geoFailure: ['error'],
+  geoPermission: ['response']
 })
 
 export const geoTypes = Types
@@ -20,6 +21,7 @@ export const INITIAL_STATE = Immutable({
   position: null,
   fetching: null,
   error: null,
+  permission: null,
   requestFinished: false
 })
 
@@ -50,10 +52,17 @@ export const failure = (state: Object, action: Object) => {
   })
 }
 
+export const updatePermission = (state: Object, action: Object) => {
+  // one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+  const { permission } = action
+  return state.merge({ permission: permission })
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GEO_REQUEST]: request,
   [Types.GEO_SUCCESS]: success,
-  [Types.GEO_FAILURE]: failure
+  [Types.GEO_FAILURE]: failure,
+  [Types.GEO_PERMISSION]: updatePermission
 })
