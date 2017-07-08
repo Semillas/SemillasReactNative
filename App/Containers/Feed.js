@@ -61,12 +61,12 @@ class Feed extends React.Component {
 
  refresh () {
     this.props.dispatch(FeedActions.feedClear())
+    this.getPosition()
     this.feedRequest(
       refresh=true,
       position=this.props.location.position,
     )
 
-		this.getPosition()
 
   }
 
