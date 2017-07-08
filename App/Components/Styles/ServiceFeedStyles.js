@@ -24,7 +24,7 @@ export default {
     height: 200
   },
   distance: {
-    alignItems: 'center',
+    textAlign: 'right',
     color: Colors.charcoal
   }
 }
