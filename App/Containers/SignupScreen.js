@@ -21,7 +21,7 @@ import I18n from 'react-native-i18n'
 type SignupScreenProps = {
   dispatch: () => any,
   fetching: boolean,
-  error: object,
+  // error: object,
   attemptSignup: () => void
 }
 

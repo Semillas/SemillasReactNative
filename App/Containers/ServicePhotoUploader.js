@@ -1,28 +1,25 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   PixelRatio,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
-} from 'react-native';
+  ActivityIndicator
+} from 'react-native'
 import ServiceActions from '../Redux/ServiceRedux'
 import I18n from 'react-native-i18n'
-
-import ImagePicker from 'react-native-image-picker';
-
+import ImagePicker from 'react-native-image-picker'
 
 class ServicePhotoUploader extends React.Component {
 
   state = {
-    avatarSource: null,
-  };
+    avatarSource: null
+  }
 
-  selectPhotoTapped() {
+  selectPhotoTapped () {
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -30,55 +27,50 @@ class ServicePhotoUploader extends React.Component {
       storageOptions: {
         skipBackup: true
       }
-    };
+    }
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      console.log('Response = ', response)
 
       if (response.didCancel) {
-        console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
+        console.log('User cancelled photo picker')
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error)
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton)
+      } else {
+        let source = { uri: response.uri }
         // Display the image and start upload
         this.props.attemptPhotoPost(source, this.props.service.uuid)
       }
-    });
+    })
   }
 
-
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.servicePhotoClear()
   }
 
-
-	renderCurrentPhotos () {
-    return(
+  renderCurrentPhotos () {
+    return (
       <View >
-        { this.props.service.photos.map(function(object, i){
+        { this.props.service.photos.map(function (object, i) {
           return <Image key={i} style={styles.avatar} source={{uri: object.photo}} />
         })}
       </View>
-      )
-	}
+    )
+  }
 
   renderUploadingStatus () {
     if (this.props.postingPhoto === true) {
       return <ActivityIndicator />
-    } else if (this.props.photoPostError === true){
+    } else if (this.props.photoPostError === true) {
       return (<Text>{I18n.t('There was a problem with the upload, Retry.')}</Text>)
     } else {
       return (<Text>{I18n.t('Select a Photo')}</Text>)
     }
   }
 
-	renderNewPhotoUploader () {
+  renderNewPhotoUploader () {
     return (
       <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
         <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
@@ -86,18 +78,16 @@ class ServicePhotoUploader extends React.Component {
         </View>
       </TouchableOpacity>
     )
-	}
+  }
 
-  render() {
+  render () {
     if (this.props.service) {
       return (
         <View style={styles.container}>
-
-        {this.renderCurrentPhotos()}
-        {this.renderNewPhotoUploader()}
-
+          {this.renderCurrentPhotos()}
+          {this.renderNewPhotoUploader()}
         </View>
-      );
+      )
     } else {
       return (<View />)
     }
@@ -122,9 +112,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150
   }
-});
-
-
+})
 
 ServicePhotoUploader.propTypes = {
   attemptPhotoPost: PropTypes.func,
@@ -134,7 +122,6 @@ ServicePhotoUploader.propTypes = {
   photoPostError: PropTypes.bool
 }
 
-
 const mapStateToProps = (state, ownProps) => {
   return {
     service: state.services.items[ownProps.serviceUuid],
@@ -142,7 +129,6 @@ const mapStateToProps = (state, ownProps) => {
     photoPostError: state.services.photoPostError
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

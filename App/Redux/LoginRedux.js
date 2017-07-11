@@ -53,7 +53,6 @@ export const signupSuccess = (state: Object, { key, user }: Object) =>
 export const signupFailure = (state: Object, { error }: Object) =>
   state.merge({ fetching: false, signupError: error })
 
-
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {

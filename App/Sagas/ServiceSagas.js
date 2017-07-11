@@ -37,16 +37,16 @@ export function * postService (api, action) {
 
   // success?
   if (response.ok) {
-    service = response.data
+    var service = response.data
     yield put(ServiceActions.servicePostSuccess(service))
   } else {
     yield put(ServiceActions.servicePostFailure(response.data))
   }
 }
 
-
 export function * photoPostService (api, action) {
   var response
+  var service
   const { photoUrl, serviceUuid } = action
   // make the call to the api
   response = yield call(

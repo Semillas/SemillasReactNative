@@ -21,7 +21,7 @@ export const INITIAL_STATE = Immutable({
   items: {},
   fetching: null,
   error: null,
-  nextPageUrl: null,
+  nextPageUrl: null
 })
 
 /* ------------- Reducers ------------- */
@@ -31,18 +31,18 @@ export const request = (state: Object, { nextPageUrl, userUuid }: Object) => {
   if (nextPageUrl === 'LastPage') {
     return Object.assign({}, state, { fetching: false })
   }
-  return Object.assign({}, state, { fetching: true, items:{}, nextPageUrl })
+  return Object.assign({}, state, {fetching: true, items: {}, nextPageUrl})
 }//
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  const { items, userUuid } = action
+  const { items } = action
 
   var nextUrl = null
   var newItems = {}
   var allItems
   if ('nextPageUrl' in action) {
-    if ((action.nextPageUrl) && ('next' in action.nextPageUrl)){
+    if ((action.nextPageUrl) && ('next' in action.nextPageUrl)) {
       nextUrl = action.nextPageUrl.next.url
     } else {
       // Everything went right, but no next field: Last Page
@@ -78,5 +78,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_SERVICES_CLEAR]: clear,
   [Types.USER_SERVICES_REQUEST]: request,
   [Types.USER_SERVICES_SUCCESS]: success,
-  [Types.USER_SERVICES_FAILURE]: failure,
+  [Types.USER_SERVICES_FAILURE]: failure
 })

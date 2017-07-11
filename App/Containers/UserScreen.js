@@ -1,9 +1,9 @@
 // @flow
 
 import React, { PropTypes } from 'react'
-import {  Text,
-          View,
-          ScrollView
+import { Text,
+         View,
+         ScrollView
 } from 'react-native'
 import { connect } from 'react-redux'
 import UserActions from '../Redux/UsersRedux.js'

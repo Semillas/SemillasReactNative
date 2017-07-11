@@ -80,5 +80,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FEED_CLEAR]: clear,
   [Types.FEED_REQUEST]: request,
   [Types.FEED_SUCCESS]: success,
-  [Types.FEED_FAILURE]: failure,
+  [Types.FEED_FAILURE]: failure
 })
