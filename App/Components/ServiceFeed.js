@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  StyleSheet,
   Text,
   View,
   TouchableHighlight,
@@ -12,7 +11,7 @@ import {
   CardTitle,
   CardContent
 } from 'react-native-card-view'
-import { Colors, Images, Metrics } from '../Themes/'
+import { Images } from '../Themes/'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import styles from './Styles/ServiceFeedStyles'
 
@@ -22,7 +21,7 @@ export default class ServiceFeed extends React.Component {
     data: React.PropTypes.object.isRequired
   }
 
-  renderPhotos(data) {
+  renderPhotos (data) {
     if (data.photos.length) {
       return (
         <Image

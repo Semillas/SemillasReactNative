@@ -21,7 +21,7 @@ class CustomNavBar extends React.Component {
 
   cancelSearch = () => {
     this.setState({showSearchBar: false})
-    //this.props.cancelSearch()
+    // this.props.cancelSearch()
   }
 
   onSearch = (searchTerm) => {
@@ -95,7 +95,7 @@ CustomNavBar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    //searchTerm: state.search.searchTerm
+    // searchTerm: state.search.searchTerm
   }
 }
 

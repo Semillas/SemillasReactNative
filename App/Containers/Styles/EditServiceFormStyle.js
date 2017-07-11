@@ -52,7 +52,7 @@ export default StyleSheet.create({
   },
   topLogo: {
     alignSelf: 'center',
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   button: {
     height: 45,
@@ -60,7 +60,7 @@ export default StyleSheet.create({
     marginHorizontal: Metrics.section,
     marginVertical: Metrics.baseMargin,
     backgroundColor: Colors.frost,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonCta: {
     height: 45,
@@ -68,7 +68,7 @@ export default StyleSheet.create({
     marginHorizontal: Metrics.section,
     marginVertical: Metrics.baseMargin,
     backgroundColor: Colors.cta,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   buttonText: {

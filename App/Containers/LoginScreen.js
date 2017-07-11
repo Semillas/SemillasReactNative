@@ -133,7 +133,7 @@ class LoginScreen extends React.Component {
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
             </Text>
-           </View>
+          </View>
 
           <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('password')}</Text>
@@ -154,7 +154,7 @@ class LoginScreen extends React.Component {
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.password) ? this.props.error['password'][0] : ''}
             </Text>
-           </View>
+          </View>
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>

@@ -19,9 +19,7 @@ const { Types, Creators } = createActions({
   servicePhotoClear: null,
   serviceDeletionRequest: ['uuid'],
   serviceDeletionSuccess: null,
-  serviceDeletionFailure: null,
-
-
+  serviceDeletionFailure: null
 })
 
 export const ServiceTypes = Types
@@ -50,20 +48,19 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // request the service with a given url.
-export const servicePostRequest = (state: Object, action : Object) =>
-{
-  updatedItems = Object.assign({}, state.items)
+export const servicePostRequest = (state: Object, action : Object) => {
+  var updatedItems = Object.assign({}, state.items)
   if (action.uuid) {
     updatedItems[action.uuid].title = action.title
     updatedItems[action.uuid].description = action.description
     updatedItems[action.uuid].seeds_price = action.seedsPrice
   }
-  return Object.assign({}, state, { posting: true, items:updatedItems })
+  return Object.assign({}, state, { posting: true, items: updatedItems })
 }
 
 // successful service lookup
 export const servicePostSuccess = (state: Object, action: Object) => {
-  newItems = Object.assign({}, state.items)
+  var newItems = Object.assign({}, state.items)
   newItems[action.service.uuid] = action.service.service
   return Object.assign(
     {},
@@ -71,7 +68,7 @@ export const servicePostSuccess = (state: Object, action: Object) => {
     {
       posting: false,
       error: null,
-      //NewService: The service just created. Is updated so the form edit and stop creating.
+      // NewService: The service just created. Is updated so the form edit and stop creating.
       newService: action.service.uuid,
       items: newItems
     }
@@ -99,8 +96,7 @@ export const serviceSuccess = (state: Object, action: Object) => {
 
 // failed to get the service
 export const serviceFailure = (state: Object, { error }: Object) =>
-  Object.assign({}, state, { fetchingService: false, error: error})
-
+  Object.assign({}, state, { fetchingService: false, error: error })
 
 // Clear new Service stored.
 // This is called every time the component is umount.
@@ -109,19 +105,18 @@ export const clearNewService = (state: Object) => {
 }
 
 // Update the state to show the photo and start the Post
-export const servicePhotoPostRequest = (state: Object, action : Object) =>
-{
-  const { photoUrl, serviceUuid } = action
+export const servicePhotoPostRequest = (state: Object, action : Object) => {
+  const { photoUrl } = action
   return Object.assign({}, state, {
     postingPhoto: true,
     currentPhotoUpload: photoUrl,
-    photoPostError: null,
+    photoPostError: null
   })
 }
 
 // successful service lookup
 export const servicePhotoPostSuccess = (state: Object, action: Object) => {
-  newItems = Object.assign({}, state.items)
+  var newItems = Object.assign({}, state.items)
   newItems[action.service.updated_service.uuid] = action.service.updated_service
   return Object.assign(
     {},
@@ -139,24 +134,21 @@ export const servicePhotoPostFailure = (state: Object) =>
   Object.assign({}, state, { postingPhoto: false, photoPostError: true })
 
 // Update the state to show the photo and start the Post
-export const clearUploadingPhoto = (state: Object, action : Object) =>
-{
-  return Object.assign({}, state, { currentPhotoUpload: null})
+export const clearUploadingPhoto = (state: Object, action : Object) => {
+  return Object.assign({}, state, {currentPhotoUpload: null})
 }
 
 // request the service with a given url.
-export const serviceDeletionRequest = (state: Object, action : Object) =>
-{
-  return Object.assign({}, state, { deleting: true , deletionError: false})
+export const serviceDeletionRequest = (state: Object, action : Object) => {
+  return Object.assign({}, state, {deleting: true, deletionError: false})
 }
 
 // successful service lookup
 export const serviceDeletionSuccess = (state: Object, action: Object) => {
   // TODO: Should delete the current service from the state.
   return Object.assign({}, state, {
-      deleting: false,
-    }
-  )
+    deleting: false
+  })
 }
 
 // failed to get the service
@@ -178,6 +170,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_PHOTO_CLEAR]: clearUploadingPhoto,
   [Types.SERVICE_DELETION_REQUEST]: serviceDeletionRequest,
   [Types.SERVICE_DELETION_SUCCESS]: serviceDeletionSuccess,
-  [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure,
-
+  [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure
 })

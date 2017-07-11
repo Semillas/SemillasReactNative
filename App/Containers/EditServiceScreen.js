@@ -18,7 +18,7 @@ class EditServiceScreen extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    uuid: ownProps.uuid,
+    uuid: ownProps.uuid
   }
 }
 

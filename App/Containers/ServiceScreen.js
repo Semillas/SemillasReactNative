@@ -15,7 +15,7 @@ import RoundedButton from '../Components/RoundedButton'
 
 import {
   Card,
-  CardImage,
+//  CardImage,
   CardTitle,
   CardContent
 } from 'react-native-card-view'
@@ -23,7 +23,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
-import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-swiper'
 import I18n from 'react-native-i18n'
 
 class ServiceScreen extends React.Component {
@@ -34,10 +34,11 @@ class ServiceScreen extends React.Component {
     dispatch(ServiceActions.serviceRequest(this.props.uuid))
   }
 
-  renderPhotos(data) {
+  renderPhotos (data) {
+    var photoViews
     if ((data.photos) && (data.photos.length)) {
       photoViews = []
-      for (var i=0; i < data.photos.length; i++) {
+      for (var i = 0; i < data.photos.length; i++) {
         photoViews.push(
           <View key={i}>
             <Image
@@ -51,7 +52,7 @@ class ServiceScreen extends React.Component {
         <Swiper
           width={350}
           height={300}
-          showsButtons={true}
+          showsButtons
           showsPagination
           automaticallyAdjustContentInsets>
 
@@ -68,8 +69,8 @@ class ServiceScreen extends React.Component {
     }
   }
 
-  renderCallToAction(service) {
-    if ((this.props.loggedUser) && (this.props.loggedUser.uuid == service.author.uuid)){
+  renderCallToAction (service) {
+    if ((this.props.loggedUser) && (this.props.loggedUser.uuid === service.author.uuid)) {
       return (
         <RoundedButton
           onPress={() => {

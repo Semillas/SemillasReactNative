@@ -1,8 +1,5 @@
 import { takeLatest } from 'redux-saga'
-import API from '../Services/Api'
 import SemillasApi from '../Services/SemillasApi'
-import FixtureAPI from '../Services/FixtureApi'
-import DebugSettings from '../Config/DebugSettings'
 
 /* ------------- Types ------------- */
 
@@ -28,7 +25,6 @@ import { openScreen } from './OpenScreenSagas'
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
-const api = DebugSettings.useFixtures ? FixtureAPI : API.create()
 const semillasApi = SemillasApi.create()
 
 /* ------------- Connect Types To Sagas ------------- */
@@ -48,6 +44,6 @@ export default function * root () {
     takeLatest(ServiceTypes.SERVICE_POST_REQUEST, postService, semillasApi),
     takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
-    takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
+    takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi)
   ]
 }

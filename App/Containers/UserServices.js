@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import {
   ListView,
-  Text,
   View
 } from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
@@ -36,7 +35,7 @@ class UserServices extends React.Component {
       rowHasChanged: this._rowHasChanged.bind(this)
     })
 
-    //this.dataSource = this.getUpdatedDataSource(props)
+    // this.dataSource = this.getUpdatedDataSource(props)
   }
 
   _rowHasChanged (r1, r2) {
@@ -74,7 +73,7 @@ class UserServices extends React.Component {
     this.props.nextUrl = nextProps.nextPageUrl
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.dispatch(UserServicesActions.userServicesClear())
   }
 
@@ -87,14 +86,14 @@ class UserServices extends React.Component {
   render () {
     return (
       <View>
-      <ListView
-        renderScrollComponent={props => <InfiniteScrollView {...props} />}
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
-        canLoadMore={this.props.nextUrl !== 'LastPage'}
-        onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-        distanceToLoadMore={3}
-      />
+        <ListView
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.dataSource}
+          renderRow={this.renderRow}
+          canLoadMore={this.props.nextUrl !== 'LastPage'}
+          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
+          distanceToLoadMore={3}
+        />
       </View>
     )
   }
@@ -104,7 +103,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     items: state.userServices.items,
     nextUrl: state.userServices.nextPageUrl,
-    userUuid: ownProps.userUuid,
+    userUuid: ownProps.userUuid
   }
 }
 
