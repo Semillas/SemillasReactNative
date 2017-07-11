@@ -39,7 +39,7 @@ export default class ServiceFeed extends React.Component {
     }
   }
 
-  renderDistance(data) {
+  renderDistance (data) {
     if (data.distance) {
       return (<Text style={styles.distance}>{data.distance} km</Text>)
     } else {

@@ -11,11 +11,10 @@ import FeedActions from '../Redux/FeedRedux.js'
 import GeoActions from '../Redux/GeoRedux.js'
 import ServiceFeed from '../Components/ServiceFeed'
 
-
 // import styles from './Styles/FeedStyle'
-const STATUS_INITIAL = 0
+// const STATUS_INITIAL = 0
 const STATUS_REQUESTED_LOCALIZATION = 1
-const STATUS_REQUESTED_FEED = 2
+// const STATUS_REQUESTED_FEED = 2
 const STATUS_FEED_RETRIEVED = 3
 
 class Feed extends React.Component {
@@ -31,7 +30,6 @@ class Feed extends React.Component {
     dispatch: PropTypes.func.isRequired
   };
 
-
   constructor (props, context) {
     super(props, context)
     this.state = {
@@ -43,7 +41,6 @@ class Feed extends React.Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: this._rowHasChanged.bind(this)
     })
-
   }
 
   _rowHasChanged (r1, r2) {
@@ -61,54 +58,46 @@ class Feed extends React.Component {
     )
   }
 
- refresh () {
+  refresh () {
     this.props.dispatch(FeedActions.feedClear())
     this.getPosition()
     this.feedRequest(
-      refresh=true,
-      position=this.props.location.position,
+      true, // refresh
+      this.props.location.position, // position
     )
-
-
   }
 
-	_geo_success(){
+  _geoSuccess () {
     // Initial fetch for data, assuming that feed is not yet populated.
-		return this.props.retrieveLocationSuccess
-	}
+    return this.props.retrieveLocationSuccess
+  }
 
-	_geo_failure(){
+  _geoFailure () {
     // Initial fetch for data, assuming that feed is not yet populated.
-		return this.props.retrieveLocationFailure
-	}
+    return this.props.retrieveLocationFailure
+  }
 
-	_geo_permission(){
+  _geoPermission () {
     // Initial fetch for data, assuming that feed is not yet populated.
-		return this.props.geolocationPermission
-	}
+    return this.props.geolocationPermission
+  }
 
-
-
-	getPosition() {
-		var maximumAge = 60 * 60 * 3 // 3 hours
-		navigator.geolocation.getCurrentPosition(
-			this._geo_success(),
-			this._geo_failure(),
-			{ enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
-		);
-
-
+  getPosition () {
+    var maximumAge = 60 * 60 * 3 // 3 hours
+    navigator.geolocation.getCurrentPosition(
+      this._geoSuccess(),
+      this._geoFailure(),
+      { enableHighAccuracy: false, timeout: 4000, maximumAge: maximumAge }
+    )
     this.props.geolocationRequested()
   }
 
-  feedRequest(refresh=false, position)
-  {
-
+  feedRequest (refresh = false, position) {
     if (!position) {
       position = this.props.location.position
     }
 
-    nextUrl = refresh ? null : this.props.nextUrl
+    var nextUrl = refresh ? null : this.props.nextUrl
 
     if (nextUrl !== 'LastPage') {
       this.props.dispatch(FeedActions.feedRequest(
@@ -123,7 +112,7 @@ class Feed extends React.Component {
   async componentDidMount () {
     // Initial fetch for data, assuming that feed is not yet populated.
     this.props.dispatch(FeedActions.feedClear())
-		this.getPosition()
+    this.getPosition()
   }
 
   async loadMoreContentAsync () {
@@ -145,7 +134,7 @@ class Feed extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
-    //this.dataSource = this.getUpdatedDataSource(nextProps)
+    // this.dataSource = this.getUpdatedDataSource(nextProps)
     console.log('requestStatus: ', nextProps.requestStatus)
     if (nextProps.requestStatus === STATUS_FEED_RETRIEVED) {
       this.dataSource = this.getUpdatedDataSource(nextProps)
@@ -154,15 +143,15 @@ class Feed extends React.Component {
     if ((nextProps.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
       ((nextProps.location) && (nextProps.location.requestFinished === true))) {
       this.feedRequest(
-        refresh=false,
-        position=nextProps.location.position,
+        false, // refresh
+        nextProps.location.position, // position
       )
     }
   }
 
   componentWillMount () {
     Permissions.check('location')
-      .then(this._geo_permission());
+      .then(this._geoPermission())
   }
 
   renderRow (data) {
@@ -206,8 +195,8 @@ const mapDispatchToProps = (dispatch) => {
     retrieveLocationSuccess: (position) => dispatch(GeoActions.geoSuccess(position)),
     retrieveLocationFailure: (error) => dispatch(GeoActions.geoFailure(error)),
     geolocationRequested: () => dispatch(FeedActions.geolocationRequested()),
-		geolocationPermission: (response) => dispatch(GeoActions.geoPermission(response)),
-		dispatch: dispatch
+    geolocationPermission: (response) => dispatch(GeoActions.geoPermission(response)),
+    dispatch: dispatch
   }
 }
 

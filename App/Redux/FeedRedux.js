@@ -16,7 +16,6 @@ const { Types, Creators } = createActions({
 export const FeedTypes = Types
 export default Creators
 
-
 const STATUS_INITIAL = 0
 const STATUS_REQUESTED_LOCALIZATION = 1
 const STATUS_REQUESTED_FEED = 2
@@ -107,8 +106,7 @@ export const clear = (state: Object) => {
 
 // failed to get the user
 export const geolocationRequested = (state: Object) =>
-  Object.assign({}, state, { requestStatus: STATUS_REQUESTED_LOCALIZATION})
-
+  Object.assign({}, state, {requestStatus: STATUS_REQUESTED_LOCALIZATION})
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -117,5 +115,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FEED_REQUEST]: request,
   [Types.FEED_SUCCESS]: success,
   [Types.FEED_FAILURE]: failure,
-  [Types.GEOLOCATION_REQUESTED]: geolocationRequested,
+  [Types.GEOLOCATION_REQUESTED]: geolocationRequested
 })

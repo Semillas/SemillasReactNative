@@ -8,8 +8,8 @@ export function * getFeed (api, action) {
   // make the call to the api
   // TODO: Add filters
   console.log(nextPageUrl)
-  latitude = position ? position.latitude : null
-  longitude = position ? position.longitude : null
+  var latitude = position ? position.latitude : null
+  var longitude = position ? position.longitude : null
   const response = yield call(
     api.getFeed,
     nextPageUrl,
