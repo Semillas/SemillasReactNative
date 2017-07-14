@@ -10,7 +10,9 @@ const { Types, Creators } = createActions({
   feedSuccess: ['nextPageUrl', 'items'],
   feedFailure: null,
   feedClear: null,
-  geolocationRequested: null
+  geolocationRequested: null,
+  feedUpdateSearch: ['searchText'],
+  feedCancelSearch: null
 })
 
 export const FeedTypes = Types
@@ -30,6 +32,7 @@ export const INITIAL_STATE = Immutable({
   nextPageUrl: null,
   searchText: null,
   category: null,
+  paramsUpdated: false,
   requestStatus: STATUS_INITIAL
 })
 
@@ -44,7 +47,8 @@ export const request = (state: Object, { nextPageUrl }: Object) => {
     {
       fetching: true,
       nextPageUrl,
-      requestStatus: STATUS_REQUESTED_FEED
+      requestStatus: STATUS_REQUESTED_FEED,
+      paramsUpdated: false
     })
 }
 
@@ -80,7 +84,8 @@ export const success = (state: Object, action: Object) => {
       error: null,
       items: allItems,
       nextPageUrl: nextUrl,
-      requestStatus: STATUS_FEED_RETRIEVED
+      requestStatus: STATUS_FEED_RETRIEVED,
+      paramsUpdated: false
     })
 }
 
@@ -90,7 +95,8 @@ export const failure = (state: Object) =>
     fetching: false,
     error: true,
     nextPageUrl: null,
-    requestStatus: STATUS_FEED_RETRIEVED
+    requestStatus: STATUS_FEED_RETRIEVED,
+    paramsUpdated: false
   })
 
 export const clear = (state: Object) => {
@@ -105,6 +111,17 @@ export const clear = (state: Object) => {
 }
 
 // failed to get the user
+export const updateSearch = (state: Object, action: Object) => {
+  const { searchText } = action
+  return Object.assign({}, state, {searchText: searchText, paramsUpdated: true})
+}
+
+// failed to get the user
+export const cancelSearch = (state: Object) => {
+  return Object.assign({}, state, {searchText: null, paramsUpdated: true})
+}
+
+// failed to get the user
 export const geolocationRequested = (state: Object) =>
   Object.assign({}, state, {requestStatus: STATUS_REQUESTED_LOCALIZATION})
 
@@ -115,5 +132,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FEED_REQUEST]: request,
   [Types.FEED_SUCCESS]: success,
   [Types.FEED_FAILURE]: failure,
+  [Types.FEED_UPDATE_SEARCH]: updateSearch,
+  [Types.FEED_CANCEL_SEARCH]: cancelSearch,
   [Types.GEOLOCATION_REQUESTED]: geolocationRequested
 })

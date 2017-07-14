@@ -5,6 +5,7 @@ import styles from './Styles/CustomNavBarStyle'
 import SearchBar from '../Components/SearchBar'
 import { connect } from 'react-redux'
 import { Metrics, Images } from '../Themes'
+import FeedActions from '../Redux/FeedRedux.js'
 
 class CustomNavBar extends React.Component {
 
@@ -95,14 +96,14 @@ CustomNavBar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    // searchTerm: state.search.searchTerm
+    searchTerm: state.feed.searchText
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-//    performSearch: (searchTerm) => dispatch(SearchActions.search(searchTerm)),
-//    cancelSearch: () => dispatch(SearchActions.cancelSearch())
+    performSearch: (searchTerm) => dispatch(FeedActions.updateSearch(searchTerm)),
+    cancelSearch: () => dispatch(FeedActions.cancelSearch())
   }
 }
 

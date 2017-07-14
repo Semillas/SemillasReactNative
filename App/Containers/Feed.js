@@ -23,7 +23,7 @@ class Feed extends React.Component {
     items: PropTypes.object,
     nextUrl: PropTypes.string,
     requestStatus: PropTypes.number,
-//    searchText: Proptypes.string,
+    searchText: PropTypes.string,
 
     // dispatch is automatically provided by react-redux, and is used to
     // interact with the store.
@@ -147,6 +147,13 @@ class Feed extends React.Component {
         nextProps.location.position, // position
       )
     }
+
+    if (nextProps.paramsUpdated) {
+      this.feedRequest(
+        true, // refresh
+        nextProps.location.position, // position
+      )
+    }
   }
 
   componentWillMount () {
@@ -186,7 +193,8 @@ const mapStateToProps = (state, ownProps) => {
     searchText: ownProps.searchText,
     category: ownProps.category,
     location: state.location,
-    requestStatus: state.feed.requestStatus
+    requestStatus: state.feed.requestStatus,
+    paramsUpdated: state.feed.paramsUpdated
   }
 }
 
