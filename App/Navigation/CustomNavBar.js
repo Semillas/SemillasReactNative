@@ -102,8 +102,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    performSearch: (searchTerm) => dispatch(FeedActions.updateSearch(searchTerm)),
-    cancelSearch: () => dispatch(FeedActions.cancelSearch())
+    performSearch: (searchTerm) => dispatch(FeedActions.feedUpdateSearch(searchTerm)),
+    cancelSearch: () => dispatch(FeedActions.FeedCancelSearch())
   }
 }
 

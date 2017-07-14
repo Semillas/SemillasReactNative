@@ -7,7 +7,7 @@ export function * getFeed (api, action) {
   const { nextPageUrl, category, searchText, position } = action
   // make the call to the api
   // TODO: Add filters
-  console.log(nextPageUrl)
+  console.log('Loading feed url: ', nextPageUrl)
   var latitude = position ? position.latitude : null
   var longitude = position ? position.longitude : null
   const response = yield call(

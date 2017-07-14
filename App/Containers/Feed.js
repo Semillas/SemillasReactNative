@@ -61,10 +61,10 @@ class Feed extends React.Component {
   refresh () {
     this.props.dispatch(FeedActions.feedClear())
     this.getPosition()
-    this.feedRequest(
-      true, // refresh
-      this.props.location.position, // position
-    )
+//    this.feedRequest(
+//      true, // refresh
+//      this.props.location.position, // position
+//    )
   }
 
   _geoSuccess () {
@@ -134,11 +134,13 @@ class Feed extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     // Trigger a re-render when receiving new props (when redux has more data).
-    // this.dataSource = this.getUpdatedDataSource(nextProps)
-    console.log('requestStatus: ', nextProps.requestStatus)
-    if (nextProps.requestStatus === STATUS_FEED_RETRIEVED) {
+    if (this.props.items !== nextProps.items) {
       this.dataSource = this.getUpdatedDataSource(nextProps)
     }
+    console.log('requestStatus: ', nextProps.requestStatus)
+    // if (nextProps.requestStatus === STATUS_FEED_RETRIEVED) {
+    //   this.dataSource = this.getUpdatedDataSource(nextProps)
+    // }
     // Geolocation just arrived
     if ((nextProps.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
       ((nextProps.location) && (nextProps.location.requestFinished === true))) {
@@ -149,10 +151,11 @@ class Feed extends React.Component {
     }
 
     if (nextProps.paramsUpdated) {
-      this.feedRequest(
-        true, // refresh
-        nextProps.location.position, // position
-      )
+      this.refresh()
+//      this.feedRequest(
+//        true, // refresh
+//        nextProps.location.position, // position
+//      )
     }
   }
 

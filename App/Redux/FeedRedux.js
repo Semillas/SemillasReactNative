@@ -123,7 +123,10 @@ export const cancelSearch = (state: Object) => {
 
 // failed to get the user
 export const geolocationRequested = (state: Object) =>
-  Object.assign({}, state, {requestStatus: STATUS_REQUESTED_LOCALIZATION})
+  Object.assign({}, state, {
+    requestStatus: STATUS_REQUESTED_LOCALIZATION,
+    paramsUpdated: false
+  })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
