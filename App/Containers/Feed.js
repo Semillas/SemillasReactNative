@@ -59,12 +59,12 @@ class Feed extends React.Component {
   }
 
   refresh () {
-    this.props.dispatch(FeedActions.feedClear())
-    this.getPosition()
-//    this.feedRequest(
-//      true, // refresh
-//      this.props.location.position, // position
-//    )
+    // this.props.dispatch(FeedActions.feedClear())
+    // this.getPosition()
+    this.feedRequest(
+      true, // refresh
+      this.props.location.position, // position
+    )
   }
 
   _geoSuccess () {
@@ -93,11 +93,17 @@ class Feed extends React.Component {
   }
 
   feedRequest (refresh = false, position) {
+    var nextUrl
     if (!position) {
       position = this.props.location.position
     }
 
-    var nextUrl = refresh ? null : this.props.nextUrl
+    if (refresh) {
+      nextUrl = null
+      this.props.dispatch(FeedActions.feedClear())
+    } else {
+      nextUrl = this.props.nextUrl
+    }
 
     if (nextUrl !== 'LastPage') {
       this.props.dispatch(FeedActions.feedRequest(
@@ -151,11 +157,10 @@ class Feed extends React.Component {
     }
 
     if (nextProps.paramsUpdated) {
-      this.refresh()
-//      this.feedRequest(
-//        true, // refresh
-//        nextProps.location.position, // position
-//      )
+      this.feedRequest(
+        true, // refresh
+        nextProps.location.position, // position
+      )
     }
   }
 
