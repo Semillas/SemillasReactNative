@@ -60,7 +60,7 @@ export const success = (state: Object, action: Object) => {
   var newItems = {}
   var allItems
   if ('nextPageUrl' in action) {
-    if ('next' in action.nextPageUrl) {
+    if ((action.nextPageUrl) && ('next' in action.nextPageUrl)) {
       nextUrl = action.nextPageUrl.next.url
     } else {
       // Everything went right, but no next field: Last Page

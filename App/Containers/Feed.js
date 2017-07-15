@@ -198,7 +198,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     items: state.feed.items,
     nextUrl: state.feed.nextPageUrl,
-    searchText: ownProps.searchText,
+    searchText: state.feed.searchText,
     category: ownProps.category,
     location: state.location,
     requestStatus: state.feed.requestStatus,
