@@ -15,7 +15,7 @@ import ServiceFeed from '../Components/ServiceFeed'
 // const STATUS_INITIAL = 0
 const STATUS_REQUESTED_LOCALIZATION = 1
 // const STATUS_REQUESTED_FEED = 2
-const STATUS_FEED_RETRIEVED = 3
+// const STATUS_FEED_RETRIEVED = 3
 
 class Feed extends React.Component {
   static propTypes = {
@@ -139,14 +139,13 @@ class Feed extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('requestStatus: ', nextProps.requestStatus)
+
     // Trigger a re-render when receiving new props (when redux has more data).
     if (this.props.items !== nextProps.items) {
       this.dataSource = this.getUpdatedDataSource(nextProps)
     }
-    console.log('requestStatus: ', nextProps.requestStatus)
-    // if (nextProps.requestStatus === STATUS_FEED_RETRIEVED) {
-    //   this.dataSource = this.getUpdatedDataSource(nextProps)
-    // }
+
     // Geolocation just arrived
     if ((nextProps.requestStatus === STATUS_REQUESTED_LOCALIZATION) &&
       ((nextProps.location) && (nextProps.location.requestFinished === true))) {
@@ -176,7 +175,7 @@ class Feed extends React.Component {
   }
 
   render () {
-    if (this.props.location.fetching) {
+    if (!this.props.items) {
       return <ActivityIndicator />
     } else {
       return (
