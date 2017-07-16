@@ -11,6 +11,8 @@ import MapView from 'react-native-maps'
 import UserServices from './UserServices'
 import I18n from 'react-native-i18n'
 import LoginSignUpButtons from '../Components/LoginSignUpButtons'
+import RoundedButton from '../Components/RoundedButton'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -40,6 +42,24 @@ class UserScreen extends React.Component {
     } else {
       return (
         <Text>Location Not Available</Text>
+      )
+    }
+  }
+
+  renderEditButton () {
+    if ((this.props.loggedUser) && (this.props.loggedUser.uuid === this.props.user.uuid)) {
+      return (
+        <RoundedButton
+          onPress={() => {
+            NavigationActions.editProfile({uuid: this.props.user.uuid})
+          }}
+        >
+          {I18n.t('Edit Profile')}
+        </RoundedButton>
+      )
+    } else {
+      return (
+        <View />
       )
     }
   }
@@ -74,6 +94,9 @@ class UserScreen extends React.Component {
         <ScrollView style={styles.mainContainer}>
           {this.renderMap(user)}
           <View style={styles.section}>
+            {this.renderEditButton()}
+          </View>
+          <View style={styles.section}>
             <Text>{user.name}</Text>
           </View>
           <Text>{I18n.t('Services being offered')}</Text>
@@ -94,6 +117,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     uuid: ownProps.uuid,
     loggedIn: state.login.key,
+    loggedUser: state.login.user,
     user: state.users['entities'][ownProps.uuid]
   }
 }

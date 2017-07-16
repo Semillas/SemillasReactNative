@@ -33,7 +33,7 @@ class NavigationRouter extends Component {
             <Scene key='service' component={ServiceScreen} title='Service' />
             <Scene key='profile' component={ProfileScreen} title='Perfil' />
             <Scene key='editService' component={EditServiceScreen} title='Service' onBack={refreshOnBack} />
-            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' />
+            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' onBack={refreshOnBack} />
             <Scene key='currency' component={CurrencyScreen} title='Semillas' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='signup' component={SignupScreen} title='signup' hideNavBar />
