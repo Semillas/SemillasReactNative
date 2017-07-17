@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 import {
   Card,
@@ -28,10 +29,55 @@ import I18n from 'react-native-i18n'
 
 class ServiceScreen extends React.Component {
 
+  state: {
+    showModal: boolean,
+    imageIndex: number,
+    fromCarousel: boolean,
+  }
+
+  static defaultProps = {
+    renderHeader: () => {},
+    renderFooter: () => {},
+  }
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showModal: false,
+      imageIndex: 0,
+      fromCarousel: false,
+    };
+
+    (this: any)._onPressImg = this._onPressImg.bind(this);
+    (this: any)._updateIndex = this._updateIndex.bind(this);
+    (this: any)._closeModal = this._closeModal.bind(this);
+  }
+
+
   componentWillMount () {
     const { dispatch } = this.props
     // TODO: Check if the service is not loaded.
     dispatch(ServiceActions.serviceRequest(this.props.uuid))
+  }
+
+  _onPressImg(i) {
+    this.setState({
+      showModal: true,
+      imageIndex: i,
+    });
+  }
+
+  _updateIndex(i, fromCarousel) {
+    this.setState({
+      imageIndex: i,
+      fromCarousel,
+    });
+  }
+
+  _closeModal() {
+    this.setState({
+      showModal: false,
+    });
   }
 
   renderPhotos (data) {
@@ -41,7 +87,7 @@ class ServiceScreen extends React.Component {
       for (var i = 0; i < data.photos.length; i++) {
         photoViews.push(
           <View key={i}>
-            <Image
+           <Image
               style={styles.picture}
               source={{ uri: data.photos[i]['photo'] }}
             />
@@ -49,6 +95,24 @@ class ServiceScreen extends React.Component {
         )
       }
       return (
+        <Modal
+          onRequestClose={this._closeModal}
+          visible={showModal}
+          transparent={true}>
+          <ImageViewer
+            renderHeader={() => <Header onClose={() => this._closeModal()}/>}
+            //onChange={this._updateIndex}
+            saveToLocalByLongPress={false}
+            imageUrls={data.photos.map((img) => {
+              let modifyImg = img;
+              if (img.uri) {
+                modifyImg = Object.assign({}, img, {url: img.photo});
+              }
+              return modifyImg;
+            })}
+            index={imageIndex}/>
+        </Modal>
+
         <Swiper
           width={350}
           height={300}
