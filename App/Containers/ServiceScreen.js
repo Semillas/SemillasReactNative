@@ -7,12 +7,15 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Modal
 } from 'react-native'
 import { connect } from 'react-redux'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
 import ImageViewer from 'react-native-image-zoom-viewer';
+import Header from '../Components/FullImageHeader';
 
 import {
   Card,
@@ -82,19 +85,24 @@ class ServiceScreen extends React.Component {
 
   renderPhotos (data) {
     var photoViews
+    const {showModal, imageIndex} = this.state;
     if ((data.photos) && (data.photos.length)) {
       photoViews = []
       for (var i = 0; i < data.photos.length; i++) {
         photoViews.push(
           <View key={i}>
-           <Image
-              style={styles.picture}
-              source={{ uri: data.photos[i]['photo'] }}
-            />
-          </View>
+            <TouchableWithoutFeedback
+              onPress={this._onPressImg}>
+               <Image
+                  style={styles.picture}
+                  source={{ uri: data.photos[i]['photo'] }}
+                />
+            </TouchableWithoutFeedback>
+              </View>
         )
       }
       return (
+        <View>
         <Modal
           onRequestClose={this._closeModal}
           visible={showModal}
@@ -105,12 +113,13 @@ class ServiceScreen extends React.Component {
             saveToLocalByLongPress={false}
             imageUrls={data.photos.map((img) => {
               let modifyImg = img;
-              if (img.uri) {
+              if (img.photo) {
                 modifyImg = Object.assign({}, img, {url: img.photo});
               }
               return modifyImg;
             })}
-            index={imageIndex}/>
+            //index={imageIndex}
+        />
         </Modal>
 
         <Swiper
@@ -122,6 +131,7 @@ class ServiceScreen extends React.Component {
 
           {photoViews}
         </Swiper>
+        </View>
       )
     } else {
       return (
