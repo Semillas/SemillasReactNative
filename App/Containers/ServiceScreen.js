@@ -70,10 +70,10 @@ class ServiceScreen extends React.Component {
     });
   }
 
-  _updateIndex(i, fromCarousel) {
+  _updateIndex(i) {
+    this.swiper.scrollBy(i-this.state.imageIndex, false)
     this.setState({
       imageIndex: i,
-      fromCarousel,
     });
   }
 
@@ -86,61 +86,53 @@ class ServiceScreen extends React.Component {
   renderPhotos (data) {
     var photoViews
     const {showModal, imageIndex} = this.state;
-    if ((data.photos) && (data.photos.length)) {
-      photoViews = []
-      for (var i = 0; i < data.photos.length; i++) {
-        photoViews.push(
-          <View key={i}>
-            <TouchableWithoutFeedback
-              onPress={this._onPressImg}>
-               <Image
-                  style={styles.picture}
-                  source={{ uri: data.photos[i]['photo'] }}
-                />
-            </TouchableWithoutFeedback>
-              </View>
-        )
-      }
-      return (
-        <View>
-        <Modal
-          onRequestClose={this._closeModal}
-          visible={showModal}
-          transparent={true}>
-          <ImageViewer
-            renderHeader={() => <Header onClose={() => this._closeModal()}/>}
-            //onChange={this._updateIndex}
-            saveToLocalByLongPress={false}
-            imageUrls={data.photos.map((img) => {
-              let modifyImg = img;
-              if (img.photo) {
-                modifyImg = Object.assign({}, img, {url: img.photo});
-              }
-              return modifyImg;
-            })}
-            //index={imageIndex}
-        />
-        </Modal>
+    photoViews = data.photos.map((item, i) =>
+      <TouchableWithoutFeedback
+        key={i}
+        onPress={e => this._onPressImg(i)}>
+         <Image
+            style={styles.picture}
+            source={{ uri: data.photos[i]['photo'] }}
+          />
+      </TouchableWithoutFeedback>
+    )
+    this.photoSwiper = (
+      <Swiper
+        ref={r => {
+          this.swiper = r;
+        }}
+        width={350}
+        height={300}
+        showsButtons
+        showsPagination
+        automaticallyAdjustContentInsets>
+        {photoViews}
+      </Swiper>
+    )
 
-        <Swiper
-          width={350}
-          height={300}
-          showsButtons
-          showsPagination
-          automaticallyAdjustContentInsets>
-
-          {photoViews}
-        </Swiper>
-        </View>
-      )
-    } else {
-      return (
-        <Image
-          style={styles.picture}
-          source={Images.servicePlaceholder}
-        />
-      )
-    }
+    return (
+      <View>
+      <Modal
+        onRequestClose={this._closeModal}
+        visible={showModal}
+        transparent={true}>
+        <ImageViewer
+          renderHeader={() => <Header onClose={() => this._closeModal()}/>}
+          onChange={this._updateIndex}
+          saveToLocalByLongPress={false}
+          imageUrls={data.photos.map((img) => {
+            let modifyImg = img;
+            if (img.photo) {
+              modifyImg = Object.assign({}, img, {url: img.photo});
+            }
+            return modifyImg;
+          })}
+          index={imageIndex}
+      />
+      </Modal>
+      {this.photoSwiper}
+      </View>
+    )
   }
 
   renderCallToAction (service) {
