@@ -14,8 +14,7 @@ import {
 import { connect } from 'react-redux'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
-import ImageViewer from 'react-native-image-zoom-viewer';
-import Header from '../Components/FullImageHeader';
+import ImageSwiper from '../Components/ImageSwiper'
 
 import {
   Card,
@@ -27,112 +26,14 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
-import Swiper from 'react-native-swiper'
 import I18n from 'react-native-i18n'
 
 class ServiceScreen extends React.Component {
-
-  state: {
-    showModal: boolean,
-    imageIndex: number,
-    fromCarousel: boolean,
-  }
-
-  static defaultProps = {
-    renderHeader: () => {},
-    renderFooter: () => {},
-  }
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showModal: false,
-      imageIndex: 0,
-      fromCarousel: false,
-    };
-
-    (this: any)._onPressImg = this._onPressImg.bind(this);
-    (this: any)._updateIndex = this._updateIndex.bind(this);
-    (this: any)._closeModal = this._closeModal.bind(this);
-  }
-
 
   componentWillMount () {
     const { dispatch } = this.props
     // TODO: Check if the service is not loaded.
     dispatch(ServiceActions.serviceRequest(this.props.uuid))
-  }
-
-  _onPressImg(i) {
-    this.setState({
-      showModal: true,
-      imageIndex: i,
-    });
-  }
-
-  _updateIndex(i) {
-    this.swiper.scrollBy(i-this.state.imageIndex, false)
-    this.setState({
-      imageIndex: i,
-    });
-  }
-
-  _closeModal() {
-    this.setState({
-      showModal: false,
-    });
-  }
-
-  renderPhotos (data) {
-    var photoViews
-    const {showModal, imageIndex} = this.state;
-    photoViews = data.photos.map((item, i) =>
-      <TouchableWithoutFeedback
-        key={i}
-        onPress={e => this._onPressImg(i)}>
-         <Image
-            style={styles.picture}
-            source={{ uri: data.photos[i]['photo'] }}
-          />
-      </TouchableWithoutFeedback>
-    )
-    this.photoSwiper = (
-      <Swiper
-        ref={r => {
-          this.swiper = r;
-        }}
-        width={350}
-        height={300}
-        showsButtons
-        showsPagination
-        automaticallyAdjustContentInsets>
-        {photoViews}
-      </Swiper>
-    )
-
-    return (
-      <View>
-      <Modal
-        onRequestClose={this._closeModal}
-        visible={showModal}
-        transparent={true}>
-        <ImageViewer
-          renderHeader={() => <Header onClose={() => this._closeModal()}/>}
-          onChange={this._updateIndex}
-          saveToLocalByLongPress={false}
-          imageUrls={data.photos.map((img) => {
-            let modifyImg = img;
-            if (img.photo) {
-              modifyImg = Object.assign({}, img, {url: img.photo});
-            }
-            return modifyImg;
-          })}
-          index={imageIndex}
-      />
-      </Modal>
-      {this.photoSwiper}
-      </View>
-    )
   }
 
   renderCallToAction (service) {
@@ -171,7 +72,7 @@ class ServiceScreen extends React.Component {
       const card = {card: {width: 320}}
       return (
         <ScrollView style={styles.mainContainer}>
-          {this.renderPhotos(service)}
+          <ImageSwiper images={service.photos} />
           <Card styles={card}>
             <CardTitle>
               <Text style={styles.title}>{service.title}</Text>
