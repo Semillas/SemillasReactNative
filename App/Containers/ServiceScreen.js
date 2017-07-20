@@ -7,11 +7,14 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Modal
 } from 'react-native'
 import { connect } from 'react-redux'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
+import ImageSwiper from '../Components/ImageSwiper'
 
 import {
   Card,
@@ -23,7 +26,6 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
-import Swiper from 'react-native-swiper'
 import I18n from 'react-native-i18n'
 
 class ServiceScreen extends React.Component {
@@ -32,41 +34,6 @@ class ServiceScreen extends React.Component {
     const { dispatch } = this.props
     // TODO: Check if the service is not loaded.
     dispatch(ServiceActions.serviceRequest(this.props.uuid))
-  }
-
-  renderPhotos (data) {
-    var photoViews
-    if ((data.photos) && (data.photos.length)) {
-      photoViews = []
-      for (var i = 0; i < data.photos.length; i++) {
-        photoViews.push(
-          <View key={i}>
-            <Image
-              style={styles.picture}
-              source={{ uri: data.photos[i]['photo'] }}
-            />
-          </View>
-        )
-      }
-      return (
-        <Swiper
-          width={350}
-          height={300}
-          showsButtons
-          showsPagination
-          automaticallyAdjustContentInsets>
-
-          {photoViews}
-        </Swiper>
-      )
-    } else {
-      return (
-        <Image
-          style={styles.picture}
-          source={Images.servicePlaceholder}
-        />
-      )
-    }
   }
 
   renderCallToAction (service) {
@@ -105,7 +72,7 @@ class ServiceScreen extends React.Component {
       const card = {card: {width: 320}}
       return (
         <ScrollView style={styles.mainContainer}>
-          {this.renderPhotos(service)}
+          <ImageSwiper images={service.photos} />
           <Card styles={card}>
             <CardTitle>
               <Text style={styles.title}>{service.title}</Text>
