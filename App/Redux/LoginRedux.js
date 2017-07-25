@@ -6,6 +6,9 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
+  profilePostRequest: ['name', 'email', 'phone', 'uuid'],
+  profilePostSuccess: ['profile'],
+  profilePostFailure: ['error'],
   loginRequest: ['email', 'password'],
   loginSuccess: ['key', 'user'],
   loginFailure: ['error'],
@@ -25,7 +28,9 @@ export const INITIAL_STATE = Immutable({
   error: null,
   fetching: false,
   signupError: null,
-  signupFetching: false
+  signupFetching: false,
+  posting: false,
+  postError: null
 })
 
 /* ------------- Reducers ------------- */
@@ -53,6 +58,31 @@ export const signupSuccess = (state: Object, { key, user }: Object) =>
 export const signupFailure = (state: Object, { error }: Object) =>
   state.merge({ fetching: false, signupError: error })
 
+export const profilePostRequest = (state: Object, action : Object) => {
+  return Object.assign({}, state, { postError: true })
+}
+
+// successful profile lookup
+export const profilePostSuccess = (state: Object, action: Object) => {
+  var newItems = Object.assign({}, state.items)
+  debugger;
+  return Object.assign(
+    {},
+    state,
+    {
+      posting: false,
+      error: null,
+      // Newprofile: The profile just created. Is updated so the form edit and stop creating.
+      newprofile: action.profile.uuid,
+      items: newItems
+    }
+  )
+}
+
+// failed to get the profile
+export const profilePostFailure = (state: Object, { error }: Object) =>
+  Object.assign({}, state, { posting: false, error: error })
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -62,8 +92,10 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGNUP_REQUEST]: signupRequest,
   [Types.SIGNUP_SUCCESS]: signupSuccess,
   [Types.SIGNUP_FAILURE]: signupFailure,
-
-  [Types.LOGOUT]: logout
+  [Types.LOGOUT]: logout,
+  [Types.PROFILE_POST_REQUEST]: profilePostRequest,
+  [Types.PROFILE_POST_SUCCESS]: profilePostSuccess,
+  [Types.PROFILE_POST_FAILURE]: profilePostFailure
 })
 
 /* ------------- Selectors ------------- */

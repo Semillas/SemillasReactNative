@@ -22,11 +22,8 @@ import ServicePhotos from './ServicePhotoUploader'
 type ServicePostProps = {
   dispatch: () => any,
   fetching: boolean,
-  uuid: string,
   attemptServicePost: () => void,
-  retrieveService: () => void,
-  clearNewService: () => void,
-  service: Object
+  profile: Object
 }
 
 class EditServiceForm extends React.Component {
@@ -287,8 +284,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptServicePost:
-      (title, description, category, seedsPrice, uuid) => dispatch(
+    attemptProfilePost:
+      (name, email, phone, uuid) => dispatch(
         ServiceActions.servicePostRequest(
           title,
           description,

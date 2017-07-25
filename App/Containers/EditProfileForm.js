@@ -14,65 +14,52 @@ import {
 import { connect } from 'react-redux'
 import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
-import ServiceActions from '../Redux/ServiceRedux'
+import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
-import ServicePhotos from './ServicePhotoUploader'
 
-type ServicePostProps = {
+type ProfilePostProps = {
   dispatch: () => any,
-  fetching: boolean,
   uuid: string,
-  attemptServicePost: () => void,
-  retrieveService: () => void,
-  clearNewService: () => void,
-  service: Object
+  attemptProfilePost: () => void,
+  profile: Object
 }
 
-class EditServiceForm extends React.Component {
-  props: ServicePostProps
+class EditProfileForm extends React.Component {
+  props: ProfilePostProps
 
   state: {
     name: string,
     email: string,
-    category: number,
-    seed_price: number,
+    phone: string,
     visibleHeight: number,
     uuid: string,
     topLogo: {
       width: number
     },
-    fetching: boolean
   }
 
   isAttempting: boolean
   keyboardDidShowListener: Object
   keyboardDidHideListener: Object
 
-  constructor (props: ServicePostProps) {
+  constructor (props: ProfilePostProps) {
     super(props)
     this.state = {
       name: '',
       email: '',
       phone: '',
       visibleHeight: Metrics.screenHeight,
-      fetching: false,
       uuid: null
     }
     this.isAttempting = false
   }
 
-  assignServiceToState (service) {
-    this.state.name = service.name
-    this.state.email = service.email
-    this.state.phone = String(service.phone)
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.service) {
-      // Update form with service values
-      this.assignServiceToState(newProps.service)
-    }
+  assignProfileToState (profile) {
+    this.state.name = profile.name
+    this.state.email = profile.email
+    this.state.phone = profile.phone
+    this.state.uuid= profile.uuid
   }
 
   componentWillMount () {
@@ -81,21 +68,21 @@ class EditServiceForm extends React.Component {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
 
-    if (this.props.uuid) {
-      // Editing a service
-      if (this.props.service) {
-        this.assignServiceToState(this.props.service)
-      } else {
-        this.props.retrieveService(this.props.uuid)
-      }
-    }
+    this.assignProfileToState(this.props.profile)
+
+//    if (this.props.uuid) {
+//      // Editing a service
+//      if (this.props.service) {
+//        this.assignServiceToState(this.props.service)
+//      } else {
+//        this.props.retrieveService(this.props.uuid)
+//      }
+//    }
   }
 
   componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
-
-    this.props.clearNewService()
   }
 
   keyboardDidShow = (e) => {
@@ -118,11 +105,11 @@ class EditServiceForm extends React.Component {
   }
 
   handlePressPost = () => {
-    var { name, email, category, phone, uuid } = this.state
+    var { name, email, phone, uuid } = this.state
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
 
-    this.props.attemptProfilePost(name, email, category, phone, uuid)
+    this.props.attemptProfilePost(name, email, phone, uuid)
   }
 
   handleChangeName = (text) => {
@@ -154,9 +141,8 @@ class EditServiceForm extends React.Component {
 //  }
 
   render () {
-    const { name, email, phone } = this.state // TODO: Add category
-    const { fetching } = this.state
-    const editable = !fetching
+    const { name, email, phone } = this.state
+    const editable = !this.props.posting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
       <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
@@ -193,7 +179,7 @@ class EditServiceForm extends React.Component {
               returnKeyType='next'
               autoCapitalize='sentences'
               autoCorrect
-              onChangeText={this.handleChangeemail}
+              onChangeText={this.handleChangeEmail}
               numberOfLines={8}
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.phone.focus()}
@@ -213,7 +199,7 @@ class EditServiceForm extends React.Component {
               keyboardType='phone-pad'
               returnKeyType='next'
               autoCorrect={false}
-              onChangeText={this.handleChangeSeedsPrice}
+              onChangeText={this.handleChangePhone}
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressPost}
               placeholder={'+34 654 321 321'} />
@@ -224,9 +210,6 @@ class EditServiceForm extends React.Component {
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
-          // <View style={[Styles.loginRow]}>
-          //   <ServicePhotos serviceUuid={this.props.uuid ? this.props.uuid : this.props.newService} />
-          // </View>
           <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
             <View style={Styles.buttonCta}>
               <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
@@ -240,11 +223,9 @@ class EditServiceForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    fetching: state.services.fetching,
-    posting: state.services.posting,
-    error: state.services.error,
-    uuid: ownProps.uuid,
-    deleting: state.services.deleting
+    error: state.login.postError,
+    profile: state.login.user,
+    posting: state.login.posting
   }
 }
 
@@ -252,15 +233,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptProfilePost:
       (name, email, phone, uuid) => dispatch(
-        ServiceActions.servicePostRequest(
+        LoginActions.profilePostRequest(
           name,
           email,
-          category,
           phone,
           uuid
         )
-      ),
+      )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditServiceForm)
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileForm)

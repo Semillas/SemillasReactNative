@@ -117,6 +117,16 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
       }
     )
 
+  const putUser = (uuid, name, email, phone) =>
+    api.patch('/api/v1/user/update/' + uuid + '/',
+      {
+        'name': name,
+        'email': email,
+        'phone': phone
+      }
+    )
+
+
   const setHeader = api.setHeader
 
   const photoPostService = (photoUrl, serviceUuid) => {
@@ -159,7 +169,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     putService,
     getUserServices,
     deleteService,
-    photoPostService
+    photoPostService,
+    putUser
   }
 }
 
