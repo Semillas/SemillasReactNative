@@ -15,3 +15,20 @@ export function * getUser (api, action) {
     yield put(UsersActions.usersFailure())
   }
 }
+
+export function * profilePost (api, { name, email, phone, uuid }) {
+  if ((name === '') || (email === '')) {
+    // dispatch failure
+    yield put(UsersActions.profilePostFailure('WRONG'))
+  }
+
+  // make the call to the api
+  const response = yield call(api.putUser, uuid, name, email, phone)
+
+  // success?
+  if (response.ok) {
+    yield put(UsersActions.profilePostSuccess(response.data))
+  } else {
+    yield put(UsersActions.profilePostFailure(response.data))
+  }
+}

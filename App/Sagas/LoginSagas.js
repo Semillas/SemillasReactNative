@@ -37,19 +37,3 @@ export function * signup (api, { email, password1, password2 }) {
   }
 }
 
-export function * profilePost (api, { name, email, phone, uuid }) {
-  if ((name === '') || (email === '')) {
-    // dispatch failure
-    yield put(LoginActions.profilePostFailure('WRONG'))
-  }
-
-  // make the call to the api
-  const response = yield call(api.putUser, uuid, name, email, phone)
-
-  // success?
-  if (response.ok) {
-    yield put(LoginActions.profilePostSuccess(response.data.key, response.data.user))
-  } else {
-    yield put(LoginActions.profilePostFailure(response.data))
-  }
-}

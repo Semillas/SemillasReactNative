@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux'
 import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
-import LoginActions from '../Redux/LoginRedux'
+import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 
@@ -223,9 +223,9 @@ class EditProfileForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    error: state.login.postError,
-    profile: state.login.user,
-    posting: state.login.posting
+    error: state.users.postError,
+    profile: state.users.entities[state.login.user.uuid],
+    posting: state.users.posting
   }
 }
 
@@ -233,7 +233,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptProfilePost:
       (name, email, phone, uuid) => dispatch(
-        LoginActions.profilePostRequest(
+        UsersActions.profilePostRequest(
           name,
           email,
           phone,

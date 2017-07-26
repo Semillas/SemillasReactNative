@@ -8,7 +8,10 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   usersRequest: ['uuid'],
   usersSuccess: ['user'],
-  usersFailure: null
+  usersFailure: null,
+  profilePostRequest: ['name', 'email', 'phone', 'uuid'],
+  profilePostSuccess: ['profile'],
+  profilePostFailure: ['error']
 })
 
 export const UsersTypes = Types
@@ -20,31 +23,65 @@ export const INITIAL_STATE = Immutable({
   entities: {},
   fetching: null,
   error: null,
-  uuid: null
+  uuid: null,
+  posting: false,
+  postError: null
 })
 
 /* ------------- Reducers ------------- */
 
 // request the user for a uuid
 export const request = (state: Object, { uuid }: Object) =>
-  state.merge({ fetching: true, uuid })
+  Object.assign({}, state, { fetching: true, uuid })
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
   const { user } = action
   const entities = {}
   entities[user['uuid']] = user
-  return state.merge({ fetching: false, error: null, entities: entities })
+  return Object.assign({}, state, { fetching: false, error: null, entities: entities })
 }
 
 // failed to get the user
 export const failure = (state: Object) =>
-  state.merge({ fetching: false, error: true })
+  Object.assign({}, state, ({ fetching: false, error: true }))
+
+export const profilePostRequest = (state: Object, action : Object) => {
+  return Object.assign({}, state, { postError: true })
+}
+
+// successful profile lookup
+export const profilePostSuccess = (state: Object, action: Object) => {
+  var newItems = Object.assign({}, state.items)
+  debugger;
+  const { uuid, name, phone, email, picture } = action.profile
+  user = state.entities[uuid]
+  newUser = Object.assign({}, user, action.profile)
+  newEntity = {}
+  newEntity[uuid] = newUser
+  newEntities = Object.assign({}, state.entities, newEntity)
+  return Object.assign(
+    {},
+    state,
+    {
+      posting: false,
+      postError: null,
+      entities: newEntities
+    }
+  )
+}
+
+// failed to get the profile
+export const profilePostFailure = (state: Object, { error }: Object) =>
+  Object.assign({}, state, { posting: false, postError: error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USERS_REQUEST]: request,
   [Types.USERS_SUCCESS]: success,
-  [Types.USERS_FAILURE]: failure
+  [Types.USERS_FAILURE]: failure,
+  [Types.PROFILE_POST_REQUEST]: profilePostRequest,
+  [Types.PROFILE_POST_SUCCESS]: profilePostSuccess,
+  [Types.PROFILE_POST_FAILURE]: profilePostFailure
 })
