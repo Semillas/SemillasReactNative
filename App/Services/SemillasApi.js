@@ -22,19 +22,19 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     timeout: 10000
   })
 
-  // baseURL = 'https://requestb.in'
-  // const requestBin = apisauce.create({
-  //   // base URL is read from the "constructor"
-  //   baseURL,
-  //   // here are some default headers
-  //   headers: {
-  //     'Cache-Control': 'no-cache',
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json'
-  //   },
-  //   // 10 second timeout...
-  //   timeout: 10000
-  // })
+   baseURL = 'https://requestb.in'
+   const requestBin = apisauce.create({
+     // base URL is read from the "constructor"
+     baseURL,
+     // here are some default headers
+     headers: {
+       'Cache-Control': 'no-cache',
+       'Content-Type': 'application/json',
+       'Accept': 'application/json'
+     },
+     // 10 second timeout...
+     timeout: 10000
+   })
 
   // Force OpenWeather API Key on all requests
   // api.addRequestTransform((request) => {
@@ -63,6 +63,10 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   //
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
+
+
+  const setHeader = api.setHeader
+
   const login = (email, password) => api.post('/rest-auth/login/', {'email': email, 'password': password})
 
   const signup = (email, password1, password2) => api.post('/rest-auth/registration/', {'email': email, 'password1': password1, 'password2': password2})
@@ -126,8 +130,18 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
       }
     )
 
+  const putUserPhoto  = (uuid, pictureUrl) => {
+    const data = new FormData()
+    data.append('picture', {
+      uri: pictureUrl,
+      type: 'application/octet-stream',
+      name: 'placeholder.jpg'
+    })
 
-  const setHeader = api.setHeader
+    return api.put('/api/v1/user/update/' + uuid + '/',
+      data
+    )
+  }
 
   const photoPostService = (photoUrl, serviceUuid) => {
     // create formdata
@@ -170,7 +184,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     getUserServices,
     deleteService,
     photoPostService,
-    putUser
+    putUser,
+    putUserPhoto
   }
 }
 

@@ -12,11 +12,12 @@ import {
   LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/EditServiceFormStyle'
+import Styles from './Styles/EditProfileFormStyle'
 import {Images, Metrics} from '../Themes'
 import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
+import ProfilePhotoUploader from './ProfilePhotoUploader'
 
 type ProfilePostProps = {
   dispatch: () => any,
@@ -124,21 +125,17 @@ class EditProfileForm extends React.Component {
     this.setState({ phone: text })
   }
 
-//  renderPublishButtonText () {
-//    if (this.props.posting) {
-//      return (
-//        <Text style={Styles.buttonText}>{I18n.t('Publishing')}</Text>
-//      )
-//    } else if (!(this.props.error) && (this.props.newService)) {
-//      return (
-//        <Text style={Styles.buttonText}>{I18n.t('Published')}</Text>
-//      )
-//    } else {
-//      return (
-//        <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
-//      )
-//    }
-//  }
+  renderPublishButtonText () {
+    if (this.props.posting) {
+      return (
+        <Text style={Styles.buttonText}>{I18n.t('Publishing')}</Text>
+      )
+    } else {
+      return (
+        <Text style={Styles.buttonText}>{I18n.t('Published')}</Text>
+      )
+    }
+  }
 
   render () {
     const { name, email, phone } = this.state
@@ -148,6 +145,9 @@ class EditProfileForm extends React.Component {
       <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
         <View style={Styles.form}>
+
+          <ProfilePhotoUploader user={this.props.profile} />
+
           <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('Name')}</Text>
             <TextInput
@@ -212,7 +212,7 @@ class EditProfileForm extends React.Component {
           </Text>
           <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
             <View style={Styles.buttonCta}>
-              <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
+              {this.renderPublishButtonText()}
             </View>
           </TouchableOpacity>
         </View>

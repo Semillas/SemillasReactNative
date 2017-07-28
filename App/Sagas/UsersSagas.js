@@ -23,12 +23,25 @@ export function * profilePost (api, { name, email, phone, uuid }) {
   }
 
   // make the call to the api
-  const response = yield call(api.putUser, uuid, name, email, phone)
+  const response = yield call(api.putUser, uuid, name, email, phone, picture)
 
   // success?
   if (response.ok) {
     yield put(UsersActions.profilePostSuccess(response.data))
   } else {
     yield put(UsersActions.profilePostFailure(response.data))
+  }
+}
+
+export function * profilePhotoPost (api, { picture, uuid }) {
+
+  // make the call to the api
+  const response = yield call(api.putUserPhoto, uuid, picture.uri)
+
+  // success?
+  if (response.ok) {
+    yield put(UsersActions.profilePhotoPostSuccess(response.data))
+  } else {
+    yield put(UsersActions.profilePhotoPostFailure(response.data))
   }
 }

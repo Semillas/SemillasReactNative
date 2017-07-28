@@ -15,7 +15,7 @@ import { UserServicesTypes } from '../Redux/UserServicesRedux'
 
 // import { startup } from './StartupSagas'
 import { login, signup } from './LoginSagas'
-import { getUser, profilePost } from './UsersSagas'
+import { getUser, profilePost, profilePhotoPost } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getService, postService, photoPostService, deleteService } from './ServiceSagas'
@@ -39,6 +39,7 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
     takeLatest(LoginTypes.SIGNUP_REQUEST, signup, semillasApi),
     takeLatest(UsersTypes.PROFILE_POST_REQUEST, profilePost, semillasApi),
+    takeLatest(UsersTypes.PROFILE_PHOTO_POST_REQUEST, profilePhotoPost, semillasApi),
     takeLatest(UsersTypes.USERS_REQUEST, getUser, semillasApi),
     takeLatest(FeedTypes.FEED_REQUEST, getFeed, semillasApi),
     takeLatest(ServiceTypes.SERVICE_REQUEST, getService, semillasApi),
