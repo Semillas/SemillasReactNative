@@ -54,7 +54,7 @@ class EditServiceForm extends React.Component {
     this.state = {
       title: '',
       description: '',
-      category: 1,
+      category: null,
       seedsPrice: '1',
       visibleHeight: Metrics.screenHeight,
       fetching: false,
@@ -201,7 +201,7 @@ class EditServiceForm extends React.Component {
         <Picker.Item label={item.name} value={item.id} key={itemKey} />
       ))
     } else {
-      return (<View />)
+      return (<Picker.Item label={'Loading Categories'} value={-1} key={0} />)
     }
   }
 
@@ -261,7 +261,6 @@ class EditServiceForm extends React.Component {
             <Text style={Styles.rowLabel}>{I18n.t('Category')}</Text>
             <Picker
               selectedValue={category} // bien
-              //onValueChange={this.handleChangeCategory}>
               onValueChange={(itemValue) => this.setState({category: itemValue})}
               enabled={editable} // Bien
               prompt={I18n.t('Category')} // bien
@@ -272,7 +271,6 @@ class EditServiceForm extends React.Component {
               { (this.props.error && this.props.error.category) ? this.props.error['category'][0] : ''}
             </Text>
           </View>
-
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
