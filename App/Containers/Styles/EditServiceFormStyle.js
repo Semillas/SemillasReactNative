@@ -31,6 +31,14 @@ export default StyleSheet.create({
     height: 40,
     color: Colors.steel
   },
+  descriptionTextInput: {
+    height: 100,
+    color: Colors.coal
+  },
+  descriptionTextInputReadonly: {
+    height: 100,
+    color: Colors.steel
+  },
   loginRow: {
     paddingBottom: Metrics.doubleBaseMargin,
     paddingHorizontal: Metrics.doubleBaseMargin,

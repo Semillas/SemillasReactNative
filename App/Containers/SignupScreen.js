@@ -127,7 +127,7 @@ class SignupScreen extends React.Component {
               style={textInputStyle}
               value={email}
               editable={editable}
-              keyboardType='default'
+              keyboardType='email-address'
               returnKeyType='next'
               autoCapitalize='none'
               autoCorrect={false}

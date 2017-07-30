@@ -210,6 +210,7 @@ class EditServiceForm extends React.Component {
     const { fetching } = this.state
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
+    const descriptionTextInputStyle = editable ? Styles.descriptionTextInput : Styles.descriptionTextInputReadonly
     return (
       <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
@@ -238,12 +239,13 @@ class EditServiceForm extends React.Component {
             <Text style={Styles.rowLabel}>{I18n.t('Description')}</Text>
             <TextInput
               ref='description'
-              style={textInputStyle}
+              style={descriptionTextInputStyle}
               value={description}
               editable={editable}
               keyboardType='default'
               returnKeyType='next'
               autoCapitalize='sentences'
+              multiline={true}
               autoCorrect
               onChangeText={this.handleChangeDescription}
               numberOfLines={8}
