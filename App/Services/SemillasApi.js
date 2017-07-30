@@ -159,6 +159,11 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     )
   }
 
+  const getCategories = function () {
+    return api.get('/api/v1/service/categories')
+  }
+
+
   // ------
   // STEP 3
   // ------
@@ -182,6 +187,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     postService,
     putService,
     getUserServices,
+    getCategories,
     deleteService,
     photoPostService,
     putUser,

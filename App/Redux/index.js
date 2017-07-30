@@ -18,6 +18,7 @@ export default () => {
   const rootReducer = combineReducers({
     login: require('./LoginRedux').reducer,
     users: require('./UsersRedux').reducer,
+    category: require('./CategoryRedux').reducer,
     feed: require('./FeedRedux').reducer,
     userServices: require('./UserServicesRedux').reducer,
     services: require('./ServiceRedux').reducer,

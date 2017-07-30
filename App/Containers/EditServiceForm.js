@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import {
   View,
   ScrollView,
@@ -9,21 +9,24 @@ import {
   TouchableOpacity,
   Image,
   Keyboard,
+  Picker,
   LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
 import ServiceActions from '../Redux/ServiceRedux'
+import CategoryActions from '../Redux/CategoryRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 import ServicePhotos from './ServicePhotoUploader'
 
-type ServicePostProps = {
-  dispatch: () => any,
-  fetching: boolean,
-  attemptServicePost: () => void,
-  profile: Object
+ServicePostProps = {
+  dispatch: PropTypes.func,
+  fetching: PropTypes.bool,
+  attemptServicePost: PropTypes.func,
+  profile: PropTypes.object,
+  categories: PropTypes.object
 }
 
 class EditServiceForm extends React.Component {
@@ -89,6 +92,11 @@ class EditServiceForm extends React.Component {
         this.props.retrieveService(this.props.uuid)
       }
     }
+
+    // If not categories loaded, load them
+    if (!this.props.categories) {
+      this.props.retrieveCategories()
+    }
   }
 
   componentWillUnmount () {
@@ -151,6 +159,10 @@ class EditServiceForm extends React.Component {
     this.setState({ seedsPrice: text })
   }
 
+  handleChangeCategory = (itemValue, itemIndex) => {
+    this.setState({ category: itemValue })
+  }
+
   renderDeleteButton () {
     if ((this.props.uuid) || (this.props.newService)) {
       return (
@@ -183,8 +195,18 @@ class EditServiceForm extends React.Component {
     }
   }
 
+  renderPickerCategories () {
+    if (this.props.categories) {
+      return (this.props.categories.map((item, itemKey) =>
+        <Picker.Item label={item.name} value={item.id} key={itemKey} />
+      ))
+    } else {
+      return (<View />)
+    }
+  }
+
   render () {
-    const { title, description, seedsPrice } = this.state // TODO: Add category
+    const { title, description, category, seedsPrice } = this.state // TODO: Add category
     const { fetching } = this.state
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
@@ -234,6 +256,27 @@ class EditServiceForm extends React.Component {
           </View>
 
           <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>{I18n.t('Category')}</Text>
+            <Picker
+              selectedValue={category} // bien
+              //onValueChange={this.handleChangeCategory}>
+              onValueChange={(itemValue) => this.setState({category: itemValue})}
+              enabled={editable} // Bien
+              prompt={I18n.t('Category')} // bien
+            >
+              {this.renderPickerCategories()}
+            </Picker>
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.category) ? this.props.error['category'][0] : ''}
+            </Text>
+          </View>
+
+          <Text style={Styles.errorLabel}>
+            { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
+          </Text>
+
+
+          <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('Seeds Price')}</Text>
             <TextInput
               ref='seedsPrice'
@@ -278,14 +321,15 @@ const mapStateToProps = (state, ownProps) => {
     uuid: ownProps.uuid,
     service: state.services.items[ownProps.uuid],
     newService: state.services.newService,
+    categories: state.category.categories,
     deleting: state.services.deleting
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptProfilePost:
-      (name, email, phone, uuid) => dispatch(
+    attemptServicePost:
+      (title, description, category, seedsPrice, uuid) => dispatch(
         ServiceActions.servicePostRequest(
           title,
           description,
@@ -297,6 +341,7 @@ const mapDispatchToProps = (dispatch) => {
     attemptServiceDelete:
       (uuid) => dispatch(ServiceActions.serviceDeletionRequest(uuid)),
     retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid)),
+    retrieveCategories: () => dispatch(CategoryActions.categoryRequest()),
     clearNewService: () => dispatch(ServiceActions.clearNewService())
   }
 }

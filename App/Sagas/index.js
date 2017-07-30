@@ -10,6 +10,7 @@ import { UsersTypes } from '../Redux/UsersRedux'
 import { FeedTypes } from '../Redux/FeedRedux'
 import { ServiceTypes } from '../Redux/ServiceRedux'
 import { UserServicesTypes } from '../Redux/UserServicesRedux'
+import { CategoryTypes } from '../Redux/CategoryRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -18,6 +19,7 @@ import { login, signup } from './LoginSagas'
 import { getUser, profilePost, profilePhotoPost } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
+import { getCategories } from './CategorySagas'
 import { getService, postService, photoPostService, deleteService } from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
 
@@ -46,6 +48,7 @@ export default function * root () {
     takeLatest(ServiceTypes.SERVICE_POST_REQUEST, postService, semillasApi),
     takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
-    takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi)
+    takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
+    takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi)
   ]
 }
