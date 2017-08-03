@@ -44,8 +44,8 @@ class LoginScreen extends React.Component {
   constructor (props: LoginScreenProps) {
     super(props)
     this.state = {
-      email: 'reactnative@infinite.red',
-      password: 'password',
+      email: '',
+      password: '',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth }
     }
@@ -136,7 +136,7 @@ class LoginScreen extends React.Component {
           </View>
 
           <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('password')}</Text>
+            <Text style={Styles.rowLabel}>{I18n.t('Password')}</Text>
             <TextInput
               ref='password'
               style={textInputStyle}
@@ -150,7 +150,7 @@ class LoginScreen extends React.Component {
               onChangeText={this.handleChangePassword}
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressLogin}
-              placeholder={I18n.t('password')} />
+              placeholder={I18n.t('Password')} />
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.password) ? this.props.error['password'][0] : ''}
             </Text>
