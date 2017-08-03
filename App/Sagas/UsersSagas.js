@@ -23,7 +23,7 @@ export function * profilePost (api, { name, email, phone, uuid }) {
   }
 
   // make the call to the api
-  const response = yield call(api.putUser, uuid, name, email, phone, picture)
+  const response = yield call(api.putUser, uuid, name, email, phone)
 
   // success?
   if (response.ok) {

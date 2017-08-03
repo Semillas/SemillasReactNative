@@ -1,18 +1,17 @@
 // @flow
 
-import { StyleSheet } from 'react-native'
-import { ApplicationStyles, Metrics, Colors } from '../../Themes/'
+import { StyleSheet, PixelRatio } from 'react-native'
+import { ApplicationStyles, Metrics, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
 
   mapSection: {
-    height: 350,
-    width: 300,
+    height: 250,
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
   map: {
-    height: 300,
+    height: 250,
     borderRadius: 5,
     marginHorizontal: Metrics.section,
     marginVertical: Metrics.baseMargin,
@@ -20,6 +19,29 @@ export default StyleSheet.create({
     alignItems: 'center',
     ...StyleSheet.absoluteFillObject
   },
+  avatarContainer: {
+    borderColor: '#9B9B9B',
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150
+  },
+  section: {
+    alignItems: 'center'
+  },
+  subSectionText: {
+    ...Fonts.style.h5,
+    color: Colors.cta,
+    backgroundColor: Colors.ricePaper,
+    padding: Metrics.smallMargin,
+    marginTop: Metrics.smallMargin,
+    marginHorizontal: Metrics.baseMargin,
+    alignItems: 'center',
+    textAlign: 'center'
+    },
   ...ApplicationStyles.screen
-
 })

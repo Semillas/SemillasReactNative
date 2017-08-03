@@ -42,20 +42,6 @@ class ProfilePhotoUploader extends React.Component {
     })
   }
 
-//   componentWillUnmount () {
-//     this.props.servicePhotoClear()
-//   }
-
-//  renderCurrentPhotos () {
-//    return (
-//      <View >
-//        { this.props.service.photos.map(function (object, i) {
-//          return <Image key={i} style={styles.avatar} source={{uri: object.photo}} />
-//        })}
-//      </View>
-//    )
-//  }
-
   renderUploadingStatus () {
     if (this.props.postingPhoto === true) {
       return <ActivityIndicator />

@@ -3,16 +3,20 @@
 import React, { PropTypes } from 'react'
 import { Text,
          View,
+         ActivityIndicator,
+         Image,
          ScrollView
 } from 'react-native'
 import { connect } from 'react-redux'
-import UserActions from '../Redux/UsersRedux.js'
 import MapView from 'react-native-maps'
-import UserServices from './UserServices'
 import I18n from 'react-native-i18n'
-import LoginSignUpButtons from '../Components/LoginSignUpButtons'
-import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import RoundedButton from '../Components/RoundedButton'
+import UserActions from '../Redux/UsersRedux.js'
+import UserServices from './UserServices'
+import LoginSignUpButtons from '../Components/LoginSignUpButtons'
+import { Images } from '../Themes/'
+
 
 // Styles
 import styles from './Styles/UserScreenStyle'
@@ -44,6 +48,21 @@ class UserScreen extends React.Component {
         <Text>Location Not Available</Text>
       )
     }
+  }
+
+  renderProfilePhoto (user) {
+    var uri
+    if (user.picture) {
+      source = {uri: user.picture}
+    } else {
+      source = Images.profilePlaceholder
+    }
+
+    return (
+      <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+        <Image style={styles.avatar} source={source} />
+      </View>
+    )
   }
 
   renderEditButton () {
@@ -79,27 +98,21 @@ class UserScreen extends React.Component {
     if (!user) {
       return (
         <View style={styles.mainContainer}>
-          <Text>Loading</Text>
-          <View style={styles.section}>
-            <Text>UserScreen Container</Text>
-          </View>
-          <View style={styles.section}>
-            <Text>UserScreen Container</Text>
-            <Text>uuid: {this.props.uuid}</Text>
-          </View>
+          <ActivityIndicator />
         </View>
       )
     } else {
       return (
         <ScrollView style={styles.mainContainer}>
-          {this.renderMap(user)}
+            {this.renderMap(user)}
           <View style={styles.section}>
+            {this.renderProfilePhoto(user)}
+            <Text style={styles.sectionTitle}>{user.name}</Text>
+            <Text style={styles.subtitle}>{(user.email && user.email)}</Text>
+            <Text style={styles.subtitle}>{(user.phone && user.phone)}</Text>
+          </View>
             {this.renderEditButton()}
-          </View>
-          <View style={styles.section}>
-            <Text>{user.name}</Text>
-          </View>
-          <Text>{I18n.t('Services being offered')}</Text>
+          <Text style={styles.subSectionText}>{I18n.t('Services being offered')}</Text>
           <UserServices userUuid={this.props.uuid} />
         </ScrollView>
       )

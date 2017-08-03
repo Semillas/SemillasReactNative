@@ -29,9 +29,10 @@ const ApplicationStyles = {
       margin: Metrics.section,
       padding: Metrics.baseMargin,
       borderTopColor: Colors.frost,
-      borderTopWidth: 0.5,
+      // borderTopWidth: 0.5,
       borderBottomColor: Colors.frost,
-      borderBottomWidth: 1
+      borderBottomWidth: 1,
+      alignItems: 'center'
     },
     sectionText: {
       color: Colors.cta,
@@ -44,7 +45,18 @@ const ApplicationStyles = {
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin
-    }
+    },
+    sectionTitle: {
+      ...Fonts.style.h4,
+      color: Colors.coal,
+      backgroundColor: Colors.ricePaper,
+      padding: Metrics.smallMargin,
+      marginTop: Metrics.smallMargin,
+      marginHorizontal: Metrics.baseMargin,
+      alignItems: 'center',
+      textAlign: 'center'
+      }
+
   },
   darkLabelContainer: {
     backgroundColor: Colors.cloud,
@@ -60,18 +72,6 @@ const ApplicationStyles = {
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  sectionTitle: {
-    ...Fonts.style.h4,
-    color: Colors.coal,
-    backgroundColor: Colors.ricePaper,
-    padding: Metrics.smallMargin,
-    marginTop: Metrics.smallMargin,
-    marginHorizontal: Metrics.baseMargin,
-    borderWidth: 1,
-    borderColor: Colors.ember,
-    alignItems: 'center',
-    textAlign: 'center'
-  }
 }
 
 export default ApplicationStyles
