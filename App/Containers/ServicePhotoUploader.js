@@ -51,10 +51,27 @@ class ServicePhotoUploader extends React.Component {
   }
 
   renderCurrentPhotos () {
+    handlePressDeletePhoto = () => {
+      console.log('Delete Service Photo.')
+      this.props.attemptPhotoDelete()
+    }
     return (
       <View >
         { this.props.service.photos.map(function (object, i) {
-          return <Image key={i} style={styles.avatar} source={{uri: object.photo}} />
+          return (
+            <View key={i}>
+              <Image style={styles.avatar} source={{uri: object.photo}} />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handlePressDeletePhoto()}>
+                <Text
+                  // style={Styles.buttonText}
+                  >
+                  {I18n.t('Delete Photo')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )
         })}
       </View>
     )
@@ -135,8 +152,13 @@ const mapDispatchToProps = (dispatch) => {
     attemptPhotoPost:
       (photoUrl, serviceUuid) => dispatch(
         ServiceActions.servicePhotoPostRequest(
-          photoUrl,
-          serviceUuid
+                    serviceUuid
+        )
+      ),
+    attemptPhotoDelete:
+      (photoId) => dispatch(
+        ServiceActions.servicePhotoDeletionRequest(
+                    photoId
         )
       ),
     servicePhotoClear: () => dispatch(ServiceActions.servicePhotoClear())

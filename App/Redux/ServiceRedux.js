@@ -16,6 +16,9 @@ const { Types, Creators } = createActions({
   servicePhotoPostRequest: ['photoUrl', 'serviceUuid'],
   servicePhotoPostSuccess: ['service'],
   servicePhotoPostFailure: null,
+  servicePhotoDeletionRequest: ['photoId'],
+  servicePhotoDeletionSuccess: null,
+  servicePhotoDeletionFailure: ['error'],
   servicePhotoClear: null,
   serviceDeletionRequest: ['uuid'],
   serviceDeletionSuccess: null,
@@ -32,6 +35,8 @@ export const INITIAL_STATE = Immutable({
   posting: null,
   deletionError: null,
   deleting: null,
+  deletePhotoError: null,
+  deletingPhoto: null,
   error: null,
   uuid: null,
   items: {},
@@ -155,8 +160,26 @@ export const serviceDeletionSuccess = (state: Object, action: Object) => {
 export const serviceDeletionFailure = (state: Object) =>
   Object.assign({}, state, { deleting: false, deletionError: true })
 
-/* ------------- Hookup Reducers To Types ------------- */
+// request the service with a given url.
+export const servicePhotoDeletionRequest = (state: Object, action : Object) => {
+  return Object.assign({}, state, {deletingPhoto: true, deletePhotoError: false})
+}
+// successful service lookup
+export const servicePhotoDeletionSuccess = (state: Object, action: Object) => {
+  // TODO: Should delete the current service from the state.
+  debugger;
+  return Object.assign({}, state, {
+    deleting: false
+  })
+}
+// failed to get the service
+// TODO Return proper error
+export const servicePhotoDeletionFailure = (state: Object, action: Object) => {
+  const { error } = action
+  return Object.assign({}, state, { deleting: false, deletionError: error })
+}
 
+/* ------------- Hookup Reducers To Types ------------- */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_POST_REQUEST]: servicePostRequest,
   [Types.SERVICE_POST_SUCCESS]: servicePostSuccess,
@@ -170,5 +193,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_PHOTO_CLEAR]: clearUploadingPhoto,
   [Types.SERVICE_DELETION_REQUEST]: serviceDeletionRequest,
   [Types.SERVICE_DELETION_SUCCESS]: serviceDeletionSuccess,
-  [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure
+  [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure,
+  [Types.SERVICE_PHOTO_DELETION_REQUEST]: servicePhotoDeletionRequest,
+  [Types.SERVICE_PHOTO_DELETION_SUCCESS]: serviceDeletionSuccess,
+  [Types.SERVICE_PHOTO_DELETION_FAILURE]: servicePhotoDeletionFailure
 })

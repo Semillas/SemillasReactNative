@@ -100,6 +100,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
   const getUserDetail = (uuid) => api.get('/api/v1/user/' + uuid + '/')
   const getServiceDetail = (uuid) => api.get('/api/v1/service/' + uuid + '/')
   const deleteService = (uuid) => api.delete('/api/v1/service/delete/' + uuid + '/')
+  const deleteServicePhoto = (id) => api.delete('/api/v1/service/photo/delete/' + id + '/')
 
   const postService = (title, description, category, seedsPrice) =>
     api.post('/api/v1/service/',
@@ -189,6 +190,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     getUserServices,
     getCategories,
     deleteService,
+    deleteServicePhoto,
     photoPostService,
     putUser,
     putUserPhoto

@@ -20,7 +20,11 @@ import { getUser, profilePost, profilePhotoPost } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getCategories } from './CategorySagas'
-import { getService, postService, photoPostService, deleteService } from './ServiceSagas'
+import {  getService,
+          postService,
+          photoPostService,
+          deleteService,
+          deleteServicePhoto} from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -49,6 +53,7 @@ export default function * root () {
     takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
+    takeLatest(ServiceTypes.SERVICE_PHOTO_DELETION_REQUEST, deleteServicePhoto, semillasApi),
     takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi)
   ]
 }
