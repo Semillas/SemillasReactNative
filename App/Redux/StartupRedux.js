@@ -5,7 +5,8 @@ import { createActions } from 'reduxsauce'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  startup: null
+  startup: null,
+  rehidratateApiKey: null
 })
 
 export const StartupTypes = Types
