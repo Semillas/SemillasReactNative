@@ -12,6 +12,7 @@ import {
 import ServiceActions from '../Redux/ServiceRedux'
 import I18n from 'react-native-i18n'
 import ImagePicker from 'react-native-image-picker'
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 class ServicePhotoUploader extends React.Component {
 
@@ -48,6 +49,12 @@ class ServicePhotoUploader extends React.Component {
 
   componentWillUnmount () {
     this.props.servicePhotoClear()
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.photoDeleteError) {
+      this.refs.toast.show(newProps.photoDeleteError);
+    }
   }
 
   renderCurrentPhotos () {
@@ -103,6 +110,7 @@ class ServicePhotoUploader extends React.Component {
         <View style={styles.container}>
           {this.renderCurrentPhotos()}
           {this.renderNewPhotoUploader()}
+          <Toast ref="toast"/>
         </View>
       )
     } else {
@@ -143,7 +151,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     service: state.services.items[ownProps.serviceUuid],
     postingPhoto: state.services.postingPhoto,
-    photoPostError: state.services.photoPostError
+    photoPostError: state.services.photoPostError,
+    photoDeleteError: state.services.deletePhotoError
   }
 }
 

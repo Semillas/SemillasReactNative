@@ -176,7 +176,7 @@ export const servicePhotoDeletionSuccess = (state: Object, action: Object) => {
 // TODO Return proper error
 export const servicePhotoDeletionFailure = (state: Object, action: Object) => {
   const { error } = action
-  return Object.assign({}, state, { deleting: false, deletionError: error })
+  return Object.assign({}, state, { deletingPhoto: false, deletePhotoError: error })
 }
 
 /* ------------- Hookup Reducers To Types ------------- */

@@ -37,6 +37,7 @@
     "react-native-config": "^0.1.2",
     "react-native-device-info": "^0.9.9",
     "react-native-drawer": "^2.3.0",
+    "react-native-easy-toast": "^1.0.6",
     "react-native-i18n": "^0.1.1",
     "react-native-image-picker": "^0.26.3",
     "react-native-image-zoom-viewer": "^2.0.6",
