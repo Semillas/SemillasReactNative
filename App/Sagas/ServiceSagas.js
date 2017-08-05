@@ -77,13 +77,13 @@ export function * deleteService (api, action) {
 }
 
 export function * deleteServicePhoto (api, action) {
-  const { photoId } = action
+  const { serviceId, photoId } = action
   // make the call to the api
   const response = yield call(api.deleteServicePhoto, photoId)
 
   // success?
   if (response.ok) {
-    yield put(ServiceActions.servicePhotoDeletionSuccess())
+    yield put(ServiceActions.servicePhotoDeletionSuccess(serviceId, photoId))
   } else {
     yield put(ServiceActions.servicePhotoDeletionFailure(error=response.data.detail))
   }

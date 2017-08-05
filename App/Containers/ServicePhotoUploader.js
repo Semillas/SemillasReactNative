@@ -58,9 +58,9 @@ class ServicePhotoUploader extends React.Component {
   }
 
   renderCurrentPhotos () {
-    handlePressDeletePhoto = () => {
+    handlePressDeletePhoto = (photoId) => {
       console.log('Delete Service Photo.')
-      this.props.attemptPhotoDelete()
+      this.props.attemptPhotoDelete(photoId)
     }
     return (
       <View >
@@ -70,7 +70,7 @@ class ServicePhotoUploader extends React.Component {
               <Image style={styles.avatar} source={{uri: object.photo}} />
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => handlePressDeletePhoto()}>
+                onPress={() => handlePressDeletePhoto(object.id)}>
                 <Text
                   // style={Styles.buttonText}
                   >

@@ -16,8 +16,8 @@ const { Types, Creators } = createActions({
   servicePhotoPostRequest: ['photoUrl', 'serviceUuid'],
   servicePhotoPostSuccess: ['service'],
   servicePhotoPostFailure: null,
-  servicePhotoDeletionRequest: ['photoId'],
-  servicePhotoDeletionSuccess: null,
+  servicePhotoDeletionRequest: ['serviceId', 'photoId'],
+  servicePhotoDeletionSuccess: ['serviceId', 'photoId'],
   servicePhotoDeletionFailure: ['error'],
   servicePhotoClear: null,
   serviceDeletionRequest: ['uuid'],
@@ -167,9 +167,19 @@ export const servicePhotoDeletionRequest = (state: Object, action : Object) => {
 // successful service lookup
 export const servicePhotoDeletionSuccess = (state: Object, action: Object) => {
   // TODO: Should delete the current service from the state.
+  const { serviceId, photoId } = action
   debugger;
+  newService = Object.assign({}, state.items[serviceId])
+  var filteredPhotos = newService.photos.filter(
+    function(e) { return e.id !== photoId }
+  )
+  newService.photos = filteredPhotos
+
+  var newItems = Object.assign({}, state.items)
+  newItems[serviceId] = newService
   return Object.assign({}, state, {
-    deleting: false
+    deleting: false,
+    items: newItems
   })
 }
 // failed to get the service
