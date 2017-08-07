@@ -12,6 +12,7 @@ const { Types, Creators } = createActions({
   signupRequest: ['email', 'password1', 'password2'],
   signupSuccess: ['key', 'user'],
   signupFailure: ['error'],
+  setApiKey: ['key'],
   logout: null
 })
 
@@ -26,9 +27,12 @@ export const INITIAL_STATE = Immutable({
   fetching: false,
   signupError: null,
   signupFetching: false,
+  key: null
 })
 
 /* ------------- Reducers ------------- */
+
+export const setApiKey = (state: Object) => state
 
 // we're attempting to login
 export const loginRequest = (state: Object) => state.merge({ fetching: true })
@@ -62,6 +66,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGNUP_REQUEST]: signupRequest,
   [Types.SIGNUP_SUCCESS]: signupSuccess,
   [Types.SIGNUP_FAILURE]: signupFailure,
+  [Types.SET_API_KEY]: setApiKey,
   [Types.LOGOUT]: logout,
 })
 

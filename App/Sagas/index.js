@@ -15,7 +15,7 @@ import { CategoryTypes } from '../Redux/CategoryRedux'
 /* ------------- Sagas ------------- */
 
 // import { startup } from './StartupSagas'
-import { login, signup } from './LoginSagas'
+import { login, signup, setApiKey } from './LoginSagas'
 import { getUser, profilePost, profilePhotoPost } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
@@ -38,11 +38,12 @@ const semillasApi = SemillasApi.create()
 export default function * root () {
   yield [
     // some sagas only receive an action
-    // takeLatest(StartupTypes.STARTUP, startup),
+    //takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(LoginTypes.LOGIN_REQUEST, login, semillasApi),
+    takeLatest(LoginTypes.SET_API_KEY, setApiKey, semillasApi),
     takeLatest(LoginTypes.SIGNUP_REQUEST, signup, semillasApi),
     takeLatest(UsersTypes.PROFILE_POST_REQUEST, profilePost, semillasApi),
     takeLatest(UsersTypes.PROFILE_PHOTO_POST_REQUEST, profilePhotoPost, semillasApi),

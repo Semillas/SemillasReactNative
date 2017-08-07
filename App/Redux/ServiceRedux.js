@@ -168,7 +168,6 @@ export const servicePhotoDeletionRequest = (state: Object, action : Object) => {
 export const servicePhotoDeletionSuccess = (state: Object, action: Object) => {
   // TODO: Should delete the current service from the state.
   const { serviceId, photoId } = action
-  debugger;
   newService = Object.assign({}, state.items[serviceId])
   var filteredPhotos = newService.photos.filter(
     function(e) { return e.id !== photoId }

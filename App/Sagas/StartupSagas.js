@@ -37,7 +37,4 @@ export function * startup (action) {
   if (!is(Number, temp)) {
     yield put(TemperatureActions.temperatureRequest('San Francisco'))
   }
-
-export function * rehidratateApiKey (action) {
-  debugger;
 }

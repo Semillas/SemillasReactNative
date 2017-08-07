@@ -5,19 +5,24 @@ import { View, StatusBar } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
+import LoginActions from '../Redux/LoginRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 
 // Styles
 import styles from './Styles/RootContainerStyle'
 
 class RootContainer extends Component {
+  componentWillReceiveProps(newProps) {
+    // Add Api Key to Semillas API
+    if (newProps.apiKey) {
+      this.props.setApiKey(newProps.apiKey)
+    }
+  }
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
       this.props.startup()
     }
-    // Add Api Key to Semillas API
-    this.props.rehidratateApiKey()
   }
 
   render () {
@@ -30,10 +35,15 @@ class RootContainer extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    apiKey: state.login.key,
+  }
+}
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup()),
-  rehidratateApiKey: () => dispatch(StartupActions.rehidratateApiKey())
+  setApiKey: (key) => dispatch(LoginActions.setApiKey(key))
 })
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

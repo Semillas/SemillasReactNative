@@ -5,7 +5,6 @@ import CategoryActions from '../Redux/CategoryRedux'
 export function * getCategories (api, action) {
   // make the call to the api
   const response = yield call(api.getCategories)
-  debugger;
 
   // success?
   if (response.ok) {

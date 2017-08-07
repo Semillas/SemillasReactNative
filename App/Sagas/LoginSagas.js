@@ -19,6 +19,13 @@ export function * login (api, { email, password }) {
   }
 }
 
+
+export function * setApiKey(api, { key }) {
+  if (key) {
+    api.setHeader('Authorization', 'token ' + key)
+  }
+}
+
 export function * signup (api, { email, password1, password2 }) {
   if (password1 === '') {
     // dispatch failure

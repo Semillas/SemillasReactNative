@@ -30,7 +30,6 @@ export const request = (state: Object) =>
 
 // successful user lookup
 export const success = (state: Object, action: Object) => {
-  debugger;
   const { categories } = action
   return Object.assign({}, state, { fetching: false, error: null, categories: categories })
 }
