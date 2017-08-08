@@ -16,8 +16,8 @@ const { Types, Creators } = createActions({
   servicePhotoPostRequest: ['photoUrl', 'serviceUuid'],
   servicePhotoPostSuccess: ['service'],
   servicePhotoPostFailure: null,
-  servicePhotoDeletionRequest: ['serviceId', 'photoId'],
-  servicePhotoDeletionSuccess: ['serviceId', 'photoId'],
+  servicePhotoDeletionRequest: ['serviceUuid', 'photoId'],
+  servicePhotoDeletionSuccess: ['serviceUuid', 'photoId'],
   servicePhotoDeletionFailure: ['error'],
   servicePhotoClear: null,
   serviceDeletionRequest: ['uuid'],
@@ -167,15 +167,16 @@ export const servicePhotoDeletionRequest = (state: Object, action : Object) => {
 // successful service lookup
 export const servicePhotoDeletionSuccess = (state: Object, action: Object) => {
   // TODO: Should delete the current service from the state.
-  const { serviceId, photoId } = action
-  newService = Object.assign({}, state.items[serviceId])
+  const { serviceUuid, photoId } = action
+
+  newService = Object.assign({}, state.items[serviceUuid])
   var filteredPhotos = newService.photos.filter(
     function(e) { return e.id !== photoId }
   )
   newService.photos = filteredPhotos
 
   var newItems = Object.assign({}, state.items)
-  newItems[serviceId] = newService
+  newItems[serviceUuid] = newService
   return Object.assign({}, state, {
     deleting: false,
     items: newItems
@@ -204,6 +205,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SERVICE_DELETION_SUCCESS]: serviceDeletionSuccess,
   [Types.SERVICE_DELETION_FAILURE]: serviceDeletionFailure,
   [Types.SERVICE_PHOTO_DELETION_REQUEST]: servicePhotoDeletionRequest,
-  [Types.SERVICE_PHOTO_DELETION_SUCCESS]: serviceDeletionSuccess,
+  [Types.SERVICE_PHOTO_DELETION_SUCCESS]: servicePhotoDeletionSuccess,
   [Types.SERVICE_PHOTO_DELETION_FAILURE]: servicePhotoDeletionFailure
 })

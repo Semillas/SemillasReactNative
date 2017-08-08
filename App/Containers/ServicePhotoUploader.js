@@ -58,10 +58,11 @@ class ServicePhotoUploader extends React.Component {
   }
 
   renderCurrentPhotos () {
-    handlePressDeletePhoto = (photoId) => {
+    handlePressDeletePhoto = (serviceUuid, photoId) => {
       console.log('Delete Service Photo.')
-      this.props.attemptPhotoDelete(photoId)
+      this.props.attemptPhotoDelete(serviceUuid, photoId)
     }
+    var service = this.props.service
     return (
       <View >
         { this.props.service.photos.map(function (object, i) {
@@ -70,7 +71,7 @@ class ServicePhotoUploader extends React.Component {
               <Image style={styles.avatar} source={{uri: object.photo}} />
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => handlePressDeletePhoto(object.id)}>
+                onPress={() => handlePressDeletePhoto(service.uuid, object.id)}>
                 <Text
                   // style={Styles.buttonText}
                   >
@@ -161,15 +162,11 @@ const mapDispatchToProps = (dispatch) => {
     attemptPhotoPost:
       (photoUrl, serviceUuid) => dispatch(
         ServiceActions.servicePhotoPostRequest(
-                    serviceUuid
+                    photoUrl, serviceUuid
         )
       ),
-    attemptPhotoDelete:
-      (photoId) => dispatch(
-        ServiceActions.servicePhotoDeletionRequest(
-                    photoId
-        )
-      ),
+    attemptPhotoDelete: (serviceId, photoId) => dispatch(
+        ServiceActions.servicePhotoDeletionRequest (serviceId, photoId)),
     servicePhotoClear: () => dispatch(ServiceActions.servicePhotoClear())
   }
 }
