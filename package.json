@@ -1,6 +1,6 @@
 {
   "name": "SemillasReactNative",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -45,7 +45,7 @@
     "react-native-maps": "0.12.4",
     "react-native-permissions": "^1.0.0",
     "react-native-router-flux": "3.38.0",
-    "react-native-sentry": "^0.14.15",
+    "react-native-sentry": "^0.16.1",
     "react-native-simple-auth": "^2.0.0",
     "react-native-swiper": "^1.5.4",
     "react-native-vector-icons": "^3.0.0",
