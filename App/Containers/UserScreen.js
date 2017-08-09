@@ -28,6 +28,17 @@ class UserScreen extends React.Component {
     dispatch(UserActions.usersRequest(this.props.uuid))
   }
 
+  componentWillReceiveProps (newProps) {
+    // Use case: Not logged in user tries to access a user profile
+    // it will show login/signup buttons. After user log-in, try to ask
+    // for user again.
+    if ((!this.props.loggedIn)
+      && (newProps.loggedIn)) {
+      const { dispatch } = this.props
+      dispatch(UserActions.usersRequest(this.props.uuid))
+    }
+  }
+
   renderMap (user) {
     if (user.location) {
       return (
