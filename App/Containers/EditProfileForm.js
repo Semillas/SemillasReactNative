@@ -33,6 +33,8 @@ class EditProfileForm extends React.Component {
     name: string,
     email: string,
     phone: string,
+    telegramId: string,
+    faircoinAddress: string,
     visibleHeight: number,
     uuid: string,
     topLogo: {
@@ -50,6 +52,8 @@ class EditProfileForm extends React.Component {
       name: '',
       email: '',
       phone: '',
+      telegramId: '',
+      faircoinAddress: '',
       visibleHeight: Metrics.screenHeight,
       uuid: null
     }
@@ -60,6 +64,8 @@ class EditProfileForm extends React.Component {
     this.state.name = profile.name
     this.state.email = profile.email
     this.state.phone = profile.phone
+    this.state.telegramId = profile.telegramId
+    this.state.faircoinAddress = profile.faircoinAddress
     this.state.uuid= profile.uuid
   }
 
@@ -106,11 +112,11 @@ class EditProfileForm extends React.Component {
   }
 
   handlePressPost = () => {
-    var { name, email, phone, uuid } = this.state
+    var { name, email, phone, telegramId, faircoinAddress, uuid } = this.state
     this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
 
-    this.props.attemptProfilePost(name, email, phone, uuid)
+    this.props.attemptProfilePost(name, email, phone, telegramId, faircoinAddress, uuid)
   }
 
   handleChangeName = (text) => {
@@ -123,6 +129,14 @@ class EditProfileForm extends React.Component {
 
   handleChangePhone = (text) => {
     this.setState({ phone: text })
+  }
+
+  handleChangeTelegramId= (text) => {
+    this.setState({ telegramId: text })
+  }
+
+  handleChangeFaircoinAddress = (text) => {
+    this.setState({ faircoinAddress: text })
   }
 
   renderPublishButtonText () {
@@ -138,7 +152,7 @@ class EditProfileForm extends React.Component {
   }
 
   render () {
-    const { name, email, phone } = this.state
+    const { name, email, phone, telegramId, faircoinAddress } = this.state
     const editable = !this.props.posting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
@@ -182,10 +196,50 @@ class EditProfileForm extends React.Component {
               onChangeText={this.handleChangeEmail}
               numberOfLines={8}
               underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.phone.focus()}
+              onSubmitEditing={() => this.refs.telegramId.focus()}
               placeholder={I18n.t('email')} />
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+            </Text>
+          </View>
+
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>{I18n.t('Telegram Id')}</Text>
+            <TextInput
+              ref='telegramId'
+              style={textInputStyle}
+              value={telegramId}
+              editable={editable}
+              keyboardType='email-address'
+              returnKeyType='next'
+              autoCapitalize='sentences'
+              onChangeText={this.handleChangeTelegramId}
+              numberOfLines={8}
+              underlineColorAndroid='transparent'
+              onSubmitEditing={() => this.refs.phone.focus()}
+              placeholder='@username' />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.telegram_id) ? this.props.error['telegram_id'][0] : ''}
+            </Text>
+          </View>
+
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>{I18n.t('Faircoin Address')}</Text>
+            <TextInput
+              ref='faircoinAddress'
+              style={textInputStyle}
+              value={faircoinAddress}
+              editable={editable}
+              keyboardType='default'
+              returnKeyType='next'
+              autoCapitalize='sentences'
+              onChangeText={this.handleChangeFaircoinAddress}
+              numberOfLines={8}
+              underlineColorAndroid='transparent'
+              onSubmitEditing={() => this.refs.phone.focus()}
+              placeholder='' />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
             </Text>
           </View>
 
@@ -232,11 +286,13 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptProfilePost:
-      (name, email, phone, uuid) => dispatch(
+      (name, email, phone, telegramId, faircoinAddress, uuid) => dispatch(
         UsersActions.profilePostRequest(
           name,
           email,
           phone,
+          telegramId,
+          faircoinAddress,
           uuid
         )
       )

@@ -122,12 +122,14 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
       }
     )
 
-  const putUser = (uuid, name, email, phone) =>
+  const putUser = (uuid, name, email, phone, telegramId. FaircoinAddress) =>
     api.patch('/api/v1/user/update/' + uuid + '/',
       {
         'name': name,
         'email': email,
         'phone': phone
+        'telegram_id': telegramId
+        'faircoin_address': FaircoinAddress
       }
     )
 
