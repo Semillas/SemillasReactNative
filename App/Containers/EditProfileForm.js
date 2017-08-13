@@ -18,6 +18,7 @@ import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 import ProfilePhotoUploader from './ProfilePhotoUploader'
+import AppConfig from '../Config/AppConfig'
 
 type ProfilePostProps = {
   dispatch: () => any,
@@ -142,6 +143,34 @@ class EditProfileForm extends React.Component {
     }
   }
 
+  renderFaircoinAddressInput (faircoinAddress, editable, textInputStyle) {
+    if (AppConfig.FaircoinEnabled) {
+    return (
+          <View style={Styles.row}>
+            <Text style={Styles.rowLabel}>{I18n.t('Faircoin Address')}</Text>
+            <TextInput
+              ref='faircoinAddress'
+              style={textInputStyle}
+              value={faircoinAddress}
+              editable={editable}
+              keyboardType='default'
+              returnKeyType='next'
+              autoCapitalize='sentences'
+              onChangeText={this.handleChangeFaircoinAddress}
+              numberOfLines={8}
+              underlineColorAndroid='transparent'
+              onSubmitEditing={() => this.refs.phone.focus()}
+              placeholder='' />
+            <Text style={Styles.errorLabel}>
+              { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
+            </Text>
+          </View>
+    )
+    } else {
+      return (<View />)
+    }
+  }
+
   render () {
     const { name, email, phone, telegramId, faircoinAddress } = this.state
     const editable = !this.props.posting
@@ -215,26 +244,6 @@ class EditProfileForm extends React.Component {
           </View>
 
           <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Faircoin Address')}</Text>
-            <TextInput
-              ref='faircoinAddress'
-              style={textInputStyle}
-              value={faircoinAddress}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              onChangeText={this.handleChangeFaircoinAddress}
-              numberOfLines={8}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.phone.focus()}
-              placeholder='' />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
-            </Text>
-          </View>
-
-          <View style={Styles.row}>
             <Text style={Styles.rowLabel}>{I18n.t('Phone')}</Text>
             <TextInput
               ref='phone'
@@ -255,6 +264,9 @@ class EditProfileForm extends React.Component {
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
+
+      {this.renderFaircoinAddressInput(faircoinAddress, editable, textInputStyle)}
+
           <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
             <View style={Styles.buttonCta}>
               {this.renderPublishButtonText()}
