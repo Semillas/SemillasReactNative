@@ -64,8 +64,8 @@ class EditProfileForm extends React.Component {
     this.state.name = profile.name
     this.state.email = profile.email
     this.state.phone = profile.phone
-    this.state.telegramId = profile.telegramId
-    this.state.faircoinAddress = profile.faircoinAddress
+    this.state.telegramId = profile.telegram_id
+    this.state.faircoinAddress = profile.faircoin_address
     this.state.uuid= profile.uuid
   }
 
@@ -76,15 +76,6 @@ class EditProfileForm extends React.Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
 
     this.assignProfileToState(this.props.profile)
-
-//    if (this.props.uuid) {
-//      // Editing a service
-//      if (this.props.service) {
-//        this.assignServiceToState(this.props.service)
-//      } else {
-//        this.props.retrieveService(this.props.uuid)
-//      }
-//    }
   }
 
   componentWillUnmount () {
