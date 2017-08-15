@@ -12,6 +12,7 @@ import MapView from 'react-native-maps'
 import I18n from 'react-native-i18n'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import RoundedButton from '../Components/RoundedButton'
+import UserContact from '../Components/UserContact'
 import UserActions from '../Redux/UsersRedux.js'
 import UserServices from './UserServices'
 import LoginSignUpButtons from '../Components/LoginSignUpButtons'
@@ -48,8 +49,8 @@ class UserScreen extends React.Component {
             initialRegion={{
               latitude: parseFloat(user.location.latitude),
               longitude: parseFloat(user.location.longitude),
-              latitudeDelta: 0.0032,
-              longitudeDelta: 0.0031
+              latitudeDelta: 0.032,
+              longitudeDelta: 0.031
             }}
           />
         </View>
@@ -118,9 +119,7 @@ class UserScreen extends React.Component {
             {this.renderMap(user)}
           <View style={styles.section}>
             {this.renderProfilePhoto(user)}
-            <Text style={styles.sectionTitle}>{user.name}</Text>
-            <Text style={styles.subtitle}>{(user.email && user.email)}</Text>
-            <Text style={styles.subtitle}>{(user.phone && user.phone)}</Text>
+            <UserContact user={user} />
           </View>
             {this.renderEditButton()}
           <Text style={styles.subSectionText}>{I18n.t('Services being offered')}</Text>

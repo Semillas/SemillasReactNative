@@ -18,6 +18,7 @@ import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 import ProfilePhotoUploader from './ProfilePhotoUploader'
+import UserContact from '../Components/UserContact'
 import AppConfig from '../Config/AppConfig'
 
 type ProfilePostProps = {

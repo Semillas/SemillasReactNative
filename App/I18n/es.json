@@ -21,6 +21,8 @@
    "Category": "Categoría",
    "Name": "Nombre",
    "Email": "Email",
-   "Phone": "Teléfono (con +prefijo)",
+   "Phone": "Teléfono",
    "Delete Photo": "Borrar Foto",
+   "Copied into Clipboard": "Copiado en el portapapeles",
+   "Faircoin Address": "Faircoin Address",
 }
