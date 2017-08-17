@@ -3,5 +3,6 @@
 export default {
   // font scaling override - RN default is on
   allowTextFontScaling: true,
-  FaircoinEnabled: true
+  FaircoinEnabled: true,
+  WalletEnabled: true
 }

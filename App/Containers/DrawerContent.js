@@ -1,11 +1,12 @@
 // @flow
 
 import React, { Component } from 'react'
-import { ScrollView, Image, BackAndroid } from 'react-native'
+import { ScrollView, Image, View, BackAndroid } from 'react-native'
 import styles from './Styles/DrawerContentStyle'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import AppConfig from '../Config/AppConfig'
 import I18n from 'react-native-i18n'
 
 class DrawerContent extends Component {
@@ -57,6 +58,13 @@ class DrawerContent extends Component {
   walletButtonText () {
     return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
   }
+  renderWalletButton () {
+    if (AppConfig.WalletEnabled) {
+      return (<DrawerButton text={this.walletButtonText()} icon='money' onPress={this.handlePressCurrency} />)
+    } else {
+      return (<View />)
+    }
+  }
 
   render () {
     if (this.props.user) {
@@ -70,7 +78,7 @@ class DrawerContent extends Component {
           />
           <DrawerButton text={I18n.t('Add Service')} icon='plus-circle' onPress={this.handlePressNewService} />
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
-          <DrawerButton text={this.walletButtonText()} icon='money' onPress={this.handlePressCurrency} />
+          {this.renderWalletButton()}
           <DrawerButton text={I18n.t('Logout')} icon='sign-out' onPress={this.props.logout} />
         </ScrollView>
       )
