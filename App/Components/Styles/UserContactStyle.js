@@ -9,16 +9,7 @@ export default StyleSheet.create({
     color: Colors.charcoal,
     textAlign: 'center',
     fontWeight: 'bold'
-
-//    ...Fonts.style.normal,
-//    color: Colors.cta,
-//    backgroundColor: Colors.ricePaper,
-//    padding: Metrics.smallMargin,
-//    marginTop: Metrics.smallMargin,
-//    marginHorizontal: Metrics.baseMargin,
-//    alignItems: 'center',
-//    textAlign: 'center'
-    },
+  },
   fieldValue: {
     ...Fonts.style.normal,
     color: Colors.cta,
@@ -27,6 +18,6 @@ export default StyleSheet.create({
     marginBottom: Metrics.baseMargin,
     alignItems: 'center',
     textAlign: 'center'
-    },
+  },
   ...ApplicationStyles.screen
 })

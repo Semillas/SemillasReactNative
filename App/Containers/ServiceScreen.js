@@ -87,7 +87,6 @@ class ServiceScreen extends React.Component {
             }}
           >
             <View>
-              <Text >Usuario: {service.author.name || service.author.email || service.author.username }</Text>
               {this.renderCallToAction(service)}
             </View>
           </TouchableOpacity>

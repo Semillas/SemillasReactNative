@@ -14,6 +14,7 @@ import styles from './Styles/ImageSwiperStyle'
 import Swiper from 'react-native-swiper'
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Header from '../Components/FullImageHeader';
+import { Metrics } from '../Themes/'
 
 type ImageSwiperProps = {
   images: Object
@@ -84,7 +85,7 @@ export default class ImageSwiper extends React.Component {
         ref={r => {
           this.swiper = r;
         }}
-        width={350}
+        width={Metrics.screenWidth}
         height={300}
         showsButtons
         showsPagination

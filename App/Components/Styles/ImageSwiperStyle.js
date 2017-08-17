@@ -5,7 +5,7 @@ import { ApplicationStyles, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   picture: {
-    width: 320,
+    width: Metrics.screenWidth,
     height: 280,
     borderRadius: 5,
     alignSelf: 'center',
