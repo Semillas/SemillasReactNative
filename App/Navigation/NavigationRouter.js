@@ -16,6 +16,7 @@ import EditProfileScreen from '../Containers/EditProfileScreen'
 import CurrencyScreen from '../Containers/CurrencyScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import SignupScreen from '../Containers/SignupScreen'
+import AboutScreen from '../Containers/AboutScreen'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -37,6 +38,7 @@ class NavigationRouter extends Component {
             <Scene key='currency' component={CurrencyScreen} title='Semillas' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='signup' component={SignupScreen} title='signup' hideNavBar />
+            <Scene key='about' component={AboutScreen} title='about' />
 
             {/* Custom navigation bar example */}
           </Scene>

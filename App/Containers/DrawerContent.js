@@ -55,6 +55,11 @@ class DrawerContent extends Component {
     NavigationActions.editService()
   }
 
+  handlePressAbout = () => {
+    this.toggleDrawer()
+    NavigationActions.about()
+  }
+
   walletButtonText () {
     return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
   }
@@ -79,6 +84,7 @@ class DrawerContent extends Component {
           <DrawerButton text={I18n.t('Add Service')} icon='plus-circle' onPress={this.handlePressNewService} />
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
           {this.renderWalletButton()}
+          <DrawerButton text={I18n.t('About')} icon='info-circle' onPress={this.handlePressAbout} />
           <DrawerButton text={I18n.t('Logout')} icon='sign-out' onPress={this.props.logout} />
         </ScrollView>
       )

@@ -9,7 +9,7 @@
    "There was a problem with the upload, Retry.": "Hubo un problema subiendo el archivo. Reintentar",
    "Delete Service": "Eliminar Servicio",
    "Select a Photo": "Añadir foto",
-   "Add Service": "Add Service",
+   "Add Service": "Publicar Oferta",
    "Services": "Servicios",
    "Sign Up": "Registro",
    "Logout": "Logout",
@@ -25,4 +25,5 @@
    "Delete Photo": "Borrar Foto",
    "Copied into Clipboard": "Copiado en el portapapeles",
    "Faircoin Address": "Faircoin Address",
+   "About": "Quienes Somos",
 }
