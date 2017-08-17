@@ -1,7 +1,7 @@
 // @flow
 
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles, Metrics } from '../../Themes/'
+import { ApplicationStyles, Metrics, Colors } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -23,8 +23,11 @@ export default StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
     marginTop: Metrics.smallMargin
-
   },
-
+  price: {
+    color: Colors.cta,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
   ...ApplicationStyles.screen
 })

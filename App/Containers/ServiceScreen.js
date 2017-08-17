@@ -12,6 +12,7 @@ import {
   Modal
 } from 'react-native'
 import { connect } from 'react-redux'
+import AppConfig from '../Config/AppConfig'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import RoundedButton from '../Components/RoundedButton'
 import ImageSwiper from '../Components/ImageSwiper'
@@ -60,6 +61,14 @@ class ServiceScreen extends React.Component {
     }
   }
 
+  renderPrice(data) {
+    if (data.seeds_price) {
+      return (<Text style={styles.price}>{data.seeds_price} {AppConfig.CurrencyName}</Text>)
+    } else {
+      return (<Text />)
+    }
+  }
+
   render () {
     const { service } = this.props
     if (!service) {
@@ -77,6 +86,7 @@ class ServiceScreen extends React.Component {
             <CardTitle>
               <Text style={styles.title}>{service.title}</Text>
             </CardTitle>
+              <Text>{this.renderPrice(service)}</Text>
             <CardContent>
               <Text>{service.description}</Text>
             </CardContent>
