@@ -12,5 +12,8 @@ export default StyleSheet.create({
     marginLeft: Metrics.doubleBaseMargin,
     backgroundColor: Colors.snow
 
+  },
+  item: {
+    fontSize: 18,
   }
 })

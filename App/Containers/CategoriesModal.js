@@ -1,7 +1,13 @@
 // @flow
 
 import React, {PropTypes} from 'react'
-import { View, Text, Modal, TouchableHighlight } from 'react-native'
+import {  View,
+          Modal,
+          TouchableHighlight,
+          FlatList,
+          ActivityIndicator
+    } from 'react-native'
+import { List, ListItem, Text } from 'native-base';
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import CategoryActions from '../Redux/CategoryRedux.js'
@@ -11,10 +17,31 @@ import styles from './Styles/CategoriesModalStyle'
 
 class CategoriesModal extends React.Component {
 
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
+  componentWillMount () {
+    if (!this.props.categories) {
+      this.props.retrieveCategories()
+    }
+  }
+
+  renderRow (data) {
+    debugger
+    return (
+      <ListItem>
+        <Text style={styles.item}>{data.name}</Text>
+      </ListItem>
+    )
+  }
+
+  renderCategoryList () {
+    return (
+      <List
+        dataArray={this.props.categories}
+        renderRow={(item) => this.renderRow(item)}
+        ListEmptyComponent={() => <ActivityIndicator /> }
+        keyExtractor = {(item, index) => item.id}
+      />
+    )
+  }
 
   render () {
     return (
@@ -23,16 +50,10 @@ class CategoriesModal extends React.Component {
           animationType="slide"
           transparent={true}
           visible={this.props.display}
-          onRequestClose={() => {alert("Modal has been closed.")}}
+          onRequestClose={() => this.props.setModalVisible(false)}
           >
           <View style={styles.container}>
-            <Text>Hello World!</Text>
-
-            <TouchableHighlight onPress={() => {
-                            this.props.setModalVisible(!this.props.display)
-                          }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
+            {this.renderCategoryList()}
          </View>
         </Modal>
       </View>
@@ -42,7 +63,7 @@ class CategoriesModal extends React.Component {
 
 CategoriesModal.propTypes = {
   display: PropTypes.bool,
-  categories: PropTypes.object,
+  categories: PropTypes.array,
   setModalVisible: PropTypes.func
 }
 
@@ -56,6 +77,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setModalVisible: (visible) => dispatch(CategoryActions.categorySetDisplayFilter(visible)),
+    retrieveCategories: () => dispatch(CategoryActions.categoryRequest()),
   }
 }
 
