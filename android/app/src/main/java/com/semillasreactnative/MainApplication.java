@@ -9,7 +9,6 @@ import com.imagepicker.ImagePickerPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -36,8 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
             new ImagePickerPackage(),
             new ReactNativeI18n(),
             new ReactNativeConfigPackage(),
-            new MapsPackage(),
-            new RNDeviceInfo()
+            new MapsPackage()
       );
     }
   };
