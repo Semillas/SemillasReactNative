@@ -3,6 +3,7 @@ import { View, Image, LayoutAnimation } from 'react-native'
 import NavItems from './NavItems'
 import styles from './Styles/CustomNavBarStyle'
 import SearchBar from '../Components/SearchBar'
+import CategoriesModal from '../Containers/CategoriesModal'
 import { connect } from 'react-redux'
 import { Metrics, Images } from '../Themes'
 import FeedActions from '../Redux/FeedRedux.js'
@@ -18,7 +19,8 @@ class CustomNavBar extends React.Component {
     }
   }
 
-  showCategoriesModal= () => {
+  showCategoriesModal = () => {
+    debugger;
     this.props.setModalVisible(true)
   }
 
@@ -91,6 +93,7 @@ class CustomNavBar extends React.Component {
         {this.renderLeftButtons()}
         {this.renderMiddle()}
         {this.renderRightButtons()}
+        <CategoriesModal />
       </View>
     )
   }
@@ -110,8 +113,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     performSearch: (searchTerm) => dispatch(FeedActions.feedUpdateSearch(searchTerm)),
-    cancelSearch: () => dispatch(FeedActions.feedCancelSearch())
-    setModalVisible: (visible) => dispatch(CategoryActions.categorySetDisplayFilter(visible)),
+    cancelSearch: () => dispatch(FeedActions.feedCancelSearch()),
+    setModalVisible: (visible) => dispatch(CategoryActions.categorySetDisplayFilter(visible))
   }
 }
 

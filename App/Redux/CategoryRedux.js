@@ -40,9 +40,10 @@ export const success = (state: Object, action: Object) => {
 export const failure = (state: Object) =>
   Object.assign({}, state, ({ fetching: false, error: true }))
 
-export const setDisplayFilter = (state: Object, action: Object) =>
+export const setDisplayFilter = (state: Object, action: Object) => {
   const { visible } = action
-  Object.assign({}, state, ({ displayCategoryFilter: visible }))
+  return Object.assign({}, state, ({ displayCategoryFilter: visible }))
+}
 
 /* ------------- Hookup Reducers To Types ------------- */
 

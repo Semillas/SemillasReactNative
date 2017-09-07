@@ -49,7 +49,7 @@ export default {
         />
       </TouchableOpacity>
     )
-  }
+  },
 
   filterButton (callback: Function) {
     return (

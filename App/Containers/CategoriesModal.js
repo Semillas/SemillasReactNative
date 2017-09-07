@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import React, {PropTypes} from 'react'
+import { View, Text, Modal, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import CategoryActions from '../Redux/CategoryRedux.js'
@@ -18,15 +18,14 @@ class CategoriesModal extends React.Component {
 
   render () {
     return (
-      <View style={{marginTop: 22}}>
+      <View >
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={this.props.display}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View>
+          <View style={styles.container}>
             <Text>Hello World!</Text>
 
             <TouchableHighlight onPress={() => {
@@ -34,32 +33,24 @@ class CategoriesModal extends React.Component {
                           }}>
               <Text>Hide Modal</Text>
             </TouchableHighlight>
-
-          </View>
          </View>
         </Modal>
-
-        <TouchableHighlight onPress={() => {
-                    this.props.setModalVisible(true)
-                  }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-
       </View>
     )
   }
 }
 
 CategoriesModal.propTypes = {
-  display: PropTypes.bool
+  display: PropTypes.bool,
   categories: PropTypes.object,
   setModalVisible: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
   return {
-    display: state.categories.diplayCategoryFilter,
-    categories: state.categories.categories
+    display: state.category.displayCategoryFilter,
+    categories: state.category.categories
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
