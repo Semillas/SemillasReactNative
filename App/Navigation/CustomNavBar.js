@@ -6,14 +6,20 @@ import SearchBar from '../Components/SearchBar'
 import { connect } from 'react-redux'
 import { Metrics, Images } from '../Themes'
 import FeedActions from '../Redux/FeedRedux.js'
+import CategoryActions from '../Redux/CategoryRedux.js'
 
 class CustomNavBar extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      showSearchBar: false
+      showSearchBar: false,
+      categoriesModalVisible: false
     }
+  }
+
+  showCategoriesModal= () => {
+    this.props.setModalVisible(true)
   }
 
   showSearchBar = () => {
@@ -46,6 +52,7 @@ class CustomNavBar extends React.Component {
     } else {
       return (
         <View style={styles.rightButtons}>
+          {NavItems.filterButton(this.showCategoriesModal)}
           {NavItems.searchButton(this.showSearchBar)}
         </View>
       )
@@ -104,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     performSearch: (searchTerm) => dispatch(FeedActions.feedUpdateSearch(searchTerm)),
     cancelSearch: () => dispatch(FeedActions.feedCancelSearch())
+    setModalVisible: (visible) => dispatch(CategoryActions.categorySetDisplayFilter(visible)),
   }
 }
 

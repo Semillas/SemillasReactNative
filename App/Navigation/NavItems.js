@@ -51,4 +51,16 @@ export default {
     )
   }
 
+  filterButton (callback: Function) {
+    return (
+      <TouchableOpacity onPress={callback}>
+        <Icon name='filter'
+          size={Metrics.icons.small}
+          color={Colors.cta}
+          style={styles.searchButton}
+        />
+      </TouchableOpacity>
+    )
+  }
+
 }
