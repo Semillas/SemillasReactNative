@@ -24,10 +24,9 @@ class CategoriesModal extends React.Component {
   }
 
   renderRow (data) {
-    debugger
     return (
       <ListItem>
-        <Text style={styles.item}>{data.name}</Text>
+        <Text>{data.name}</Text>
       </ListItem>
     )
   }
