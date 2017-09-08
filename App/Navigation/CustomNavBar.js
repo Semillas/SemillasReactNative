@@ -20,7 +20,6 @@ class CustomNavBar extends React.Component {
   }
 
   showCategoriesModal = () => {
-    debugger;
     this.props.setModalVisible(true)
   }
 

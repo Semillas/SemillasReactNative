@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react'
 import {  View,
           Modal,
           TouchableHighlight,
-          FlatList,
+          TouchableWithoutFeedback,
           ActivityIndicator
     } from 'react-native'
 import { List, ListItem, Text } from 'native-base';
@@ -23,10 +23,19 @@ class CategoriesModal extends React.Component {
     }
   }
 
+  handlePressCategoryFilter = (value) => {
+    this.props.setModalVisible(false)
+    this.props.setSelectedValue(value)
+
+
+  }
+
   renderRow (data) {
     return (
-      <ListItem>
-        <Text>{data.name}</Text>
+      <ListItem
+          onPress={() => this.handlePressCategoryFilter(data.id)}
+        >
+          <Text>{data.name}</Text>
       </ListItem>
     )
   }
@@ -51,9 +60,11 @@ class CategoriesModal extends React.Component {
           visible={this.props.display}
           onRequestClose={() => this.props.setModalVisible(false)}
           >
-          <View style={styles.container}>
-            {this.renderCategoryList()}
-         </View>
+          <TouchableWithoutFeedback onPress={() => this.props.setModalVisible(false)}>
+            <View style={styles.container}>
+              {this.renderCategoryList()}
+           </View>
+          </TouchableWithoutFeedback>
         </Modal>
       </View>
     )
@@ -69,13 +80,15 @@ CategoriesModal.propTypes = {
 const mapStateToProps = (state) => {
   return {
     display: state.category.displayCategoryFilter,
-    categories: state.category.categories
+    categories: state.category.categories,
+    selectedValue: state.category.selectedValue
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setModalVisible: (visible) => dispatch(CategoryActions.categorySetDisplayFilter(visible)),
+    setSelectedValue: (value) => dispatch(CategoryActions.categorySetSelectedValue(value)),
     retrieveCategories: () => dispatch(CategoryActions.categoryRequest()),
   }
 }

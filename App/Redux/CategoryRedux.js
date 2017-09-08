@@ -10,6 +10,7 @@ const { Types, Creators } = createActions({
   categorySuccess: ['categories'],
   categoryFailure: null,
   categorySetDisplayFilter: ['visible'],
+  categorySetSelectedValue: ['value'],
 })
 
 export const CategoryTypes = Types
@@ -21,7 +22,8 @@ export const INITIAL_STATE = Immutable({
   categories: null,
   fetching: null,
   error: null,
-  displayCategoryFilter: false
+  displayCategoryFilter: false,
+  selectedValue: null
 })
 
 /* ------------- Reducers ------------- */
@@ -45,11 +47,17 @@ export const setDisplayFilter = (state: Object, action: Object) => {
   return Object.assign({}, state, ({ displayCategoryFilter: visible }))
 }
 
+export const setSelectedValue = (state: Object, action: Object) => {
+  const { value } = action
+  return Object.assign({}, state, ({ selectedValue: value }))
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.CATEGORY_REQUEST]: request,
   [Types.CATEGORY_SUCCESS]: success,
   [Types.CATEGORY_FAILURE]: failure,
-  [Types.CATEGORY_SET_DISPLAY_FILTER]: setDisplayFilter
+  [Types.CATEGORY_SET_DISPLAY_FILTER]: setDisplayFilter,
+  [Types.CATEGORY_SET_SELECTED_VALUE]: setSelectedValue
 })
