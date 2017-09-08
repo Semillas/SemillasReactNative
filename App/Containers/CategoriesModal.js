@@ -11,6 +11,8 @@ import { List, ListItem, Text } from 'native-base';
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import CategoryActions from '../Redux/CategoryRedux.js'
+import { Colors, Metrics } from '../Themes/'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 // Styles
 import styles from './Styles/CategoriesModalStyle'
@@ -26,16 +28,29 @@ class CategoriesModal extends React.Component {
   handlePressCategoryFilter = (value) => {
     this.props.setModalVisible(false)
     this.props.setSelectedValue(value)
-
-
   }
 
   renderRow (data) {
+    function renderText(data, selectedValue) {
+      if (selectedValue == data.id) {
+        return (
+          <View style={{flex:1, flexDirection:'row'}}>
+            <Icon name='check' style={styles.selectedCategory} size={Metrics.icons.small} />
+            <Text style={styles.selectedCategory}> {data.name}</Text>
+          </View>
+        )
+      } else {
+        return (
+          <Text>{data.name}</Text>
+      )
+      }
+    }
     return (
       <ListItem
-          onPress={() => this.handlePressCategoryFilter(data.id)}
+          onPress={() => this.handlePressCategoryFilter(
+            data.id)}
         >
-          <Text>{data.name}</Text>
+        {renderText(data, this.props.selectedValue)}
       </ListItem>
     )
   }

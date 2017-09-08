@@ -15,5 +15,10 @@ export default StyleSheet.create({
   },
   item: {
     fontSize: 18,
+  },
+
+  selectedCategory: {
+    color: Colors.cta,
   }
+
 })
