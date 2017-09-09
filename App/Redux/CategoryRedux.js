@@ -35,6 +35,9 @@ export const request = (state: Object) =>
 // successful user lookup
 export const success = (state: Object, action: Object) => {
   const { categories } = action
+  NoneItem = {id:null, name:'Ningun Filtro', order:-1}
+  categories.push(NoneItem)
+  categories.sort(function(a,b){ return a['order']>b['order']?1:-1; })
   return Object.assign({}, state, { fetching: false, error: null, categories: categories })
 }
 
