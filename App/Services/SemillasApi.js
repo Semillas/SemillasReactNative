@@ -1,5 +1,6 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import I18n from 'react-native-i18n'
 
 // our "constructor"
 const create = (baseURL = 'https://www.semillasocial.org') => {
@@ -16,7 +17,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Accept-Language': I18n.locale
     },
     // 10 second timeout...
     timeout: 10000
