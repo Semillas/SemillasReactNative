@@ -163,6 +163,14 @@ class Feed extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.category != prevProps.category){
+      this.feedRequest(
+        true, // refresh
+      )
+    }
+  }
+
   componentWillMount () {
     Permissions.check('location')
       .then(this._geoPermission())
@@ -198,7 +206,7 @@ const mapStateToProps = (state, ownProps) => {
     items: state.feed.items,
     nextUrl: state.feed.nextPageUrl,
     searchText: state.feed.searchText,
-    category: ownProps.category,
+    category: state.category.selectedValue,
     location: state.location,
     requestStatus: state.feed.requestStatus,
     paramsUpdated: state.feed.paramsUpdated
