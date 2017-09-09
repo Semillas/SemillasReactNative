@@ -2,6 +2,7 @@
 
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import I18n from 'react-native-i18n'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -35,7 +36,7 @@ export const request = (state: Object) =>
 // successful user lookup
 export const success = (state: Object, action: Object) => {
   const { categories } = action
-  NoneItem = {id:null, name:'Ningun Filtro', order:-1}
+  NoneItem = {id:null, name:I18n.t('None'), order:-1}
   categories.push(NoneItem)
   categories.sort(function(a,b){ return a['order']>b['order']?1:-1; })
   return Object.assign({}, state, { fetching: false, error: null, categories: categories })
