@@ -50,7 +50,6 @@
 		FBF1EAA329B345FA91E3DD67 /* Skia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD66B0BB05D94D3EA0C986B8 /* Skia.ttf */; };
 		21321A4761A946D3907DF4CF /* Times New Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42040BD7607F40DEAEF17B73 /* Times New Roman.ttf */; };
 		B5A01DDB9B704BE496B139B8 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C428D824DBE4C8D9C22F865 /* libReactNativeConfig.a */; };
-		EE1CD9C3B9054D7783894C08 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD48061E386741C5A9F5AFE2 /* libRNSentry.a */; };
 		ECC93B025C18423CB0734CEB /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B5A4EE8169545B0A7E7A3BF /* libRNImagePicker.a */; };
 		71B423F90F794D1F84B77559 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F96C4B91301A451A9884DEB7 /* libAirMaps.a */; };
 		27A0789D9C6342EA871A56E9 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1197BD6B3F54320BC2BE40C /* libRNVectorIcons.a */; };
@@ -216,8 +215,6 @@
 		42040BD7607F40DEAEF17B73 /* Times New Roman.ttf */ = {isa = PBXFileReference; name = "Times New Roman.ttf"; path = "../node_modules/native-base/Fonts/Times New Roman.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		73CCB69E7FD44512A9F0219B /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeConfig.xcodeproj"; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4C428D824DBE4C8D9C22F865 /* libReactNativeConfig.a */ = {isa = PBXFileReference; name = "libReactNativeConfig.a"; path = "libReactNativeConfig.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		898FB56F7ABE46FBA3E82F25 /* RNSentry.xcodeproj */ = {isa = PBXFileReference; name = "RNSentry.xcodeproj"; path = "../node_modules/react-native-sentry/ios/RNSentry.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CD48061E386741C5A9F5AFE2 /* libRNSentry.a */ = {isa = PBXFileReference; name = "libRNSentry.a"; path = "libRNSentry.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		9D42BEEC457049E0A8CBB462 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		3B5A4EE8169545B0A7E7A3BF /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		FB12A557AE0946E98ADAAFCC /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
@@ -269,7 +266,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				7E35935F37084D9188632D16 /* libReactNativePermissions.a in Frameworks */,
 				B5A01DDB9B704BE496B139B8 /* libReactNativeConfig.a in Frameworks */,
-				EE1CD9C3B9054D7783894C08 /* libRNSentry.a in Frameworks */,
 				ECC93B025C18423CB0734CEB /* libRNImagePicker.a in Frameworks */,
 				71B423F90F794D1F84B77559 /* libAirMaps.a in Frameworks */,
 				27A0789D9C6342EA871A56E9 /* libRNVectorIcons.a in Frameworks */,
@@ -417,7 +413,6 @@
 				7D791EC4E9AD41DC961C1B8F /* ReactNativePermissions.xcodeproj */,
 				41CEE91E15CA49AD812B101F /* CrashLib.xcodeproj */,
 				73CCB69E7FD44512A9F0219B /* ReactNativeConfig.xcodeproj */,
-				898FB56F7ABE46FBA3E82F25 /* RNSentry.xcodeproj */,
 				9D42BEEC457049E0A8CBB462 /* RNImagePicker.xcodeproj */,
 				FB12A557AE0946E98ADAAFCC /* AirMaps.xcodeproj */,
 				D8DE82E056674A74AF492974 /* RNVectorIcons.xcodeproj */,
@@ -956,7 +951,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SemillasReactNative.app/SemillasReactNative";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -973,7 +967,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SemillasReactNative.app/SemillasReactNative";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;
@@ -998,7 +991,6 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
-					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1026,7 +1018,6 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
-					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",

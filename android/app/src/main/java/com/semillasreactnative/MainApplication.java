@@ -7,7 +7,6 @@ import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.imagepicker.ImagePickerPackage;
-import io.sentry.RNSentryPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -34,7 +33,6 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new MapsPackage(),
             new ImagePickerPackage(),
-            new RNSentryPackage(MainApplication.this),
             new ReactNativeConfigPackage()
         //new MapsPackage(),
         //new RNSentryPackage(MainApplication.this),

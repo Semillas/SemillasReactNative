@@ -1,7 +1,8 @@
 // @flow
 
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import Drawer from 'react-native-drawer'
+import PropTypes from 'prop-types';
 import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
 import DrawerContent from '../Containers/DrawerContent'
 import { connect } from 'react-redux'

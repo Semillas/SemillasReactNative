@@ -35,7 +35,7 @@ const semillasApi = SemillasApi.create()
 
 /* ------------- Connect Types To Sagas ------------- */
 
-export default function * root () {
+const root = function * root () {
   yield [
     // some sagas only receive an action
     //takeLatest(StartupTypes.STARTUP, startup),
@@ -58,3 +58,5 @@ export default function * root () {
     takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi)
   ]
 }
+
+export default root

@@ -1,12 +1,12 @@
 // @flow
 
 import React, { Component } from 'react'
-import { ScrollView, Image, View, BackAndroid } from 'react-native'
+import { ScrollView, Image, BackAndroid } from 'react-native'
+import PropTypes from 'prop-types';
 import styles from './Styles/DrawerContentStyle'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import AppConfig from '../Config/AppConfig'
 import I18n from 'react-native-i18n'
 
 class DrawerContent extends Component {
@@ -55,20 +55,8 @@ class DrawerContent extends Component {
     NavigationActions.editService()
   }
 
-  handlePressAbout = () => {
-    this.toggleDrawer()
-    NavigationActions.about()
-  }
-
   walletButtonText () {
     return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
-  }
-  renderWalletButton () {
-    if (AppConfig.WalletEnabled) {
-      return (<DrawerButton text={this.walletButtonText()} icon='money' onPress={this.handlePressCurrency} />)
-    } else {
-      return (<View />)
-    }
   }
 
   render () {
@@ -83,8 +71,7 @@ class DrawerContent extends Component {
           />
           <DrawerButton text={I18n.t('Add Service')} icon='plus-circle' onPress={this.handlePressNewService} />
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
-          {this.renderWalletButton()}
-          <DrawerButton text={I18n.t('About')} icon='info-circle' onPress={this.handlePressAbout} />
+          <DrawerButton text={this.walletButtonText()} icon='money' onPress={this.handlePressCurrency} />
           <DrawerButton text={I18n.t('Logout')} icon='sign-out' onPress={this.props.logout} />
         </ScrollView>
       )
@@ -109,9 +96,9 @@ class DrawerContent extends Component {
 }
 
 DrawerContent.contextTypes = {
-  drawer: React.PropTypes.object,
-  user: React.PropTypes.object,
-  logout: React.PropTypes.func
+  drawer: PropTypes.object,
+  user: PropTypes.object,
+  logout: PropTypes.func
 }
 
 export default DrawerContent

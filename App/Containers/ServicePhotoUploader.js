@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import {
   StyleSheet,
@@ -12,7 +13,7 @@ import {
 import ServiceActions from '../Redux/ServiceRedux'
 import I18n from 'react-native-i18n'
 import ImagePicker from 'react-native-image-picker'
-import Toast, {DURATION} from 'react-native-easy-toast'
+// import Toast, {DURATION} from 'react-native-easy-toast'
 
 class ServicePhotoUploader extends React.Component {
 
@@ -111,12 +112,13 @@ class ServicePhotoUploader extends React.Component {
         <View style={styles.container}>
           {this.renderCurrentPhotos()}
           {this.renderNewPhotoUploader()}
-          <Toast ref="toast"/>
         </View>
       )
     } else {
       return (<View />)
     }
+
+          // <Toast ref="toast"/>
   }
 }
 

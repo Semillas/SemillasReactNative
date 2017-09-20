@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {
   Text,
   View,
@@ -18,7 +19,7 @@ import styles from './Styles/ServiceFeedStyles'
 export default class ServiceFeed extends React.Component {
 
   static propTypes = {
-    data: React.PropTypes.object.isRequired
+    data: PropTypes.object.isRequired
   }
 
   renderPhotos (data) {

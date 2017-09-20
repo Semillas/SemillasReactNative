@@ -1,12 +1,13 @@
 // @flow
 
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Text,
          View,
          ActivityIndicator,
          Image,
          ScrollView
 } from 'react-native'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import MapView from 'react-native-maps'
 import I18n from 'react-native-i18n'

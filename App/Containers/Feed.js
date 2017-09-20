@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import {
   ListView,
   ActivityIndicator,
   RefreshControl
 } from 'react-native'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import Permissions from 'react-native-permissions'

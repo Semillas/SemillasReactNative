@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PropTypes } from 'react'
+import React from 'react'
 import {
   View,
   ScrollView,
@@ -13,6 +13,7 @@ import {
   LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
 import ServiceActions from '../Redux/ServiceRedux'
