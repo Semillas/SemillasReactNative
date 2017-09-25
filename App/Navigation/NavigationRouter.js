@@ -27,23 +27,29 @@ class NavigationRouter extends Component {
     const refreshOnBack = () => { Actions.pop({ refresh: {} }) }
     return (
       <Router>
-        <Scene key='drawer' component={NavigationDrawer} open={false}>
-          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
-            <Scene key='user' component={UserScreen} title='User' />
-            <Scene key='service' component={ServiceScreen} title='Service' />
-            <Scene key='profile' component={ProfileScreen} title='Perfil' />
-            <Scene key='editService' component={EditServiceScreen} title='Service' onBack={refreshOnBack} />
-            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' onBack={refreshOnBack} />
-            <Scene key='currency' component={CurrencyScreen} title='Semillas' />
-            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='signup' component={SignupScreen} title='signup' hideNavBar />
-            <Scene key='about' component={AboutScreen} title='about' />
-
-            {/* Custom navigation bar example */}
-          </Scene>
+        <Scene key="root">
+            <Scene initial key='FeedScreen' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
         </Scene>
       </Router>
+
+//      <Router>
+//        <Scene key='drawer' component={NavigationDrawer} open={false}>
+//          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
+//            <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
+//            <Scene key='user' component={UserScreen} title='User' />
+//            <Scene key='service' component={ServiceScreen} title='Service' />
+//            <Scene key='profile' component={ProfileScreen} title='Perfil' />
+//            <Scene key='editService' component={EditServiceScreen} title='Service' onBack={refreshOnBack} />
+//            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' onBack={refreshOnBack} />
+//            <Scene key='currency' component={CurrencyScreen} title='Semillas' />
+//            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
+//            <Scene key='signup' component={SignupScreen} title='signup' hideNavBar />
+//            <Scene key='about' component={AboutScreen} title='about' />
+//
+//            {/* Custom navigation bar example */}
+//          </Scene>
+//        </Scene>
+//      </Router>
     )
   }
 }

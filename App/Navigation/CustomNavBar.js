@@ -74,18 +74,9 @@ class CustomNavBar extends React.Component {
   }
 
   render () {
-    let state = this.props.navigationState
-    let selected = state.children[state.index]
-    while (selected.hasOwnProperty('children')) {
-      state = selected
-      selected = selected.children[selected.index]
-    }
-
     const containerStyle = [
       styles.container,
       this.props.navigationBarStyle,
-      state.navigationBarStyle,
-      selected.navigationBarStyle
     ]
 
     return (
