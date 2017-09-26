@@ -72,7 +72,6 @@ class CustomNavBar extends React.Component {
       )
     }
   }
-
   render () {
     const containerStyle = [
       styles.container,

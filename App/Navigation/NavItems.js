@@ -6,13 +6,7 @@ import styles from './Styles/NavItemsStyle'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Colors, Metrics } from '../Themes'
-
-const openDrawer = () => {
-  NavigationActions.refresh({
-    key: 'drawer',
-    open: true
-  })
-}
+import { Actions } from 'react-native-router-flux'
 
 export default {
   backButton () {
@@ -29,7 +23,7 @@ export default {
 
   hamburgerButton () {
     return (
-      <TouchableOpacity onPress={openDrawer}>
+      <TouchableOpacity onPress={Actions.drawerOpen}>
         <Icon name='bars'
           size={Metrics.icons.small}
           color={Colors.cta}
