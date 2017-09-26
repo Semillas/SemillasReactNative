@@ -26,6 +26,7 @@ import {
 } from 'react-native-card-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
+import CommonHeader from '../Components/CommonHeader'
 // Styles
 import styles from './Styles/ServiceScreenStyle'
 import I18n from 'react-native-i18n'
@@ -75,6 +76,7 @@ class ServiceScreen extends React.Component {
     if (!service) {
       return (
         <View style={styles.container}>
+          <CommonHeader navigation={this.props.navigation} title="Service Loading" />
           <ActivityIndicator />
         </View>
       )
@@ -82,6 +84,7 @@ class ServiceScreen extends React.Component {
       const card = {card: {width: 320}}
       return (
         <ScrollView style={styles.mainContainer}>
+        <CommonHeader navigation={this.props.navigation} title={service.title} />
           <ImageSwiper images={service.photos} />
           <Card styles={card}>
             <CardTitle>
