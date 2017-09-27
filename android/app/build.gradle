@@ -73,6 +73,7 @@ import com.android.build.OutputFile
  */
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 project.ext.vectoricons = [
     iconFontNames: [ 'FontAwesome.ttf' ]
@@ -147,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sentry')
     compile project(':react-native-i18n')
     compile project(':react-native-vector-icons')
     compile project(':react-native-maps')
