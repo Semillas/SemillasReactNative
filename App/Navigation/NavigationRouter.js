@@ -9,6 +9,7 @@ import CustomNavBar from '../Navigation/CustomNavBar'
 import { StyleProvider, variables } from 'native-base'
 import { actions } from 'react-native-navigation-redux-helpers';
 import { BackHandler, StatusBar, NavigationExperimental, Platform } from 'react-native';
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import { connect } from 'react-redux';
 
 
@@ -51,16 +52,7 @@ class NavigationRouter extends Component {
 }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      const routes = this.props.navigation.routes;
-
-      if (routes[routes.length - 1].key === 'home') {
-        return false;
-      }
-
-      this.props.popRoute(this.props.navigation.key);
-      return true;
-    });
+    BackHandler.addEventListener('hardwareBackPress', NavigationActions.pop);
   }
 
   popRoute() {
