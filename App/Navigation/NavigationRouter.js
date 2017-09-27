@@ -8,7 +8,7 @@ import NavigationDrawer from './NavigationDrawer'
 import CustomNavBar from '../Navigation/CustomNavBar'
 import { StyleProvider, variables } from 'native-base'
 import { actions } from 'react-native-navigation-redux-helpers';
-import { BackAndroid, StatusBar, NavigationExperimental, Platform } from 'react-native';
+import { BackHandler, StatusBar, NavigationExperimental, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 
@@ -51,7 +51,7 @@ class NavigationRouter extends Component {
 }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       const routes = this.props.navigation.routes;
 
       if (routes[routes.length - 1].key === 'home') {
