@@ -75,8 +75,7 @@ class NavigationRouter extends Component {
           <Drawer key="app" contentComponent={DrawerMenu} hideNavBar type="reset">
             <Scene initial key='FeedScreen' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
 					</Drawer>
-            <Scene initial key='FeedScreen' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
-          <Scene key='service' component={ServiceScreen} title='Service' hideNavBar />
+            <Scene key='service' component={ServiceScreen} title='Service' hideNavBar />
         </Scene>
       </Router>
 
