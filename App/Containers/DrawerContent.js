@@ -3,55 +3,42 @@
 import React, { Component } from 'react'
 import { ScrollView, Image, BackAndroid } from 'react-native'
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import styles from './Styles/DrawerContentStyle'
-import { Images } from '../Themes'
-import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
+import LoginActions from '../Redux/LoginRedux'
+import { Images } from '../Themes'
+import DrawerButton from '../Components/DrawerButton'
 
 class DrawerContent extends Component {
 
-  componentDidMount () {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.context.drawer.props.open) {
-        this.toggleDrawer()
-        return true
-      }
-      return false
-    })
-  }
-
-  toggleDrawer () {
-    this.context.drawer.toggle()
-  }
-
   handlePressFeed = () => {
-    this.toggleDrawer()
-    NavigationActions.feed()
+    NavigationActions.reset('FeedScreen')
   }
 
   handlePressLogin= () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.login()
   }
 
   handlePressSignup= () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.signup()
   }
 
   handlePressCurrency= () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.currency()
   }
 
   handlePressProfile= () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.profile()
   }
 
   handlePressNewService= () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.editService()
   }
 
@@ -95,10 +82,21 @@ class DrawerContent extends Component {
   }
 }
 
-DrawerContent.contextTypes = {
-  drawer: PropTypes.object,
+DrawerContent.propTypes = {
   user: PropTypes.object,
   logout: PropTypes.func
 }
 
-export default DrawerContent
+const mapStateToProps = (state) => {
+  return {
+    user: state.login.user
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(LoginActions.logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)

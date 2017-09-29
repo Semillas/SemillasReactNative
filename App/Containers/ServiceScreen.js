@@ -49,7 +49,7 @@ class ServiceScreen extends React.Component {
       return (
         <RoundedButton
           onPress={() => {
-            mainCavigationActions.editService({uuid: service.uuid})
+            NavigationActions.editService({uuid: service.uuid})
           }}
         >
           {I18n.t('Edit')}

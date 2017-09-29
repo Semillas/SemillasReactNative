@@ -60,7 +60,7 @@ class NavigationRouter extends Component {
   }
 
   render () {
-    //const refreshOnBack = () => { Actions.pop({ refresh: {} }) }
+    const refreshOnBack = () => { Actions.pop({ refresh: {} }) }
     return (
       <Router>
         <Scene key="root">
@@ -68,6 +68,18 @@ class NavigationRouter extends Component {
             <Scene initial key='FeedScreen' component={FeedScreen} navBar={CustomNavBar} />
 					</Drawer>
             <Scene key='service' component={ServiceScreen} hideNavBar />
+            <Scene key='FeedScreen' component={FeedScreen} navBar={CustomNavBar} />
+            <scene key='user' component={UserScreen} title='user' />
+            <scene key='profile' component={ProfileScreen} title='perfil' />
+            <scene key='editService' component={EditServiceScreen} title='service' onback={refreshOnBack} />
+            <scene key='editProfile' component={EditProfileScreen} title='perfil' onback={refreshOnBack} />
+            <scene key='currency' component={CurrencyScreen} title='semillas' />
+            <scene key='login' component={LoginScreen} title='login' hidenavbar />
+            <scene key='signup' component={SignupScreen} title='signup' hidenavbar />
+            <scene key='about' component={AboutScreen} title='about' />
+
+
+
         </Scene>
       </Router>
 
@@ -75,15 +87,15 @@ class NavigationRouter extends Component {
 //        <Scene key='drawer' component={NavigationDrawer} open={false}>
 //          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
 //            <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
-//            <Scene key='user' component={UserScreen} title='User' />
-//            <Scene key='service' component={ServiceScreen} title='Service' />
-//            <Scene key='profile' component={ProfileScreen} title='Perfil' />
-//            <Scene key='editService' component={EditServiceScreen} title='Service' onBack={refreshOnBack} />
-//            <Scene key='editProfile' component={EditProfileScreen} title='Perfil' onBack={refreshOnBack} />
-//            <Scene key='currency' component={CurrencyScreen} title='Semillas' />
-//            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
-//            <Scene key='signup' component={SignupScreen} title='signup' hideNavBar />
-//            <Scene key='about' component={AboutScreen} title='about' />
+//            <scene key='user' component={userscreen} title='user' />
+//            <scene key='service' component={servicescreen} title='service' />
+//            <scene key='profile' component={profilescreen} title='perfil' />
+//            <scene key='editservice' component={editservicescreen} title='service' onback={refreshonback} />
+//            <scene key='editprofile' component={editprofilescreen} title='perfil' onback={refreshonback} />
+//            <scene key='currency' component={currencyscreen} title='semillas' />
+//            <scene key='login' component={loginscreen} title='login' hidenavbar />
+//            <scene key='signup' component={signupscreen} title='signup' hidenavbar />
+//            <scene key='about' component={aboutscreen} title='about' />
 //
 //            {/* Custom navigation bar example */}
 //          </Scene>
