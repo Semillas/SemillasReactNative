@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { Scene, Router, Actions, Drawer } from 'react-native-router-flux'
 import PropTypes from 'prop-types';
 import Styles from './Styles/NavigationContainerStyle'
-import NavigationDrawer from './NavigationDrawer'
 import CustomNavBar from '../Navigation/CustomNavBar'
 import { StyleProvider, variables } from 'native-base'
 import { actions } from 'react-native-navigation-redux-helpers';
