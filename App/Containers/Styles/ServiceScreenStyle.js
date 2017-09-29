@@ -6,7 +6,7 @@ import { ApplicationStyles, Metrics, Colors } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
+    //marginTop: Metrics.navBarHeight,
     marginBottom: 0,
     backgroundColor: 'green',
     justifyContent: 'center',

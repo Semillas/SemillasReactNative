@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Image, Animated, TouchableOpacity } from 'react-native'
 import { Images, Colors } from '../Themes'
-import Styles from './Styles/CustomNavBarStyle'
+import Styles from './Styles/CommonHeaderStyle'
 import {
   Container,
   Header,
@@ -25,27 +25,24 @@ export default class CommonHeader extends React.Component {
 
   static propTypes = {
       title: PropTypes.string,
-      navigation: PropTypes.object
   }
 
   render () {
     return (
-        <Header>
+        <Header style={Styles.container} rounded androidStatusBarColor={Colors.coal}>
           <Left>
             <Button
               transparent
               onPress={Actions.pop}
             >
-              <Icon name="ios-arrow-back" />
+              <Icon style={Styles.text} name="ios-arrow-back" />
             </Button>
           </Left>
           <Body>
-            <Title>{this.props.title}</Title>
+            <Title style={Styles.text} >{this.props.title}</Title>
           </Body>
           <Right />
         </Header>
     )
   }
 }
-
-

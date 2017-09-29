@@ -12,6 +12,11 @@ import {
   TouchableWithoutFeedback,
   Modal
 } from 'react-native'
+
+import {
+  Container,
+  Content
+} from 'native-base'
 import { connect } from 'react-redux'
 import AppConfig from '../Config/AppConfig'
 import ServiceActions from '../Redux/ServiceRedux.js'
@@ -44,7 +49,7 @@ class ServiceScreen extends React.Component {
       return (
         <RoundedButton
           onPress={() => {
-            NavigationActions.editService({uuid: service.uuid})
+            mainCavigationActions.editService({uuid: service.uuid})
           }}
         >
           {I18n.t('Edit')}
@@ -76,15 +81,17 @@ class ServiceScreen extends React.Component {
     if (!service) {
       return (
         <View style={styles.container}>
-          <CommonHeader navigation={this.props.navigation} title="Service Loading" />
+          <CommonHeader title="Service Loading" />
           <ActivityIndicator />
         </View>
       )
     } else {
       const card = {card: {width: 320}}
       return (
+        <Container>
+          <CommonHeader title={service.title} />
+        <Content>
         <ScrollView style={styles.mainContainer}>
-        <CommonHeader navigation={this.props.navigation} title={service.title} />
           <ImageSwiper images={service.photos} />
           <Card styles={card}>
             <CardTitle>
@@ -105,6 +112,8 @@ class ServiceScreen extends React.Component {
             </View>
           </TouchableOpacity>
         </ScrollView>
+        </Content>
+        </Container>
       )
     }
   }

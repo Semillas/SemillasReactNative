@@ -22,7 +22,8 @@ const colors = {
   drawer: 'rgba(30, 30, 29, 0.95)',
 
   // Call to action color
-  cta: '#69B572'
+  cta: '#69B572',
+  secundary: '#4ca2cd',
 
 }
 
