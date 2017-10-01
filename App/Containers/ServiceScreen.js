@@ -81,7 +81,7 @@ class ServiceScreen extends React.Component {
     if (!service) {
       return (
         <View style={styles.container}>
-          <CommonHeader title="Service Loading" />
+          <CommonHeader title={I18n.t('Loading Service')} />
           <ActivityIndicator />
         </View>
       )
@@ -89,7 +89,7 @@ class ServiceScreen extends React.Component {
       const card = {card: {width: 320}}
       return (
         <Container>
-          <CommonHeader title={service.title} />
+          <CommonHeader title={I18n.t('Service')} />
         <Content>
         <ScrollView style={styles.mainContainer}>
           <ImageSwiper images={service.photos} />
