@@ -67,7 +67,6 @@ export default class ServiceFeed extends React.Component {
             </CardTitle>
             <CardContent>
               {this.renderDistance(data)}
-              <Text>{data.description}</Text>
             </CardContent>
           </Card>
         </View >
