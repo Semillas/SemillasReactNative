@@ -10,10 +10,10 @@ import {
   Image,
   ActivityIndicator
 } from 'react-native'
+import { Toast } from 'native-base';
 import ServiceActions from '../Redux/ServiceRedux'
 import I18n from 'react-native-i18n'
 import ImagePicker from 'react-native-image-picker'
-// import Toast, {DURATION} from 'react-native-easy-toast'
 
 class ServicePhotoUploader extends React.Component {
 
@@ -54,7 +54,11 @@ class ServicePhotoUploader extends React.Component {
 
   componentWillReceiveProps (newProps) {
     if (newProps.photoDeleteError) {
-      this.refs.toast.show(newProps.photoDeleteError);
+      Toast.show({
+        text: newProps.photoDeleteError,
+        position: 'bottom',
+        buttonText: 'Okay'
+      })
     }
   }
 
@@ -118,7 +122,6 @@ class ServicePhotoUploader extends React.Component {
       return (<View />)
     }
 
-          // <Toast ref="toast"/>
   }
 }
 

@@ -9,8 +9,8 @@ import {
   Image
 } from 'react-native'
 import I18n from 'react-native-i18n'
+import { Toast } from 'native-base';
 import { Images } from '../Themes/'
-// import Toast, {DURATION} from 'react-native-easy-toast'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import AppConfig from '../Config/AppConfig'
 import styles from './Styles/UserContactStyle'
@@ -21,26 +21,29 @@ export default class ServiceFeed extends React.Component {
     user: PropTypes.object.isRequired
   }
 
-  // openLink (clipboardToast, url) {
   openLink (url) {
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        // clipboardToast.show(I18n.t('Copied into Clipboard'));
+        Toast.show({
+          text: I18n.t('Copied into Clipboard'),
+          position: 'bottom',
+          buttonText: 'Okay'
+        })
         console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       } }).catch(err => console.error('An error occurred', err));
   }
 
-  //copyToClipboardLink (clipboardToast, text) {
   copyToClipboardLink (text) {
-    // TODO: toast not showing up
-    // clipboardToast.show(I18n.t('Copied into Clipboard'));
+    Toast.show({
+      text: I18n.t('Copied into Clipboard'),
+      position: 'bottom',
+      duration: 3000,
+    })
     Clipboard.setString(text)
-
   }
 
-  // onLongPress={() => this.refs.clipboard.show('prueba') }>
   renderContactLink(url, text) {
     return (
       <TouchableOpacity

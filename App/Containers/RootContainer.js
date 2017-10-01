@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { View, StatusBar } from 'react-native'
+import { Root } from "native-base";
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
@@ -27,10 +28,12 @@ class RootContainer extends Component {
 
   render () {
     return (
-      <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
-        <NavigationRouter />
-      </View>
+      <Root>
+        <View style={styles.applicationView}>
+          <StatusBar barStyle='light-content' />
+          <NavigationRouter />
+        </View>
+      </Root>
     )
   }
 }
