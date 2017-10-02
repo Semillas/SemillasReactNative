@@ -5,10 +5,9 @@ import { ApplicationStyles, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   picture: {
-    width: Metrics.screenWidth,
+    width: Metrics.screenWidth-40,
     height: 280,
-    borderRadius: 5,
+    borderRadius: 10,
     alignSelf: 'center',
-    marginTop: Metrics.smallMargin
   }
 })

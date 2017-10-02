@@ -3,32 +3,28 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {
-  Text,
   View,
-  ScrollView,
   Image,
-  TouchableOpacity,
   ActivityIndicator,
-  TouchableWithoutFeedback,
-  Modal
 } from 'react-native'
 
 import {
   Container,
-  Content
+  Content,
+  Card,
+  CardItem,
+  Title,
+  Text,
+  Left,
+  Right,
+  Button,
+  Body
 } from 'native-base'
 import { connect } from 'react-redux'
 import AppConfig from '../Config/AppConfig'
 import ServiceActions from '../Redux/ServiceRedux.js'
-import RoundedButton from '../Components/RoundedButton'
 import ImageSwiper from '../Components/ImageSwiper'
 
-import {
-  Card,
-//  CardImage,
-  CardTitle,
-  CardContent
-} from 'react-native-card-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
 import CommonHeader from '../Components/CommonHeader'
@@ -47,24 +43,32 @@ class ServiceScreen extends React.Component {
   renderCallToAction (service) {
     if ((this.props.loggedUser) && (this.props.loggedUser.uuid === service.author.uuid)) {
       return (
-        <RoundedButton
+        <Button block
           onPress={() => {
             NavigationActions.editService({uuid: service.uuid})
           }}
         >
-          {I18n.t('Edit')}
-        </RoundedButton>
+          <Text>{I18n.t('Edit')}</Text>
+        </Button>
       )
     } else {
       return (
-        <RoundedButton
+        <Button block
           onPress={() => {
             NavigationActions.user({uuid: service.author.uuid})
           }}
         >
-          {I18n.t('Get it')}
-        </RoundedButton>
+          <Text>{I18n.t('Get it')}</Text>
+        </Button>
       )
+    }
+  }
+
+  renderDistance(data) {
+    if (data.distance) {
+      return (<Text>{data.distance} Km</Text>)
+    } else {
+      return (<Text />)
     }
   }
 
@@ -90,29 +94,37 @@ class ServiceScreen extends React.Component {
       return (
         <Container>
           <CommonHeader title={I18n.t('Service')} />
-        <Content>
-        <ScrollView style={styles.mainContainer}>
-          <ImageSwiper images={service.photos} />
-          <Card styles={card}>
-            <CardTitle>
-              <Text style={styles.title}>{service.title}</Text>
-            </CardTitle>
-              <Text>{this.renderPrice(service)}</Text>
-            <CardContent>
-              <Text>{service.description}</Text>
-            </CardContent>
-          </Card>
-          <TouchableOpacity
-            onPress={() => {
-              NavigationActions.user({uuid: service.author.uuid})
-            }}
-          >
-            <View>
-              {this.renderCallToAction(service)}
-            </View>
-          </TouchableOpacity>
-        </ScrollView>
-        </Content>
+          <Content>
+            <Card>
+              <CardItem>
+                <ImageSwiper images={service.photos} />
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text style={styles.title}>{service.title}</Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Text> {this.renderPrice(service)} </Text>
+                </Left>
+                <Right>
+                  <Text> {this.renderDistance(service)} </Text>
+                </Right>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>{service.description}</Text>
+                </Body>
+              </CardItem>
+
+              <CardItem>
+                <Body>
+                  {this.renderCallToAction(service)}
+                </Body>
+              </CardItem>
+            </Card>
+          </Content>
         </Container>
       )
     }

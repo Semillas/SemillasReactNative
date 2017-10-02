@@ -120,6 +120,5 @@ export default class ServiceFeed extends React.Component {
         {this.renderFaircoinAddress(user)}
       </View>
     )
-    // <Toast ref="clipboard"/>
   }
 }

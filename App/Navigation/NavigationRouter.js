@@ -43,7 +43,6 @@ class NavigationRouter extends Component {
   static propTypes = {
     drawerState: PropTypes.string,
     popRoute: PropTypes.func,
-    themeState: PropTypes.string,
     navigation: PropTypes.shape({
       key: PropTypes.string,
       routes: PropTypes.array,
