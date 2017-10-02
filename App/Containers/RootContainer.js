@@ -2,12 +2,13 @@
 
 import React, { Component } from 'react'
 import { View, StatusBar } from 'react-native'
-import { Root } from "native-base";
+import { Root, StyleProvider } from "native-base";
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import LoginActions from '../Redux/LoginRedux'
 import ReduxPersist from '../Config/ReduxPersist'
+import getTheme from '../Themes/native-base-theme/components';
 
 // Styles
 import styles from './Styles/RootContainerStyle'
@@ -29,10 +30,12 @@ class RootContainer extends Component {
   render () {
     return (
       <Root>
-        <View style={styles.applicationView}>
-          <StatusBar barStyle='light-content' />
-          <NavigationRouter />
-        </View>
+        <StyleProvider  style={getTheme()}>
+          <View style={styles.applicationView}>
+            <StatusBar barStyle='light-content' />
+            <NavigationRouter />
+          </View>
+        </StyleProvider>
       </Root>
     )
   }
