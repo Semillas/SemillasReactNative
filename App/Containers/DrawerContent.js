@@ -74,13 +74,6 @@ class DrawerContent extends Component {
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
           <DrawerButton text={I18n.t('Login')} icon='sign-in' onPress={this.handlePressLogin} />
           <DrawerButton text={I18n.t('Sign Up')} icon='hand-o-right' onPress={this.handlePressSignup} />
-          {/*
-            <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
-            <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
-            <DrawerButton text='API Testing' onPress={this.handlePressAPI} />
-            <DrawerButton text='Themes' onPress={this.handlePressTheme} />
-            <DrawerButton text='Device Info' onPress={this.handlePressDevice} />
-          */}
         </ScrollView>
       )
     }

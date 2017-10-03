@@ -3,6 +3,8 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import I18n from 'react-native-i18n'
+import { Toast } from 'native-base'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -41,6 +43,11 @@ export const loginRequest = (state: Object) => state.merge({ fetching: true })
 // we've successfully logged in
 export const loginSuccess = (state: Object, { key, user }: Object) => {
   NavigationActions.pop()
+  Toast.show({
+    text: I18n.t("You're in!!"),
+    position: 'bottom',
+    buttonText: 'Okay'
+  })
   return state.merge({ fetching: false, error: null, key, user })
 }
 
@@ -56,6 +63,11 @@ export const signupRequest = (state: Object) => state.merge({ fetching: true })
 
 export const signupSuccess = (state: Object, { key, user }: Object) => {
   NavigationActions.pop()
+  Toast.show({
+    text: I18n.t("You're in!!"),
+    position: 'bottom',
+    buttonText: 'Okay'
+  })
   return state.merge({ fetching: false, error: null, key, user })
 }
 

@@ -72,33 +72,11 @@ class NavigationRouter extends Component {
             <scene key='editService' component={EditServiceScreen} title='service' onback={refreshOnBack} />
             <scene key='editProfile' component={EditProfileScreen} title='perfil' onback={refreshOnBack} />
             <scene key='currency' component={CurrencyScreen} title='semillas' />
-            <scene key='login' component={LoginScreen} title='login' hidenavbar />
-            <scene key='signup' component={SignupScreen} title='signup' hidenavbar />
+            <scene key='login' component={LoginScreen} hideNavBar title='login' />
+            <scene key='signup' component={SignupScreen} title='signup' hideNavBar />
             <scene key='about' component={AboutScreen} title='about' />
-
-
-
         </Scene>
       </Router>
-
-//      <Router>
-//        <Scene key='drawer' component={NavigationDrawer} open={false}>
-//          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-//            <Scene initial key='feed' component={FeedScreen} title='Feed' navBar={CustomNavBar} />
-//            <scene key='user' component={userscreen} title='user' />
-//            <scene key='service' component={servicescreen} title='service' />
-//            <scene key='profile' component={profilescreen} title='perfil' />
-//            <scene key='editservice' component={editservicescreen} title='service' onback={refreshonback} />
-//            <scene key='editprofile' component={editprofilescreen} title='perfil' onback={refreshonback} />
-//            <scene key='currency' component={currencyscreen} title='semillas' />
-//            <scene key='login' component={loginscreen} title='login' hidenavbar />
-//            <scene key='signup' component={signupscreen} title='signup' hidenavbar />
-//            <scene key='about' component={aboutscreen} title='about' />
-//
-//            {/* Custom navigation bar example */}
-//          </Scene>
-//        </Scene>
-//      </Router>
     )
   }
 }

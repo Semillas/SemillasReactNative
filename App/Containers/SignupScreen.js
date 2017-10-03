@@ -12,11 +12,16 @@ import {
   LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
+import {
+  Container,
+  Content
+} from 'native-base'
 import Styles from './Styles/SignupScreenStyle'
 import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
+import CommonHeader from '../Components/CommonHeader'
 
 type SignupScreenProps = {
   dispatch: () => any,
@@ -107,89 +112,92 @@ class SignupScreen extends React.Component {
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-        <View style={Styles.form}>
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('email')}</Text>
-            <TextInput
-              ref='email'
-              style={textInputStyle}
-              value={email}
-              editable={editable}
-              keyboardType='email-address'
-              returnKeyType='next'
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={this.handleChangeEmail}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.password1.focus()}
-              placeholder={I18n.t('email')} />
+      <Container>
+        <CommonHeader title={I18n.t('Sign Up')} />
+        <Content contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
+          <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+          <View style={Styles.form}>
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('email')}</Text>
+              <TextInput
+                ref='email'
+                style={textInputStyle}
+                value={email}
+                editable={editable}
+                keyboardType='email-address'
+                returnKeyType='next'
+                autoCapitalize='none'
+                autoCorrect={false}
+                onChangeText={this.handleChangeEmail}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.password1.focus()}
+                placeholder={I18n.t('email')} />
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+              </Text>
+            </View>
+
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('Password')}</Text>
+              <TextInput
+                ref='password1'
+                style={textInputStyle}
+                value={password1}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='go'
+                autoCapitalize='none'
+                autoCorrect={false}
+                secureTextEntry
+                onChangeText={this.handleChangePassword1}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.password2.focus()}
+                placeholder={I18n.t('Password')} />
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.password1) ? this.props.error['password1'][0] : ''}
+              </Text>
+            </View>
+
+            <View style={Styles.row}>
+              <Text style={Styles.rowLabel}>{I18n.t('Repeat Password')}</Text>
+              <TextInput
+                ref='password2'
+                style={textInputStyle}
+                value={password2}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='go'
+                autoCapitalize='none'
+                autoCorrect={false}
+                secureTextEntry
+                onChangeText={this.handleChangePassword2}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={this.handlePressLogin}
+                placeholder={I18n.t('Password')} />
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.password2) ? this.props.error['password2'][0] : ''}
+              </Text>
+            </View>
             <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+              { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
             </Text>
+
+            <View style={[Styles.loginRow]}>
+              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressSignup}>
+                <View style={Styles.loginButton}>
+                  <Text style={Styles.loginText}>{I18n.t('Sign Up')}</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
+                <View style={Styles.loginButton}>
+                  <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Password')}</Text>
-            <TextInput
-              ref='password1'
-              style={textInputStyle}
-              value={password1}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='go'
-              autoCapitalize='none'
-              autoCorrect={false}
-              secureTextEntry
-              onChangeText={this.handleChangePassword1}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.password2.focus()}
-              placeholder={I18n.t('Password')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.password1) ? this.props.error['password1'][0] : ''}
-            </Text>
-          </View>
-
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Repeat Password')}</Text>
-            <TextInput
-              ref='password2'
-              style={textInputStyle}
-              value={password2}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='go'
-              autoCapitalize='none'
-              autoCorrect={false}
-              secureTextEntry
-              onChangeText={this.handleChangePassword2}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={this.handlePressLogin}
-              placeholder={I18n.t('Password')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.password2) ? this.props.error['password2'][0] : ''}
-            </Text>
-          </View>
-          <Text style={Styles.errorLabel}>
-            { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
-          </Text>
-
-          <View style={[Styles.loginRow]}>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressSignup}>
-              <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>{I18n.t('Sign Up')}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={Styles.loginButtonWrapper} onPress={NavigationActions.pop}>
-              <View style={Styles.loginButton}>
-                <Text style={Styles.loginText}>{I18n.t('cancel')}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      </ScrollView>
+        </Content>
+      </Container>
     )
   }
 }
