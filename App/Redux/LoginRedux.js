@@ -54,8 +54,10 @@ export const logout = (state: Object) => INITIAL_STATE
 // we're attempting to signup
 export const signupRequest = (state: Object) => state.merge({ fetching: true })
 
-export const signupSuccess = (state: Object, { key, user }: Object) =>
-  state.merge({ fetching: false, error: null, key, user })
+export const signupSuccess = (state: Object, { key, user }: Object) => {
+  NavigationActions.pop()
+  return state.merge({ fetching: false, error: null, key, user })
+}
 
 export const signupFailure = (state: Object, { error }: Object) =>
   state.merge({ fetching: false, signupError: error })

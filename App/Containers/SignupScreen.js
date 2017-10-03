@@ -39,7 +39,6 @@ class SignupScreen extends React.Component {
     }
   }
 
-  isAttempting: boolean
   keyboardDidShowListener: Object
   keyboardDidHideListener: Object
 
@@ -51,14 +50,6 @@ class SignupScreen extends React.Component {
       password2: '',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth }
-    }
-    this.isAttempting = false
-  }
-
-  componentWillReceiveProps (newProps) {
-    this.forceUpdate() // TODO check if really needed
-    if (this.isAttempting && !newProps.fetching && !newProps.error) {
-      NavigationActions.pop()
     }
   }
 
@@ -95,7 +86,6 @@ class SignupScreen extends React.Component {
 
   handlePressSignup= () => {
     const { email, password1, password2 } = this.state
-    this.isAttempting = true
     this.props.attemptSignup(email, password1, password2)
   }
 
