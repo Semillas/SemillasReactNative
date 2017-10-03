@@ -2,7 +2,12 @@
 
 import React from 'react'
 import { View } from 'react-native'
-import RoundedButton from '../Components/RoundedButton'
+import {
+  Button,
+  Container,
+  Content,
+  Text
+} from 'native-base'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 
@@ -23,18 +28,20 @@ export default class LoginSignUpButtons extends React.Component {
 
   render () {
     return (
-      <View>
-        <RoundedButton
+      <Content>
+        <Button block
+          style={{marginTop:20}}
           onPress={NavigationActions.login}
         >
-          {I18n.t('Login')}
-        </RoundedButton>
-        <RoundedButton
+          <Text> {I18n.t('Login')} </Text>
+        </Button>
+        <Button block
+          style={{marginTop:20}}
           onPress={NavigationActions.signup}
         >
-          {I18n.t('Sign Up')}
-        </RoundedButton>
-      </View>
+          <Text>{I18n.t('Sign Up')}</Text>
+        </Button>
+      </Content>
     )
   }
 }

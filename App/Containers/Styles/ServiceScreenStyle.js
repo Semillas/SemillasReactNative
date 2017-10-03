@@ -14,7 +14,6 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 38,
-    backgroundColor: 'transparent'
   },
 
   picture: {

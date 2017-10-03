@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {
-  Text,
   View,
   TouchableHighlight,
   Image
 } from 'react-native'
+import {
+  Text
+} from 'native-base'
+
 import {
   Card,
   CardImage,

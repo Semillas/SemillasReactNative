@@ -46,6 +46,11 @@ class DrawerContent extends Component {
     return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
   }
 
+  pressLogout = () => {
+    this.props.logout()
+    NavigationActions.drawerClose()
+  }
+
   render () {
     if (this.props.user) {
       return (
@@ -59,7 +64,7 @@ class DrawerContent extends Component {
           <DrawerButton text={I18n.t('Add Service')} icon='plus-circle' onPress={this.handlePressNewService} />
           <DrawerButton text={I18n.t('Services')} icon='envira' onPress={this.handlePressFeed} />
           <DrawerButton text={this.walletButtonText()} icon='money' onPress={this.handlePressCurrency} />
-          <DrawerButton text={I18n.t('Logout')} icon='sign-out' onPress={this.props.logout} />
+          <DrawerButton text={I18n.t('Logout')} icon='sign-out' onPress={() => this.pressLogout(this)} />
         </ScrollView>
       )
     } else {

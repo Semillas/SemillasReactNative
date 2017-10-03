@@ -1,12 +1,18 @@
 // @flow
 
 import React from 'react'
-import { Text,
+import {
          View,
          ActivityIndicator,
          Image,
          ScrollView
 } from 'react-native'
+import {
+  Button,
+  Container,
+  Content,
+  Text
+} from 'native-base'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import MapView from 'react-native-maps'
@@ -99,12 +105,14 @@ class UserScreen extends React.Component {
   render (uuid) {
     if (!this.props.loggedIn) {
       return (
-        <View style={styles.mainContainer}>
+        <Container style={styles.mainContainer}>
+          <Content padder>
           <Text>{I18n.t('You need to be logged in')}</Text>
-          <View style={styles.section}>
+          <Content padder>
             <LoginSignUpButtons />
-          </View>
-        </View>
+          </Content>
+          </Content>
+        </Container>
       )
     }
     const { user } = this.props

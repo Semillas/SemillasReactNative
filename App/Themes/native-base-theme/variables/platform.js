@@ -14,7 +14,7 @@ export default {
   // AndroidRipple
   androidRipple: true,
   androidRippleColor: "rgba(256, 256, 256, 0.3)",
-  androidRippleColorDark: "rgba(0, 0, 0, 0.15)",
+  androidRippleColorDark: Colors.coal,
 
   // Badge
   badgeBg: "#ED1727",
@@ -244,8 +244,8 @@ export default {
   tabTextColor: "#222222",
 
   // Text
-  textColor: "#000",
-  inverseTextColor: "#fff",
+  textColor: Colors.coal,
+  inverseTextColor: Colors.snow,
   noteFontSize: 14,
 
   // Title
@@ -255,7 +255,7 @@ export default {
   subtitleColor: platform === "ios" ? "#8e8e93" : "#FFF",
 
   // New Variable
-  titleFontColor: platform === "ios" ? "#000" : "#FFF",
+  titleFontColor: platform === "ios" ? Colors.coal : Colors.snow,
 
   // Other
   borderRadiusBase: platform === "ios" ? 5 : 2,
