@@ -37,7 +37,6 @@ class LoginScreen extends React.Component {
     }
   }
 
-  isAttempting: boolean
   keyboardDidShowListener: Object
   keyboardDidHideListener: Object
 
@@ -48,15 +47,6 @@ class LoginScreen extends React.Component {
       password: '',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth }
-    }
-    this.isAttempting = false
-  }
-
-  componentWillReceiveProps (newProps) {
-    this.forceUpdate()
-    // Did the login attempt complete?
-    if (this.isAttempting && !newProps.fetching && !newProps.error) {
-      NavigationActions.pop()
     }
   }
 
@@ -93,8 +83,6 @@ class LoginScreen extends React.Component {
 
   handlePressLogin = () => {
     const { email, password } = this.state
-    this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
     this.props.attemptLogin(email, password)
   }
 

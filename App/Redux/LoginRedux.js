@@ -2,6 +2,7 @@
 
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -38,8 +39,10 @@ export const setApiKey = (state: Object) => state
 export const loginRequest = (state: Object) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const loginSuccess = (state: Object, { key, user }: Object) =>
-  state.merge({ fetching: false, error: null, key, user })
+export const loginSuccess = (state: Object, { key, user }: Object) => {
+  NavigationActions.pop()
+  return state.merge({ fetching: false, error: null, key, user })
+}
 
 // we've had a problem logging in
 export const loginFailure = (state: Object, { error }: Object) =>
