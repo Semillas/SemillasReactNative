@@ -2,7 +2,8 @@
 
 // An Feed Screen is a great way to dev and quick-test components
 import React from 'react'
-import { Platform, View, Text } from 'react-native'
+import { Platform, Text } from 'react-native'
+import { Content } from 'native-base'
 import styles from './Styles/FeedScreenStyle'
 
 // Components to show examples (only real point of merge conflict)
@@ -29,9 +30,9 @@ class FeedScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.mainContainer}>
+      <Content padder style={styles.mainContainer}>
         <Feed />
-      </View>
+      </Content>
     )
   }
 }

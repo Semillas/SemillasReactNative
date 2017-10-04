@@ -6,18 +6,21 @@ import {
   Image
 } from 'react-native'
 import {
-  Text
-} from 'native-base'
-
-import {
+  Container,
   Card,
-  CardImage,
-  CardTitle,
-  CardContent
-} from 'react-native-card-view'
+  CardItem,
+  Title,
+  Text,
+  Left,
+  Right,
+  Button,
+  H2,
+  Body
+} from 'native-base'
 import { Images } from '../Themes/'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import styles from './Styles/ServiceFeedStyles'
+import Price from '../Components/Price'
 
 export default class ServiceFeed extends React.Component {
 
@@ -44,7 +47,7 @@ export default class ServiceFeed extends React.Component {
   }
 
   renderDistance (data) {
-    if (data.distance) {
+    if ((data.distance == 0) || (data.distance)) {
       return (<Text style={styles.distance}>{data.distance} km</Text>)
     } else {
       return (<Text />)
@@ -55,25 +58,29 @@ export default class ServiceFeed extends React.Component {
     const { data } = this.props
     const card = {card: {width: 320}}
     return (
-      <TouchableHighlight
-        onPress={() => {
-          NavigationActions.service({uuid: data.uuid})
-        }}
-      >
-        <View style={styles.container}>
-          <Card styles={card}>
-            <CardImage>
-              {this.renderPhotos(data)}
-            </CardImage>
-            <CardTitle>
-              <Text style={styles.title}>{data.title}</Text>
-            </CardTitle>
-            <CardContent>
-              {this.renderDistance(data)}
-            </CardContent>
-          </Card>
-        </View >
-      </TouchableHighlight>
+
+        <TouchableHighlight
+          onPress={() => {
+            NavigationActions.service({uuid: data.uuid})
+          }}
+        >
+            <Card style={{justifyContent: 'center',flex: 0}}>
+              <CardItem>
+                {this.renderPhotos(data)}
+              </CardItem>
+              <CardItem>
+                <H2>{data.title}</H2>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Price data={data} />
+                </Left>
+                <Right>
+                  {this.renderDistance(data)}
+                </Right>
+              </CardItem>
+            </Card>
+        </TouchableHighlight>
     )
   }
 }

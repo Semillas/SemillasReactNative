@@ -85,7 +85,7 @@ export default class ImageSwiper extends React.Component {
         ref={r => {
           this.swiper = r;
         }}
-        width={Metrics.screenWidth-2*Metrics.doubleBaseMargin}
+        width={Metrics.screenWidth-3*Metrics.doubleBaseMargin}
         height={300}
         style={{alignItems:'center'}}
         showsButtons

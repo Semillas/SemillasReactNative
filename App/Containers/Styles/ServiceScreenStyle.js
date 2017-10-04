@@ -15,18 +15,5 @@ export default StyleSheet.create({
   title: {
     fontSize: 38,
   },
-
-  picture: {
-    width: 320,
-    height: 280,
-    borderRadius: 5,
-    alignSelf: 'center',
-    marginTop: Metrics.smallMargin
-  },
-  price: {
-    color: Colors.cta,
-    textAlign: 'left',
-    fontWeight: 'bold'
-  },
   ...ApplicationStyles.screen
 })

@@ -20,11 +20,7 @@ export default {
   },
   image: {
     marginTop: Metrics.smallMargin,
-    width: 300,
-    height: 200
+    width: 325,
+    height: 220
   },
-  distance: {
-    textAlign: 'right',
-    color: Colors.charcoal
-  }
 }

@@ -18,12 +18,13 @@ import {
   Left,
   Right,
   Button,
+  H2,
   Body
 } from 'native-base'
 import { connect } from 'react-redux'
-import AppConfig from '../Config/AppConfig'
 import ServiceActions from '../Redux/ServiceRedux.js'
 import ImageSwiper from '../Components/ImageSwiper'
+import Price from '../Components/Price'
 
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Images } from '../Themes/'
@@ -64,17 +65,9 @@ class ServiceScreen extends React.Component {
     }
   }
 
-  renderDistance(data) {
-    if (data.distance) {
-      return (<Text>{data.distance} Km</Text>)
-    } else {
-      return (<Text />)
-    }
-  }
-
-  renderPrice(data) {
-    if (data.seeds_price) {
-      return (<Text style={styles.price}>{data.seeds_price} {AppConfig.CurrencyName}</Text>)
+  renderDistance (data) {
+    if ((data.distance == 0) || (data.distance)) {
+      return (<Text style={styles.distance}>{data.distance} km</Text>)
     } else {
       return (<Text />)
     }
@@ -94,19 +87,19 @@ class ServiceScreen extends React.Component {
       return (
         <Container>
           <CommonHeader title={I18n.t('Service')} />
-          <Content>
+          <Content padder>
             <Card>
               <CardItem>
                 <ImageSwiper images={service.photos} />
               </CardItem>
               <CardItem>
                 <Body>
-                  <Text style={styles.title}>{service.title}</Text>
+                  <H2>{service.title}</H2>
                 </Body>
               </CardItem>
               <CardItem>
                 <Left>
-                  <Text> {this.renderPrice(service)} </Text>
+                  <Price data={service} />
                 </Left>
                 <Right>
                   <Text> {this.renderDistance(service)} </Text>
