@@ -46,7 +46,6 @@
     "react-native-navigation-redux-helpers": "^0.5.0",
     "react-native-permissions": "^1.0.0",
     "react-native-router-flux": "4.0.0-beta.21",
-    "react-native-sentry": "^0.23.2",
     "react-native-simple-auth": "^2.0.0",
     "react-native-swiper": "^1.5.4",
     "react-native-vector-icons": "^4.4.0",
