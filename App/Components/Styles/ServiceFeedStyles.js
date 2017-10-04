@@ -20,7 +20,7 @@ export default {
   },
   image: {
     marginTop: Metrics.smallMargin,
-    width: 325,
+    width: Metrics.screenWidth-3*Metrics.doubleBaseMargin,
     height: 220
   },
 }
