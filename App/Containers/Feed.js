@@ -4,6 +4,10 @@ import {
   ActivityIndicator,
   RefreshControl
 } from 'react-native'
+import {
+  Content,
+  List,
+} from 'native-base'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
