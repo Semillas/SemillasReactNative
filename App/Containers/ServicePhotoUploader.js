@@ -68,6 +68,10 @@ class ServicePhotoUploader extends React.Component {
       this.props.attemptPhotoDelete(serviceUuid, photoId)
     }
     var service = this.props.service
+    if ((this.props.service.photos) &&
+      (this.props.service.photos[0].photo.includes('service_placeholder.jpg'))) {
+        return (<View />)
+      }
     return (
       <View >
         { this.props.service.photos.map(function (object, i) {
