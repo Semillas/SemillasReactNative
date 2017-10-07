@@ -9,7 +9,7 @@ export default StyleSheet.create({
       flex: 1,
       marginTop: Metrics.navBarHeight,
       marginRight: Metrics.baseMargin,
-      marginLef: Metrics.baseMargin,
+      marginLeft: Metrics.baseMargin,
 
       backgroundColor: Colors.transparent
 
