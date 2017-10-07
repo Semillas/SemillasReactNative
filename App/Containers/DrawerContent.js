@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { ScrollView, Image, BackAndroid } from 'react-native'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+import AppConfig from '../Config/AppConfig'
 import styles from './Styles/DrawerContentStyle'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
@@ -43,7 +44,7 @@ class DrawerContent extends Component {
   }
 
   walletButtonText () {
-    return 'Semillas (' + String(this.props.user.wallet.balance) + ')'
+    return AppConfig.CurrencyName + ' (' + String(this.props.user.wallet.balance) + ')'
   }
 
   pressLogout = () => {
