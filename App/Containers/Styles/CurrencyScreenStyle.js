@@ -1,15 +1,20 @@
 // @flow
 
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../Themes/'
+import { ApplicationStyles, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
-  containerasd: {
+  thisContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 50
+  },
+
+  cta: {
+    marginBottom: Metrics.baseMargin,
+    marginRight: Metrics.baseMargin,
+    marginLeft: Metrics.baseMargin,
   },
 
   ...ApplicationStyles.screen
