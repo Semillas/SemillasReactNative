@@ -23,15 +23,16 @@ export default StyleSheet.create({
     borderColor: '#9B9B9B',
     borderWidth: 1 / PixelRatio.get(),
     justifyContent: 'center',
-    alignItems: 'center'
   },
   avatar: {
     borderRadius: 75,
     width: 150,
+    alignSelf: 'center',
     height: 150
   },
   section: {
-    alignItems: 'center'
+    alignSelf: 'center',
+    marginTop: 50
   },
   subSectionText: {
     ...Fonts.style.h5,

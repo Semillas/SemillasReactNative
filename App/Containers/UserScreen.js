@@ -83,9 +83,7 @@ class UserScreen extends React.Component {
     }
 
     return (
-      <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-        <Image style={styles.avatar} source={source} />
-      </View>
+      <Image style={styles.avatar} source={source} />
     )
   }
 
@@ -134,15 +132,25 @@ class UserScreen extends React.Component {
       return (
         <Container>
           <CommonHeader title={user.name} />
-          <Content>
+          <Content padder>
+            <Card>
               {this.renderMap(user)}
-            <View style={styles.section}>
               {this.renderProfilePhoto(user)}
-              <UserContact user={user} />
-            </View>
-              {this.renderEditButton()}
-            <H2>{I18n.t('Services being offered')}</H2>
-            <UserServices userUuid={this.props.uuid} />
+              <CardItem cardBody style={styles.section}>
+                <UserContact user={user} />
+              </CardItem>
+              <CardItem cardBody style={styles.section}>
+                {this.renderEditButton()}
+              </CardItem>
+            </Card>
+            <Card>
+              <CardItem cardBody style={styles.section}>
+                <H2>{I18n.t('Services being offered')}</H2>
+              </CardItem>
+              <CardItem cardBody style={styles.section}>
+                <UserServices userUuid={this.props.uuid} />
+              </CardItem>
+            </Card>
           </Content>
         </Container>
       )
