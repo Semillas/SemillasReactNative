@@ -3,7 +3,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {
-  View,
   Image,
   ActivityIndicator,
 } from 'react-native'
@@ -77,10 +76,10 @@ class ServiceScreen extends React.Component {
     const { service } = this.props
     if (!service) {
       return (
-        <View style={styles.container}>
+        <Container style={styles.container}>
           <CommonHeader title={I18n.t('Loading Service')} />
           <ActivityIndicator />
-        </View>
+        </Container>
       )
     } else {
       const card = {card: {width: 320}}

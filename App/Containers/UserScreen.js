@@ -11,6 +11,10 @@ import {
   Button,
   Container,
   Content,
+  Card,
+  CardItem,
+  H2,
+  H3,
   Text
 } from 'native-base'
 import PropTypes from 'prop-types';
@@ -24,6 +28,7 @@ import UserActions from '../Redux/UsersRedux.js'
 import UserServices from './UserServices'
 import LoginSignUpButtons from '../Components/LoginSignUpButtons'
 import { Images } from '../Themes/'
+import CommonHeader from '../Components/CommonHeader'
 
 
 // Styles
@@ -64,7 +69,7 @@ class UserScreen extends React.Component {
       )
     } else {
       return (
-        <Text>Location Not Available</Text>
+        <H3>{I18n.t('Location Not Available')}</H3>
       )
     }
   }
@@ -105,35 +110,41 @@ class UserScreen extends React.Component {
   render (uuid) {
     if (!this.props.loggedIn) {
       return (
-        <Container style={styles.mainContainer}>
-          <Content padder>
-          <Text>{I18n.t('You need to be logged in')}</Text>
-          <Content padder>
-            <LoginSignUpButtons />
-          </Content>
-          </Content>
+        <Container>
+          <CommonHeader title={I18n.t('User')} />
+          <Container style={styles.mainContainer}>
+            <Content padder>
+            <Text>{I18n.t('You need to be logged in')}</Text>
+            <Content padder>
+              <LoginSignUpButtons />
+            </Content>
+            </Content>
+          </Container>
         </Container>
       )
     }
     const { user } = this.props
     if (!user) {
       return (
-        <View style={styles.mainContainer}>
+        <Container style={styles.mainContainer}>
           <ActivityIndicator />
-        </View>
+        </Container>
       )
     } else {
       return (
-        <ScrollView style={styles.mainContainer}>
-            {this.renderMap(user)}
-          <View style={styles.section}>
-            {this.renderProfilePhoto(user)}
-            <UserContact user={user} />
-          </View>
-            {this.renderEditButton()}
-          <Text style={styles.subSectionText}>{I18n.t('Services being offered')}</Text>
-          <UserServices userUuid={this.props.uuid} />
-        </ScrollView>
+        <Container>
+          <CommonHeader title={user.name} />
+          <Content>
+              {this.renderMap(user)}
+            <View style={styles.section}>
+              {this.renderProfilePhoto(user)}
+              <UserContact user={user} />
+            </View>
+              {this.renderEditButton()}
+            <H2>{I18n.t('Services being offered')}</H2>
+            <UserServices userUuid={this.props.uuid} />
+          </Content>
+        </Container>
       )
     }
   }

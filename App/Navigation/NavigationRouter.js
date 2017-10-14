@@ -23,6 +23,7 @@ import CurrencyScreen from '../Containers/CurrencyScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import SignupScreen from '../Containers/SignupScreen'
 import AboutScreen from '../Containers/AboutScreen'
+import PerformTransactionScreen from '../Containers/PerformTransactionScreen'
 import DrawerMenu from './DrawerMenu'
 
 /* **************************
@@ -67,7 +68,7 @@ class NavigationRouter extends Component {
 					</Drawer>
             <Scene key='service' component={ServiceScreen} hideNavBar />
             <Scene key='FeedScreen' component={FeedScreen} navBar={CustomNavBar} />
-            <scene key='user' component={UserScreen} title='user' />
+            <scene key='user' component={UserScreen} title='user' hideNavBar/>
             <scene key='profile' component={ProfileScreen} title='perfil' />
             <scene key='editService' component={EditServiceScreen} title='service' onback={refreshOnBack} />
             <scene key='editProfile' component={EditProfileScreen} title='perfil' onback={refreshOnBack} />
@@ -75,6 +76,7 @@ class NavigationRouter extends Component {
             <scene key='login' component={LoginScreen} hideNavBar title='login' />
             <scene key='signup' component={SignupScreen} title='signup' hideNavBar />
             <scene key='about' component={AboutScreen} title='about' />
+            <scene key='performTransaction' component={PerformTransactionScreen} title='performTransaction' hideNavBar/>
         </Scene>
       </Router>
     )

@@ -57,5 +57,8 @@
    "About": "About Us",
    "None": "None",
    "You're in!!": "You're in!!",
-
+   "Transfer": "Transfer",
+   "Activity": "Activity",
+   "User": "User",
+   "Location Not Available": "Location Not Available",
 }
