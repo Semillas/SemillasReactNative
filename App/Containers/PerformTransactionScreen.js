@@ -1,7 +1,11 @@
 // @flow
 
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import {
+  TouchableOpacity,
+  View,
+  Modal
+} from 'react-native'
 import { connect } from 'react-redux'
 import {
   Container,
@@ -14,8 +18,14 @@ import {
   Text,
   Spinner,
   Left,
+  Right,
   Body,
-  Thumbnail
+  Button,
+  Thumbnail,
+  Form,
+  Item,
+  Label,
+  Input
 } from 'native-base'
 import CommonHeader from '../Components/CommonHeader'
 import AppConfig from '../Config/AppConfig'
@@ -33,12 +43,14 @@ class PerformTransactionScreen extends React.Component {
     super()
     this.state = {
       amount: 0.0,
-      recipient: null
+      recipient: null,
+      displaySearchUser: false
     }
   }
 
   cancelSearch = () => {
     this.props.cancelSearch()
+    this.setModalVisible(false)
     this.state.recipient = null
   }
 
@@ -48,6 +60,7 @@ class PerformTransactionScreen extends React.Component {
 
   setRecipient(recipient) {
     this.state.recipient = recipient
+    this.setModalVisible(false)
     this.props.cancelSearch()
   }
 
@@ -91,6 +104,35 @@ class PerformTransactionScreen extends React.Component {
     }
   }
 
+  setModalVisible (visible) {
+    this.setState({displaySearchUser: visible});
+  }
+
+  performTransfer () {
+    this.setState({displaySearchUser: visible});
+  }
+
+  renderSearchUserModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={this.state.displaySearchUser}
+        onRequestClose={() => this.setModalVisible(false)}
+        >
+          <Content>
+          <H3 style={{paddingTop:20}}>
+            {I18n.t('Choose recipient:')}
+          </H3>
+          <Text note>{I18n.t("Can search by name, full email, full phone (with +prefix) or Telegram Id")} </Text>
+
+          <SearchBar onSearch={this.onSearch} searchTerm={this.props.searchTerm} onCancel={this.cancelSearch} />
+          { (this.props.searching) ? <Spinner /> : <View />}
+          {this.renderSearchResults()}
+      </Content>
+      </Modal>
+    )
+  }
 
   render () {
     return (
@@ -101,22 +143,45 @@ class PerformTransactionScreen extends React.Component {
             <H2>
               {this.props.user.wallet.balance + ' ' + AppConfig.CurrencyName + ' ' + I18n.t('in your wallet')}
             </H2>
-            <H3 style={{paddingTop:20}}>
-              {I18n.t('Choose recipient:')}
-            </H3>
-            <Text note>{I18n.t('Can search by name, full email, full phone (with +prefix) or Telegram Id')}</Text>
-
-            <SearchBar onSearch={this.onSearch} searchTerm={this.props.searchTerm} onCancel={this.cancelSearch} />
-            { (this.props.searching) ? <Spinner /> : <View />}
-            {this.renderSearchResults()}
-
-            <H2 style={{paddingTop:20}}>
-              {I18n.t('Recipient: ')}
-            </H2>
-            {this.renderRecipient()}
-
-
-
+            <Card padder>
+              <CardItem>
+                <Left>
+                  <H3 style={{paddingTop:20}}>
+                    {I18n.t('Recipient: ')}
+                  </H3>
+                </Left>
+                <Right>
+                  <Button transparent onPress={() => this.setModalVisible(true)} >
+                    <Text> {I18n.t('Search User')} </Text>
+                  </Button>
+                </Right>
+              </CardItem>
+              <CardItem>
+                {this.renderSearchUserModal()}
+                {this.renderRecipient()}
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <H3 style={{paddingTop:20}}>
+                    {I18n.t('Amount:')}
+                  </H3>
+                </Left>
+                <Right>
+                  <Item floatingLabel>
+                    <Label>{AppConfig.CurrencyName}</Label>
+                    <Input
+                      value={this.state.amount}
+                      keyboardType={'numeric'}
+                    />
+                  </Item>
+                </Right>
+              </CardItem>
+              <Content style={{paddingTop: 60}}>
+                <Button full onPress={() => this.performTransfer()} >
+                  <Text> {I18n.t('Send')} </Text>
+                </Button>
+              </Content>
+            </Card>
           </Content>
         </Container>
       </Container>

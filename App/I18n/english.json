@@ -64,5 +64,8 @@
    "Choose recipient:": "Choose recipient:",
    "in your wallet": "in your wallet",
    "Recipient: ": "Send to: ",
-   "Can search by name, full email, full phone (with +prefix) or Telegram Id": "Can search by name, full email, full phone (with +prefix) or Telegram Id"
+   "Can search by name, full email, full phone (with +prefix) or Telegram Id": "Can search by name, full email, full phone (with +prefix) or Telegram Id",
+   "Search User": "Search User",
+   "Amount:": "Amount:",
+   "Send": "Send",
 }
