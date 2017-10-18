@@ -46,3 +46,17 @@ export function * profilePhotoPost (api, { picture, uuid }) {
     yield put(UsersActions.profilePhotoPostFailure(response.data))
   }
 }
+
+export function * searchUser (api, action) {
+  const { searchText } = action
+  // make the call to the api
+  const response = yield call(api.searchUser, searchText)
+
+  // success?
+  if (response.ok) {
+    const user = path(['data'], response)
+    yield put(UsersActions.usersSearchSuccess(user))
+  } else {
+    yield put(UsersActions.usersFailure())
+  }
+}

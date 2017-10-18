@@ -16,7 +16,7 @@ import { CategoryTypes } from '../Redux/CategoryRedux'
 
 // import { startup } from './StartupSagas'
 import { login, signup, setApiKey } from './LoginSagas'
-import { getUser, profilePost, profilePhotoPost } from './UsersSagas'
+import { getUser, profilePost, profilePhotoPost, searchUser } from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getCategories } from './CategorySagas'
@@ -55,7 +55,8 @@ const root = function * root () {
     takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_DELETION_REQUEST, deleteServicePhoto, semillasApi),
-    takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi)
+    takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi),
+    takeLatest(UsersTypes.USERS_SEARCH_REQUEST, searchUser, semillasApi)
   ]
 }
 

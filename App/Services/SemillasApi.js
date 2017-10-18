@@ -91,6 +91,16 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     }
   }
 
+  const searchUser = function (searchText) {
+    return api.get(
+      '/api/v1/user',
+      {
+        search: searchText
+      }
+    )
+  }
+
+
   const getUserServices = function (nextPageUrl, userUuid) {
     if (nextPageUrl != null) {
       return api.get(nextPageUrl)
@@ -196,6 +206,7 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     deleteService,
     deleteServicePhoto,
     photoPostService,
+    searchUser,
     putUser,
     putUserPhoto
   }

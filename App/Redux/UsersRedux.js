@@ -17,7 +17,11 @@ const { Types, Creators } = createActions({
   profilePostFailure: ['error'],
   profilePhotoPostRequest: ['picture', 'uuid'],
   profilePhotoPostSuccess: ['profile'],
-  profilePhotoPostFailure: ['error']
+  profilePhotoPostFailure: ['error'],
+  usersCancelSearch: null,
+  usersSearchRequest: ['searchText'],
+  usersSearchSuccess: ['users'],
+  usersSearchFailure: ['error']
 })
 
 export const UsersTypes = Types
@@ -33,7 +37,10 @@ export const INITIAL_STATE = Immutable({
   posting: false,
   postError: null,
   photoPosting: false,
-  photoPostError: null
+  photoPostError: null,
+  searchText: null,
+  searching: false,
+  searchError: null
 })
 
 /* ------------- Reducers ------------- */
@@ -110,6 +117,28 @@ export const profilePhotoPostSuccess = (state: Object, action: Object) => {
 export const profilePhotoPostFailure = (state: Object, { error }: Object) =>
   Object.assign({}, state, { photoPosting: false, photoPostError: error })
 
+export const cancelSearch = (state: Object) => {
+  return Object.assign({}, state, {
+    searchText: null,
+    searchResults: null,
+    searching: false,
+  })
+}
+
+// request the user for a uuid
+export const searchRequest = (state: Object, { searchText }: Object) =>
+  Object.assign({}, state, { searching: true, searchText })
+
+// successful user lookup
+export const searchSuccess = (state: Object, action: Object) => {
+  const { users } = action
+  searchResults = users
+  return Object.assign({}, state, { searching: false, searchError: null, searchResults: searchResults })
+}
+
+// failed to get the user
+export const searchFailure = (state: Object) =>
+  Object.assign({}, state, ({ searching: false, searchError: true }))
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -122,5 +151,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.PROFILE_POST_FAILURE]: profilePostFailure,
   [Types.PROFILE_PHOTO_POST_REQUEST]: profilePhotoPostRequest,
   [Types.PROFILE_PHOTO_POST_SUCCESS]: profilePhotoPostSuccess,
-  [Types.PROFILE_PHOTO_POST_FAILURE]: profilePhotoPostFailure
+  [Types.PROFILE_PHOTO_POST_FAILURE]: profilePhotoPostFailure,
+  [Types.USERS_CANCEL_SEARCH]: cancelSearch,
+  [Types.USERS_SEARCH_REQUEST]: searchRequest,
+  [Types.USERS_SEARCH_SUCCESS]: searchSuccess,
+  [Types.USERS_SEARCH_FAILURE]: searchFailure,
 })

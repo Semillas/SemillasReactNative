@@ -61,4 +61,8 @@
    "Activity": "Activity",
    "User": "User",
    "Location Not Available": "Location Not Available",
+   "Choose recipient:": "Choose recipient:",
+   "in your wallet": "in your wallet",
+   "Recipient: ": "Send to: ",
+   "Can search by name, full email, full phone (with +prefix) or Telegram Id": "Can search by name, full email, full phone (with +prefix) or Telegram Id"
 }
