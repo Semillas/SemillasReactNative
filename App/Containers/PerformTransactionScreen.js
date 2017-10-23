@@ -42,7 +42,7 @@ class PerformTransactionScreen extends React.Component {
   constructor () {
     super()
     this.state = {
-      amount: 0.0,
+      amount: '',
       recipient: null,
       displaySearchUser: false
     }
@@ -127,7 +127,7 @@ class PerformTransactionScreen extends React.Component {
           <Text note>{I18n.t("Can search by name, full email, full phone (with +prefix) or Telegram Id")} </Text>
 
           <SearchBar onSearch={this.onSearch} searchTerm={this.props.searchTerm} onCancel={this.cancelSearch} />
-          { (this.props.searching) ? <Spinner /> : <View />}
+          { (this.props.searching) ? <Spinner /> : <View /> }
           {this.renderSearchResults()}
       </Content>
       </Modal>
@@ -151,7 +151,10 @@ class PerformTransactionScreen extends React.Component {
                   </H3>
                 </Left>
                 <Right>
-                  <Button transparent onPress={() => this.setModalVisible(true)} >
+                  <Button
+                    transparent
+                    onPress={() => this.setModalVisible(true)}
+                    style={{paddingTop:25}}>
                     <Text> {I18n.t('Search User')} </Text>
                   </Button>
                 </Right>
@@ -172,12 +175,14 @@ class PerformTransactionScreen extends React.Component {
                     <Input
                       value={this.state.amount}
                       keyboardType={'numeric'}
+                      paceholder={'0.0'}
+                      onChangeText={(amount) => this.setState({amount})}
                     />
                   </Item>
                 </Right>
               </CardItem>
               <Content style={{paddingTop: 60}}>
-                <Button full onPress={() => this.performTransfer()} >
+                <Button full disabled={!(parseFloat(this.state.amount) && this.state.recipient)} onPress={() => this.performTransfer()} >
                   <Text> {I18n.t('Send')} </Text>
                 </Button>
               </Content>
