@@ -25,6 +25,7 @@ import {
   Form,
   Item,
   Label,
+  Toast,
   Input
 } from 'native-base'
 import CommonHeader from '../Components/CommonHeader'
@@ -36,6 +37,7 @@ import styles from './Styles/PerformTransactionScreenStyle'
 
 import SearchBar from '../Components/SearchBar'
 import UsersActions from '../Redux/UsersRedux'
+import WalletActions from '../Redux/WalletRedux'
 
 class PerformTransactionScreen extends React.Component {
 
@@ -108,10 +110,6 @@ class PerformTransactionScreen extends React.Component {
     this.setState({displaySearchUser: visible});
   }
 
-  performTransfer () {
-    this.setState({displaySearchUser: visible});
-  }
-
   renderSearchUserModal = () => {
     return (
       <Modal
@@ -120,7 +118,7 @@ class PerformTransactionScreen extends React.Component {
         visible={this.state.displaySearchUser}
         onRequestClose={() => this.setModalVisible(false)}
         >
-          <Content>
+          <Content padder>
           <H3 style={{paddingTop:20}}>
             {I18n.t('Choose recipient:')}
           </H3>
@@ -133,6 +131,18 @@ class PerformTransactionScreen extends React.Component {
       </Modal>
     )
   }
+
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.transactionError != this.props.transactionError) {
+      Toast.show({
+        text: newProps.transactionError,
+        position: 'bottom',
+        buttonText: 'Okay'
+      })
+    }
+  }
+
 
   render () {
     return (
@@ -150,14 +160,14 @@ class PerformTransactionScreen extends React.Component {
                     {I18n.t('Recipient: ')}
                   </H3>
                 </Left>
-                <Right>
+                <Body style={{paddingTop:25}}>
                   <Button
                     transparent
                     onPress={() => this.setModalVisible(true)}
-                    style={{paddingTop:25}}>
+                    >
                     <Text> {I18n.t('Search User')} </Text>
                   </Button>
-                </Right>
+                </Body>
               </CardItem>
               <CardItem>
                 {this.renderSearchUserModal()}
@@ -182,7 +192,10 @@ class PerformTransactionScreen extends React.Component {
                 </Right>
               </CardItem>
               <Content style={{paddingTop: 60}}>
-                <Button full disabled={!(parseFloat(this.state.amount) && this.state.recipient)} onPress={() => this.performTransfer()} >
+                <Button full disabled={!(parseFloat(this.state.amount) && this.state.recipient)} onPress={() => this.props.performTransfer(
+                    this.props.user.uuid,
+                    this.state.recipient.uuid,
+                    this.state.amount)} >
                   <Text> {I18n.t('Send')} </Text>
                 </Button>
               </Content>
@@ -199,13 +212,15 @@ const mapStateToProps = (state) => {
     user: state.login.user,
     searchTerm: state.users.searchText,
     searchResults: state.users.searchResults,
-    searching: state.users.searching
+    searching: state.users.searching,
+    transactionError: state.wallet.transactionError
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     performSearch: (searchTerm) => dispatch(UsersActions.usersSearchRequest(searchTerm)),
+    performTransfer: (sourceUuid, destUuid, amount) => dispatch(WalletActions.walletTransactionRequest(sourceUuid, destUuid, amount)),
     cancelSearch: () => dispatch(UsersActions.usersCancelSearch()),
   }
 }

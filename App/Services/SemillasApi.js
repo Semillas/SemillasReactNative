@@ -178,6 +178,19 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     return api.get('/api/v1/service/categories')
   }
 
+  const transact = function (userSource, userDest, value) {
+    data = {
+      'user_source': userSource,
+      'user_dest': userDest,
+      'value': value
+    }
+    return api.post('/api/v1/wallet/transactions/create/',
+    data)
+  }
+
+  const getWallet= function (userUuid) {
+    return api.get('/api/v1/wallet/owner/'.concat(userUuid, '/'))
+  }
 
   // ------
   // STEP 3
@@ -208,7 +221,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     photoPostService,
     searchUser,
     putUser,
-    putUserPhoto
+    putUserPhoto,
+    transact
   }
 }
 

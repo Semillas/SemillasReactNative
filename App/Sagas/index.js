@@ -11,6 +11,7 @@ import { FeedTypes } from '../Redux/FeedRedux'
 import { ServiceTypes } from '../Redux/ServiceRedux'
 import { UserServicesTypes } from '../Redux/UserServicesRedux'
 import { CategoryTypes } from '../Redux/CategoryRedux'
+import { WalletTypes } from '../Redux/WalletRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -20,6 +21,7 @@ import { getUser, profilePost, profilePhotoPost, searchUser } from './UsersSagas
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getCategories } from './CategorySagas'
+import { createTransaction } from './WalletSagas'
 import {  getService,
           postService,
           photoPostService,
@@ -56,7 +58,8 @@ const root = function * root () {
     takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_DELETION_REQUEST, deleteServicePhoto, semillasApi),
     takeLatest(CategoryTypes.CATEGORY_REQUEST, getCategories, semillasApi),
-    takeLatest(UsersTypes.USERS_SEARCH_REQUEST, searchUser, semillasApi)
+    takeLatest(UsersTypes.USERS_SEARCH_REQUEST, searchUser, semillasApi),
+    takeLatest(WalletTypes.WALLET_TRANSACTION_REQUEST, createTransaction, semillasApi)
   ]
 }
 
