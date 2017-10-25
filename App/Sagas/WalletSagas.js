@@ -19,3 +19,19 @@ export function * createTransaction (api, action) {
     yield put(WalletActions.walletTransactionFailure(response.data))
   }
 }
+
+export function * getWallet(api, action) {
+  const { ownerUuid } = action
+  // make the call to the api
+  const response = yield call(
+    api.getWallet,
+    ownerUuid,
+  )
+
+  // success?
+  if (response.ok) {
+    yield put(WalletActions.walletSuccess(response.data))
+  } else {
+    yield put(WalletActions.walletFailure(response.data))
+  }
+}

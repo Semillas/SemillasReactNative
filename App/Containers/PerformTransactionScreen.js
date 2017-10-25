@@ -50,6 +50,12 @@ class PerformTransactionScreen extends React.Component {
     }
   }
 
+  componentWillMount () {
+    if (!this.props.wallet) {
+      this.props.walletRequest(this.props.user.uuid)
+    }
+  }
+
   cancelSearch = () => {
     this.props.cancelSearch()
     this.setModalVisible(false)
@@ -151,7 +157,7 @@ class PerformTransactionScreen extends React.Component {
         <Container style={styles.container}>
           <Content padder>
             <H2>
-              {this.props.user.wallet.balance + ' ' + AppConfig.CurrencyName + ' ' + I18n.t('in your wallet')}
+              {this.props.wallet ? (this.props.user.wallet.balance + ' ' + AppConfig.CurrencyName + ' ' + I18n.t('in your wallet')) : AppConfig.CurrencyName}
             </H2>
             <Card padder>
               <CardItem>
@@ -213,7 +219,8 @@ const mapStateToProps = (state) => {
     searchTerm: state.users.searchText,
     searchResults: state.users.searchResults,
     searching: state.users.searching,
-    transactionError: state.wallet.transactionError
+    transactionError: state.wallet.transactionError,
+    wallet: state.wallet.wallet
   }
 }
 
@@ -222,6 +229,7 @@ const mapDispatchToProps = (dispatch) => {
     performSearch: (searchTerm) => dispatch(UsersActions.usersSearchRequest(searchTerm)),
     performTransfer: (sourceUuid, destUuid, amount) => dispatch(WalletActions.walletTransactionRequest(sourceUuid, destUuid, amount)),
     cancelSearch: () => dispatch(UsersActions.usersCancelSearch()),
+    walletRequest: (ownerUuid) => dispatch(WalletActions.walletRequest(ownerUuid)),
   }
 }
 

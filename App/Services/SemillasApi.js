@@ -222,7 +222,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     searchUser,
     putUser,
     putUserPhoto,
-    transact
+    transact,
+    getWallet
   }
 }
 
