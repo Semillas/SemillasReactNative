@@ -27,6 +27,13 @@ class CurrencyScreen extends React.Component {
     this.props.walletRequest(this.props.user.uuid)
   }
 
+  renderWalletMovements () {
+    return (
+      this.props.wallet.transactions.map((item, itemKey) =>
+        <Text> {item.trans_value} - {item.user} - {item.balance} - {item.created_at} </Text>
+      ))
+  }
+
   render () {
     if (this.props.wallet) {
       return (
@@ -40,6 +47,7 @@ class CurrencyScreen extends React.Component {
               <H3>
                 {I18n.t('Activity')}
               </H3>
+              {this.renderWalletMovements()}
 
               <Button
                 block

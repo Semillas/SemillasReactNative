@@ -14,7 +14,7 @@ export function * createTransaction (api, action) {
 
   // success?
   if (response.ok) {
-    yield put(WalletActions.walletTransactionSuccess())
+    yield put(WalletActions.walletTransactionSuccess(response.data))
   } else {
     yield put(WalletActions.walletTransactionFailure(response.data))
   }

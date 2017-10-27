@@ -147,6 +147,14 @@ class PerformTransactionScreen extends React.Component {
         buttonText: 'Okay'
       })
     }
+    if (newProps.successMessage!= this.props.successMessage) {
+      Toast.show({
+        text: newProps.successMessage,
+        position: 'bottom',
+        buttonText: 'Okay'
+      })
+      this.props.walletRequest(this.props.user.uuid)
+    }
   }
 
 
@@ -220,6 +228,8 @@ const mapStateToProps = (state) => {
     searchResults: state.users.searchResults,
     searching: state.users.searching,
     transactionError: state.wallet.transactionError,
+    transacting: state.wallet.transactionRequesting,
+    successMessage: state.wallet.successMessage,
     wallet: state.wallet.wallet
   }
 }

@@ -26,18 +26,19 @@ export const INITIAL_STATE = Immutable({
   transactionError: null,
   error: null,
   requesting: null,
-  wallet: null
+  wallet: null,
+  successMessage: null
 })
 
 /* ------------- Reducers ------------- */
 
 // request the user for a uuid
 export const walletTransactionRequest = (state: Object, { userUuid, amount }: Object) =>
-  Object.assign({}, state, { transactionRequesting: true, userUuid, amount })
+  Object.assign({}, state, { transactionRequesting: true, userUuid, amount, successMessage: null })
 
 // successful user lookup
-export const walletTransactionSuccess = (state: Object, action: Object) => {
-  return Object.assign({}, state, { transactionRequesting: false, transactionError: null })
+export const walletTransactionSuccess = (state: Object, {message}: Object) => {
+  return Object.assign({}, state, { transactionRequesting: false, transactionError: null, successMessage: message })
 }
 
 // failed to get the user
