@@ -11,8 +11,8 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
-      marginTop: Metrics.navBarHeight,
-      backgroundColor: Colors.transparent
+      backgroundColor: Colors.transparent,
+      marginBottom: Metrics.baseMargin,
     },
     backgroundImage: {
       position: 'absolute',

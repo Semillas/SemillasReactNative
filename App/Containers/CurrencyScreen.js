@@ -10,6 +10,8 @@ import {
   H3,
   Button,
   Spinner,
+  Card,
+  CardItem,
   Text
 } from 'native-base'
 import I18n from 'react-native-i18n'
@@ -28,26 +30,51 @@ class CurrencyScreen extends React.Component {
   }
 
   renderWalletMovements () {
+    if (this.props.wallet.transactions) {
     return (
-      this.props.wallet.transactions.map((item, itemKey) =>
-        <Text> {item.trans_value} - {item.user} - {item.balance} - {item.created_at} </Text>
-      ))
+      this.props.wallet.transactions.map((item, itemKey) => {
+        if (item.trans_value > 0) {
+          textStyle = styles.movement
+        } else {
+          textStyle = [styles.movement, styles.red]
+        }
+
+        return (
+          <CardItem key={itemKey}
+            style={styles.thisContainer}
+            onPress={() => {NavigationActions.user({uuid: item.user_uuid})}}
+            >
+            <Text style={textStyle}> {item.user} </Text>
+            <Text style={textStyle}> {item.created_at} </Text>
+            <Text style={textStyle}> {item.trans_value} </Text>
+            <Text style={textStyle}> {item.balance} </Text>
+          </CardItem>
+        )
+      }))
+    } else {
+      return (
+        <Text>
+          {I18n.t('You have no transactions to be shown yet')}
+        </Text>
   }
 
   render () {
     if (this.props.wallet) {
       return (
-        <Container style={styles.screen}>
+        <Container style={styles.mainContainer}>
           <CommonHeader title={AppConfig.CurrencyName} />
-          <Container>
-            <Container style={styles.thisContainer}>
+          <Content padder>
               <H1>
                 {this.props.wallet.balance + ' ' + AppConfig.CurrencyName}
               </H1>
-              <H3>
-                {I18n.t('Activity')}
-              </H3>
-              {this.renderWalletMovements()}
+              <Card>
+                <CardItem>
+                  <H3>
+                    {I18n.t('Activity')}
+                  </H3>
+                </CardItem>
+                {this.renderWalletMovements()}
+              </Card>
 
               <Button
                 block
@@ -56,8 +83,7 @@ class CurrencyScreen extends React.Component {
                 >
                 <Text>{I18n.t('Transfer')} </Text>
               </Button>
-            </Container>
-          </Container>
+          </Content>
         </Container>
       )
     } else {
