@@ -177,7 +177,7 @@ class EditProfileForm extends React.Component {
     const editable = !this.props.posting
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
+      <ScrollView contentContainerStyle={Styles.center} style={[Styles.container]} keyboardShouldPersistTaps='always'>
         <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
         <View style={Styles.form}>
 
