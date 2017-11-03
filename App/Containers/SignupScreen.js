@@ -114,7 +114,7 @@ class SignupScreen extends React.Component {
     return (
       <Container>
         <CommonHeader title={I18n.t('Sign Up')} />
-        <Content contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container]} keyboardShouldPersistTaps='always'>
+        <Content contentContainerStyle={Styles.center} style={[Styles.container]} keyboardShouldPersistTaps='always'>
           <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
           <View style={Styles.form}>
             <View style={Styles.row}>

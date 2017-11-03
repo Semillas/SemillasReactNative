@@ -87,7 +87,7 @@ export default class ImageSwiper extends React.Component {
         }}
         width={Metrics.screenWidth-3*Metrics.doubleBaseMargin}
         height={300}
-        style={{alignItems:'center'}}
+        style={styles.center}
         showsButtons
         showsPagination
         automaticallyAdjustContentInsets>
