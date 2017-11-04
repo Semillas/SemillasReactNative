@@ -30,7 +30,6 @@ class CurrencyScreen extends React.Component {
   }
 
   renderWalletMovements () {
-    if (this.props.wallet.transactions) {
     return (
       this.props.wallet.transactions.map((item, itemKey) => {
         if (item.trans_value > 0) {
@@ -50,18 +49,14 @@ class CurrencyScreen extends React.Component {
             <Text style={textStyle}> {item.balance} </Text>
           </CardItem>
         )
-      }))
-    } else {
-      return (
-        <Text>
-          {I18n.t('You have no transactions to be shown yet')}
-        </Text>
+      })
+    )
   }
 
   render () {
     if (this.props.wallet) {
       return (
-        <Container style={styles.mainContainer}>
+        <Container style={[styles.currencyContainer, styles.mainContainer]}>
           <CommonHeader title={AppConfig.CurrencyName} />
           <Content padder>
               <H1>

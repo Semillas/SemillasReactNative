@@ -10,6 +10,13 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+  currencyContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+
+
   cta: {
     marginBottom: Metrics.baseMargin,
     marginRight: Metrics.baseMargin,
