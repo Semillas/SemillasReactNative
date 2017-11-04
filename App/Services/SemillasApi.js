@@ -91,6 +91,16 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     }
   }
 
+  const searchUser = function (searchText) {
+    return api.get(
+      '/api/v1/user',
+      {
+        search: searchText
+      }
+    )
+  }
+
+
   const getUserServices = function (nextPageUrl, userUuid) {
     if (nextPageUrl != null) {
       return api.get(nextPageUrl)
@@ -168,6 +178,19 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     return api.get('/api/v1/service/categories')
   }
 
+  const transact = function (userSource, userDest, value) {
+    data = {
+      'user_source': userSource,
+      'user_dest': userDest,
+      'value': value
+    }
+    return api.post('/api/v1/wallet/transactions/create/',
+    data)
+  }
+
+  const getWallet= function (userUuid) {
+    return api.get('/api/v1/wallet/owner/'.concat(userUuid, '/'))
+  }
 
   // ------
   // STEP 3
@@ -196,8 +219,11 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     deleteService,
     deleteServicePhoto,
     photoPostService,
+    searchUser,
     putUser,
-    putUserPhoto
+    putUserPhoto,
+    transact,
+    getWallet
   }
 }
 

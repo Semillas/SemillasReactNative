@@ -107,7 +107,7 @@ class LoginScreen extends React.Component {
     return (
       <Container>
         <CommonHeader title={I18n.t('Login')} />
-        <Content contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+        <Content contentContainerStyle={Styles.center} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
           <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
           <View style={Styles.form}>
             <View style={Styles.row}>

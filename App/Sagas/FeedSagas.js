@@ -5,8 +5,6 @@ import parse from 'parse-link-header'
 
 export function * getFeed (api, action) {
   const { nextPageUrl, category, searchText, position } = action
-  // make the call to the api
-  // TODO: Add filters
   console.log('Loading feed url: ', nextPageUrl)
   var latitude = position ? position.latitude : null
   var longitude = position ? position.longitude : null
@@ -25,6 +23,6 @@ export function * getFeed (api, action) {
     const nextUrl = parse(path(['headers', 'link'], response))
     yield put(FeedActions.feedSuccess(nextUrl, items))
   } else {
-    yield put(FeedActions.feedFailure())
+    yield put(FeedActions.feedFailure(response.problem))
   }
 }

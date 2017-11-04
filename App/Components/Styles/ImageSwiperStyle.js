@@ -9,5 +9,8 @@ export default StyleSheet.create({
     height: 280,
     borderRadius: 10,
     alignSelf: 'center',
+  },
+  center: {
+    alignItems: 'center',
   }
 })

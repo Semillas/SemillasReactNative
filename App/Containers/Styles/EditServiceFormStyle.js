@@ -8,6 +8,9 @@ export default StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.background
   },
+  center: {
+    alignItems: 'center',
+  },
   form: {
     backgroundColor: Colors.snow,
     margin: Metrics.baseMargin,
