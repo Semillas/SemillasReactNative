@@ -8,7 +8,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   feedRequest: ['nextPageUrl', 'searchText', 'category', 'position'],
   feedSuccess: ['nextPageUrl', 'items'],
-  feedFailure: null,
+  feedFailure: ['error'],
   feedClear: null,
   geolocationRequested: null,
   feedUpdateSearch: ['searchText'],
@@ -90,14 +90,16 @@ export const success = (state: Object, action: Object) => {
 }
 
 // failed to get the user
-export const failure = (state: Object) =>
-  Object.assign({}, state, {
+export const failure = (state: Object, action) => {
+  const { error } = action
+  return Object.assign({}, state, {
     fetching: false,
-    error: true,
+    error: error,
     nextPageUrl: null,
     requestStatus: STATUS_FEED_RETRIEVED,
     paramsUpdated: false
   })
+}
 
 export const clear = (state: Object) => {
   var newState = Object.assign({}, state,
@@ -110,18 +112,15 @@ export const clear = (state: Object) => {
   return newState
 }
 
-// failed to get the user
 export const updateSearch = (state: Object, action: Object) => {
   const { searchText } = action
   return Object.assign({}, state, {searchText: searchText, paramsUpdated: true})
 }
 
-// failed to get the user
 export const cancelSearch = (state: Object) => {
   return Object.assign({}, state, {searchText: null, paramsUpdated: true})
 }
 
-// failed to get the user
 export const geolocationRequested = (state: Object) =>
   Object.assign({}, state, {
     requestStatus: STATUS_REQUESTED_LOCALIZATION,

@@ -23,6 +23,7 @@ export default () => {
     userServices: require('./UserServicesRedux').reducer,
     services: require('./ServiceRedux').reducer,
     location: require('./GeoRedux').reducer,
+    wallet: require('./WalletRedux').reducer,
     form: formReducer,
     entities
   })

@@ -44,7 +44,11 @@ class DrawerContent extends Component {
   }
 
   walletButtonText () {
-    return AppConfig.CurrencyName + ' (' + String(this.props.user.wallet.balance) + ')'
+    if (this.props.wallet) {
+      return AppConfig.CurrencyName + ' (' + String(this.props.wallet.balance) + ')'
+    } else {
+      return AppConfig.CurrencyName
+    }
   }
 
   pressLogout = () => {
@@ -82,12 +86,14 @@ class DrawerContent extends Component {
 
 DrawerContent.propTypes = {
   user: PropTypes.object,
+  wallet: PropTypes.object,
   logout: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.login.user
+    user: state.login.user,
+    wallet: state.wallet.wallet
   }
 }
 
