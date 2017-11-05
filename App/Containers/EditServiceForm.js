@@ -185,7 +185,7 @@ class EditServiceForm extends React.Component {
         </Button>
       )
     } else {
-      return (<View />)
+      return (<Content />)
     }
   }
 
