@@ -26,14 +26,6 @@ export default StyleSheet.create({
   errorLabel: {
     color: Colors.error
   },
-  textInput: {
-    height: 40,
-    color: Colors.coal
-  },
-  textInputReadonly: {
-    height: 40,
-    color: Colors.steel
-  },
   loginRow: {
     paddingBottom: Metrics.doubleBaseMargin,
     paddingHorizontal: Metrics.doubleBaseMargin,

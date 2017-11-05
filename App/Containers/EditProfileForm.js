@@ -4,13 +4,24 @@ import React from 'react'
 import {
   View,
   ScrollView,
-  Text,
   TextInput,
   TouchableOpacity,
   Image,
   Keyboard,
   LayoutAnimation
 } from 'react-native'
+import {
+  Content,
+  Container,
+  Card,
+  CardItem,
+  Input,
+  Button,
+  Text,
+  Form,
+  Item,
+  Label
+} from 'native-base'
 import { connect } from 'react-redux'
 import Styles from './Styles/EditProfileFormStyle'
 import {Images, Metrics} from '../Themes'
@@ -18,6 +29,7 @@ import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import I18n from 'react-native-i18n'
 import ProfilePhotoUploader from './ProfilePhotoUploader'
+import CommonHeader from '../Components/CommonHeader'
 import UserContact from '../Components/UserContact'
 import AppConfig from '../Config/AppConfig'
 
@@ -144,14 +156,13 @@ class EditProfileForm extends React.Component {
     }
   }
 
-  renderFaircoinAddressInput (faircoinAddress, editable, textInputStyle) {
+  renderFaircoinAddressInput (faircoinAddress, editable) {
     if (AppConfig.FaircoinEnabled) {
     return (
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Faircoin Address')}</Text>
-            <TextInput
+            <Item floatingLabel>
+            <Label>{I18n.t('Faircoin Address')}</Label>
+            <Input
               ref='faircoinAddress'
-              style={textInputStyle}
               value={faircoinAddress}
               editable={editable}
               keyboardType='default'
@@ -161,74 +172,71 @@ class EditProfileForm extends React.Component {
               numberOfLines={8}
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.phone.focus()}
-              placeholder='' />
+              />
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
             </Text>
-          </View>
+          </Item>
     )
     } else {
-      return (<View />)
+      return (<Item />)
     }
   }
 
   render () {
     const { name, email, phone, telegramId, faircoinAddress } = this.state
     const editable = !this.props.posting
-    const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={Styles.center} style={[Styles.container]} keyboardShouldPersistTaps='always'>
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-        <View style={Styles.form}>
+      <Container>
+        <CommonHeader title={I18n.t('Service')} />
+        <Content padder>
+          <Card>
+            <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+            <ProfilePhotoUploader user={this.props.profile} />
+            <Form>
+              <Item floatingLabel>
+                <Label>{I18n.t('Name')}</Label>
+                <Input
+                  ref='name'
+                  value={name}
+                  editable={editable}
+                  keyboardType='default'
+                  returnKeyType='next'
+                  autoCapitalize='words'
+                  autoCorrect={false}
+                  onChangeText={this.handleChangeName}
+                  underlineColorAndroid='transparent'
+                  onSubmitEditing={() => this.refs.email.focus()}
+                  />
+                <Text style={Styles.errorLabel}>
+                  { (this.props.error && this.props.error.name) ? this.props.error['name'][0] : ''}
+                </Text>
+            </Item>
 
-          <ProfilePhotoUploader user={this.props.profile} />
+            <Item floatingLabel>
+              <Label>{I18n.t('Email')}</Label>
+              <Input
+                ref='email'
+                value={email}
+                editable={editable}
+                keyboardType='email-address'
+                returnKeyType='next'
+                autoCapitalize='sentences'
+                autoCorrect
+                onChangeText={this.handleChangeEmail}
+                numberOfLines={8}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.telegramId.focus()}
+                />
+          </Item>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+              </Text>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Name')}</Text>
-            <TextInput
-              ref='name'
-              style={textInputStyle}
-              value={name}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='words'
-              autoCorrect={false}
-              onChangeText={this.handleChangeName}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.email.focus()}
-              placeholder={I18n.t('Name')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.name) ? this.props.error['name'][0] : ''}
-            </Text>
-          </View>
-
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Email')}</Text>
-            <TextInput
-              ref='email'
-              style={textInputStyle}
-              value={email}
-              editable={editable}
-              keyboardType='email-address'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              autoCorrect
-              onChangeText={this.handleChangeEmail}
-              numberOfLines={8}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.telegramId.focus()}
-              placeholder={I18n.t('email')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
-            </Text>
-          </View>
-
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Telegram Id')}</Text>
-            <TextInput
+          <Item floatingLabel>
+            <Label>{I18n.t('Telegram Id')}</Label>
+            <Input
               ref='telegramId'
-              style={textInputStyle}
               value={telegramId}
               editable={editable}
               keyboardType='email-address'
@@ -238,17 +246,16 @@ class EditProfileForm extends React.Component {
               numberOfLines={8}
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.phone.focus()}
-              placeholder='@username' />
+              />
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.telegram_id) ? this.props.error['telegram_id'][0] : ''}
             </Text>
-          </View>
+          </Item>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Phone')}</Text>
-            <TextInput
+          <Item floatingLabel>
+            <Label>{I18n.t('Phone')}</Label>
+            <Input
               ref='phone'
-              style={textInputStyle}
               value={phone}
               editable={editable}
               keyboardType='phone-pad'
@@ -257,24 +264,26 @@ class EditProfileForm extends React.Component {
               onChangeText={this.handleChangePhone}
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressPost}
-              placeholder={'+34 654 321 321'} />
+              />
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.phone) ? this.props.error['phone'][0] : ''}
             </Text>
-          </View>
+          </Item>
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
 
-      {this.renderFaircoinAddressInput(faircoinAddress, editable, textInputStyle)}
+      {this.renderFaircoinAddressInput(faircoinAddress, editable)}
 
+          </Form>
           <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
-            <View style={Styles.buttonCta}>
+            <CardItem style={Styles.buttonCta}>
               {this.renderPublishButtonText()}
-            </View>
+            </CardItem>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
+          </Card>
+        </Content>
+      </Container>
     )
   }
 }

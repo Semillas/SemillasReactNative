@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import {
   Button,
+  Body,
   Container,
   Content,
   Card,
@@ -22,7 +23,6 @@ import { connect } from 'react-redux'
 import MapView from 'react-native-maps'
 import I18n from 'react-native-i18n'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import RoundedButton from '../Components/RoundedButton'
 import UserContact from '../Components/UserContact'
 import UserActions from '../Redux/UsersRedux.js'
 import UserServices from './UserServices'
@@ -90,13 +90,13 @@ class UserScreen extends React.Component {
   renderEditButton () {
     if ((this.props.loggedUser) && (this.props.loggedUser.uuid === this.props.user.uuid)) {
       return (
-        <RoundedButton
+        <Button block
           onPress={() => {
             NavigationActions.editProfile({uuid: this.props.user.uuid})
           }}
         >
-          {I18n.t('Edit Profile')}
-        </RoundedButton>
+          <Text>{I18n.t('Edit Profile')}</Text>
+        </Button>
       )
     } else {
       return (
@@ -139,17 +139,17 @@ class UserScreen extends React.Component {
               <CardItem cardBody style={styles.section}>
                 <UserContact user={user} />
               </CardItem>
-              <CardItem cardBody style={styles.section}>
+              <CardItem >
+                <Body>
                 {this.renderEditButton()}
+                </Body>
               </CardItem>
             </Card>
             <Card>
               <CardItem cardBody style={styles.section}>
                 <H2>{I18n.t('Services being offered')}</H2>
               </CardItem>
-              <CardItem cardBody style={styles.section}>
                 <UserServices userUuid={this.props.uuid} />
-              </CardItem>
             </Card>
           </Content>
         </Container>

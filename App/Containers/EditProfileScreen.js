@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react'
-import { View } from 'react-native'
 import { connect } from 'react-redux'
 import EditProfileForm from './EditProfileForm'
 
@@ -12,9 +11,7 @@ class EditProfileScreen extends React.Component {
 
   render () {
     return (
-      <View >
-        <EditProfileForm uuid={this.props.uuid} />
-      </View >
+      <EditProfileForm uuid={this.props.uuid} />
     )
   }
 }

@@ -82,7 +82,6 @@ class ServiceScreen extends React.Component {
         </Container>
       )
     } else {
-      const card = {card: {width: 320}}
       return (
         <Container>
           <CommonHeader title={I18n.t('Service')} />
