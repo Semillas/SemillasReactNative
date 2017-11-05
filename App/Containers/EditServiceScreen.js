@@ -9,9 +9,7 @@ class EditServiceScreen extends React.Component {
 
   render () {
     return (
-      <View >
-        <EditServiceForm uuid={this.props.uuid} />
-      </View >
+      <EditServiceForm uuid={this.props.uuid} />
     )
   }
 }

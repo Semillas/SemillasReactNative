@@ -2,10 +2,6 @@
 
 import React from 'react'
 import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
   TouchableOpacity,
   Image,
   Keyboard,
@@ -19,6 +15,19 @@ import {Images, Metrics} from '../Themes'
 import ServiceActions from '../Redux/ServiceRedux'
 import CategoryActions from '../Redux/CategoryRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import {
+  Content,
+  Container,
+  Card,
+  CardItem,
+  Input,
+  Button,
+  Text,
+  Form,
+  Item,
+  Label
+} from 'native-base'
+import CommonHeader from '../Components/CommonHeader'
 import I18n from 'react-native-i18n'
 import ServicePhotos from './ServicePhotoUploader'
 
@@ -167,13 +176,13 @@ class EditServiceForm extends React.Component {
   renderDeleteButton () {
     if ((this.props.uuid) || (this.props.newService)) {
       return (
-        <TouchableOpacity
-          style={Styles.button}
+        <Button
+          block
+          danger
           onPress={this.handlePressDelete}
-
         >
-          <Text style={Styles.buttonText}>{I18n.t('Delete Service')}</Text>
-        </TouchableOpacity>
+          <Text> {I18n.t('Delete Service')} </Text>
+        </Button>
       )
     } else {
       return (<View />)
@@ -183,15 +192,15 @@ class EditServiceForm extends React.Component {
   renderPublishButtonText () {
     if (this.props.posting) {
       return (
-        <Text style={Styles.buttonText}>{I18n.t('Publishing')}</Text>
+        <Text >{I18n.t('Publishing')}</Text>
       )
     } else if (!(this.props.error) && (this.props.newService)) {
       return (
-        <Text style={Styles.buttonText}>{I18n.t('Published')}</Text>
+        <Text >{I18n.t('Published')}</Text>
       )
     } else {
       return (
-        <Text style={Styles.buttonText}>{I18n.t('Publish')}</Text>
+        <Text >{I18n.t('Publish')}</Text>
       )
     }
   }
@@ -210,56 +219,56 @@ class EditServiceForm extends React.Component {
     const { title, description, category, seedsPrice } = this.state // TODO: Add category
     const { fetching } = this.state
     const editable = !fetching
-    const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     const descriptionTextInputStyle = editable ? Styles.descriptionTextInput : Styles.descriptionTextInputReadonly
     return (
-      <ScrollView contentContainerStyle={Styles.center} style={[Styles.container]} keyboardShouldPersistTaps='always'>
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-        <View style={Styles.form}>
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Title')}</Text>
-            <TextInput
-              ref='title'
-              style={textInputStyle}
-              value={title}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              autoCorrect={false}
-              onChangeText={this.handleChangeTitle}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.description.focus()}
-              placeholder={I18n.t('Title')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.title) ? this.props.error['title'][0] : ''}
-            </Text>
-          </View>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Description')}</Text>
-            <TextInput
-              ref='description'
-              style={descriptionTextInputStyle}
-              value={description}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              multiline={true}
-              autoCorrect
-              onChangeText={this.handleChangeDescription}
-              numberOfLines={8}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.seedsPrice.focus()}
-              placeholder={I18n.t('Description')} />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.description) ? this.props.error['description'][0] : ''}
-            </Text>
-          </View>
+      <Container>
+        <CommonHeader title={I18n.t('Service')} />
+        <Content padder>
+          <Card>
+            <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+            <Form>
+              <Item floatingLabel>
+                <Label>{I18n.t('Title')}</Label>
+                <Input
+                ref='title'
+                value={title}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='next'
+                autoCapitalize='sentences'
+                autoCorrect={false}
+                onChangeText={this.handleChangeTitle}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.description.focus()}
+                />
+              </Item>
+                <Text style={Styles.errorLabel}>
+                  { (this.props.error && this.props.error.title) ? this.props.error['title'][0] : ''}
+                </Text>
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Category')}</Text>
+             <Item floatingLabel>
+              <Label>{I18n.t('Description')}</Label>
+              <Input
+                ref='description'
+                style={descriptionTextInputStyle}
+                value={description}
+                editable={editable}
+                keyboardType='default'
+                returnKeyType='next'
+                autoCapitalize='sentences'
+                multiline={true}
+                autoCorrect
+                onChangeText={this.handleChangeDescription}
+                numberOfLines={8}
+                underlineColorAndroid='transparent'
+                onSubmitEditing={() => this.refs.seedsPrice.focus()}
+                />
+            </Item>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.description) ? this.props.error['description'][0] : ''}
+              </Text>
+
             <Picker
               selectedValue={category} // bien
               onValueChange={(itemValue) => this.setState({category: itemValue})}
@@ -271,17 +280,15 @@ class EditServiceForm extends React.Component {
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.category) ? this.props.error['category'][0] : ''}
             </Text>
-          </View>
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
 
 
-          <View style={Styles.row}>
-            <Text style={Styles.rowLabel}>{I18n.t('Seeds Price')}</Text>
-            <TextInput
+          <Item floatingLabel>
+            <Label>{I18n.t('Seeds Price')}</Label>
+            <Input
               ref='seedsPrice'
-              style={textInputStyle}
               value={seedsPrice}
               editable={editable}
               keyboardType='numeric'
@@ -290,26 +297,27 @@ class EditServiceForm extends React.Component {
               onChangeText={this.handleChangeSeedsPrice}
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressPost}
-              placeholder={''} />
+              />
+            </Item>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.seeds_price) ? this.props.error['seeds_price'][0] : ''}
+              </Text>
             <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.seeds_price) ? this.props.error['seeds_price'][0] : ''}
+              { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
             </Text>
-          </View>
-          <Text style={Styles.errorLabel}>
-            { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
-          </Text>
 
-          <View style={[Styles.loginRow]}>
+            </Form>
             <ServicePhotos serviceUuid={this.props.uuid ? this.props.uuid : this.props.newService} />
-          </View>
-          {this.renderDeleteButton()}
-          <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressPost}>
-            <View style={Styles.buttonCta}>
-              {this.renderPublishButtonText()}
-            </View>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            {this.renderDeleteButton()}
+            <Button
+              block
+              onPress={this.handlePressPost}
+              >
+                {this.renderPublishButtonText()}
+            </Button>
+          </Card>
+        </Content>
+      </Container>
     )
   }
 }

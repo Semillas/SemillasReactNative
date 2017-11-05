@@ -1,4 +1,5 @@
 import variable from "./../variables/platform";
+import { Metrics } from "../../"
 
 export default (variables = variable) => {
 	const platformStyle = variables.platformStyle;
@@ -261,6 +262,10 @@ export default (variables = variable) => {
 		".block": {
 			justifyContent: "center",
 			alignSelf: "stretch",
+      marginTop: Metrics.baseMargin,
+      marginBottom: Metrics.baseMargin,
+      marginRight: Metrics.baseMargin,
+      marginLeft: Metrics.baseMargin
 		},
 
 		".full": {

@@ -159,24 +159,24 @@ class EditProfileForm extends React.Component {
   renderFaircoinAddressInput (faircoinAddress, editable) {
     if (AppConfig.FaircoinEnabled) {
     return (
-            <Item floatingLabel>
-            <Label>{I18n.t('Faircoin Address')}</Label>
-            <Input
-              ref='faircoinAddress'
-              value={faircoinAddress}
-              editable={editable}
-              keyboardType='default'
-              returnKeyType='next'
-              autoCapitalize='sentences'
-              onChangeText={this.handleChangeFaircoinAddress}
-              numberOfLines={8}
-              underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.phone.focus()}
-              />
-            <Text style={Styles.errorLabel}>
-              { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
-            </Text>
-          </Item>
+      <Item floatingLabel>
+        <Label>{I18n.t('Faircoin Address')}</Label>
+        <Input
+          ref='faircoinAddress'
+          value={faircoinAddress}
+          editable={editable}
+          keyboardType='default'
+          returnKeyType='next'
+          autoCapitalize='sentences'
+          onChangeText={this.handleChangeFaircoinAddress}
+          numberOfLines={8}
+          underlineColorAndroid='transparent'
+          onSubmitEditing={() => this.refs.phone.focus()}
+          />
+        <Text style={Styles.errorLabel}>
+          { (this.props.error && this.props.error.faircoin_address) ? this.props.error['faircoin_address'][0] : ''}
+        </Text>
+      </Item>
     )
     } else {
       return (<Item />)
@@ -208,10 +208,10 @@ class EditProfileForm extends React.Component {
                   underlineColorAndroid='transparent'
                   onSubmitEditing={() => this.refs.email.focus()}
                   />
+              </Item>
                 <Text style={Styles.errorLabel}>
                   { (this.props.error && this.props.error.name) ? this.props.error['name'][0] : ''}
                 </Text>
-            </Item>
 
             <Item floatingLabel>
               <Label>{I18n.t('Email')}</Label>
@@ -228,7 +228,7 @@ class EditProfileForm extends React.Component {
                 underlineColorAndroid='transparent'
                 onSubmitEditing={() => this.refs.telegramId.focus()}
                 />
-          </Item>
+            </Item>
               <Text style={Styles.errorLabel}>
                 { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
               </Text>
@@ -247,10 +247,10 @@ class EditProfileForm extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={() => this.refs.phone.focus()}
               />
+          </Item>
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.telegram_id) ? this.props.error['telegram_id'][0] : ''}
             </Text>
-          </Item>
 
           <Item floatingLabel>
             <Label>{I18n.t('Phone')}</Label>
@@ -265,10 +265,10 @@ class EditProfileForm extends React.Component {
               underlineColorAndroid='transparent'
               onSubmitEditing={this.handlePressPost}
               />
+          </Item>
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.phone) ? this.props.error['phone'][0] : ''}
             </Text>
-          </Item>
           <Text style={Styles.errorLabel}>
             { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
           </Text>
