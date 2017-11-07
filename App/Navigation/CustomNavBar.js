@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { View, Image, LayoutAnimation } from 'react-native'
+import {
+  View,
+  Image,
+  LayoutAnimation,
+  ViewPropTypes
+} from 'react-native'
 import NavItems from './NavItems'
 import styles from './Styles/CustomNavBarStyle'
 import SearchBar from '../Components/SearchBar'
@@ -91,7 +96,7 @@ class CustomNavBar extends React.Component {
 
 CustomNavBar.propTypes = {
   navigationState: PropTypes.object,
-  navigationBarStyle: View.propTypes.style
+  navigationBarStyle: ViewPropTypes.style
 }
 
 const mapStateToProps = (state) => {
