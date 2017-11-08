@@ -57,6 +57,20 @@ export function * searchUser (api, action) {
     const user = path(['data'], response)
     yield put(UsersActions.usersSearchSuccess(user))
   } else {
-    yield put(UsersActions.usersFailure())
+    yield put(UsersActions.usersSearchFailure())
+  }
+}
+
+export function * recoverPassword (api, action) {
+  const { email } = action
+  // make the call to the api
+  const response = yield call(api.recoverPassword, email)
+
+  // success?
+  const message = path(['data'], response)
+  if (response.ok) {
+    yield put(UsersActions.passwordRecoverySuccess(message.detail))
+  } else {
+    yield put(UsersActions.passwordRecoveryFailure(message))
   }
 }

@@ -192,6 +192,14 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     return api.get('/api/v1/wallet/owner/'.concat(userUuid, '/'))
   }
 
+  const recoverPassword = function (email) {
+    data = {
+      'email': email
+    }
+    return api.post('/rest-auth/password/reset/',
+    data)
+  }
+
   // ------
   // STEP 3
   // ------
@@ -223,7 +231,8 @@ const create = (baseURL = 'https://www.semillasocial.org') => {
     putUser,
     putUserPhoto,
     transact,
-    getWallet
+    getWallet,
+    recoverPassword
   }
 }
 

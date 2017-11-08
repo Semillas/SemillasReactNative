@@ -17,16 +17,24 @@ import { WalletTypes } from '../Redux/WalletRedux'
 
 // import { startup } from './StartupSagas'
 import { login, signup, setApiKey } from './LoginSagas'
-import { getUser, profilePost, profilePhotoPost, searchUser } from './UsersSagas'
+import {
+  getUser,
+  profilePost,
+  profilePhotoPost,
+  searchUser,
+  recoverPassword
+} from './UsersSagas'
 import { getUserServices } from './UserServicesSagas'
 import { getFeed } from './FeedSagas'
 import { getCategories } from './CategorySagas'
 import { createTransaction, getWallet } from './WalletSagas'
-import {  getService,
-          postService,
-          photoPostService,
-          deleteService,
-          deleteServicePhoto} from './ServiceSagas'
+import {
+  getService,
+  postService,
+  photoPostService,
+  deleteService,
+  deleteServicePhoto
+} from './ServiceSagas'
 import { openScreen } from './OpenScreenSagas'
 
 /* ------------- API ------------- */
@@ -54,6 +62,7 @@ const root = function * root () {
     takeLatest(ServiceTypes.SERVICE_REQUEST, getService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_POST_REQUEST, postService, semillasApi),
     takeLatest(UserServicesTypes.USER_SERVICES_REQUEST, getUserServices, semillasApi),
+    takeLatest(UsersTypes.PASSWORD_RECOVERY_REQUEST, recoverPassword, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_POST_REQUEST, photoPostService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_DELETION_REQUEST, deleteService, semillasApi),
     takeLatest(ServiceTypes.SERVICE_PHOTO_DELETION_REQUEST, deleteServicePhoto, semillasApi),

@@ -12,8 +12,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import Styles from './Styles/EditServiceFormStyle'
 import {Images, Metrics} from '../Themes'
-import ServiceActions from '../Redux/ServiceRedux'
-import CategoryActions from '../Redux/CategoryRedux'
+import UsersActions from '../Redux/UsersRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {
   Content,
@@ -25,29 +24,28 @@ import {
   Text,
   Form,
   Item,
+  Body,
   Label
 } from 'native-base'
 import CommonHeader from '../Components/CommonHeader'
 import I18n from 'react-native-i18n'
 import ServicePhotos from './ServicePhotoUploader'
 
-ServicePostProps = {
-  dispatch: PropTypes.func,
-  fetching: PropTypes.bool,
-  attemptServicePost: PropTypes.func,
-  profile: PropTypes.object,
-  categories: PropTypes.object
+RecoverPasswordProps = {
+  posting: PropTypes.bool,
+  message: PropTypes.string,
+  passwordRecoveryResult: PropTypes.func,
 }
 
-class EditServiceForm extends React.Component {
-  props: ServicePostProps
+class RecoverPasswordScreen extends React.Component {
+  props: RecoverPasswordProps
 
   state: {
     email: string,
   }
 
 
-  constructor (props: ServicePostProps) {
+  constructor (props: RecoverPasswordProps) {
     super(props)
     this.state = {
       email: '',
@@ -55,12 +53,7 @@ class EditServiceForm extends React.Component {
   }
 
   handlePressPost = () => {
-    if (this.props.uuid) {
-      this.props.attemptServiceDelete(this.props.uuid)
-    } else if (this.props.newService) {
-      this.props.attemptServiceDelete(this.props.newService)
-    }
-    NavigationActions.feed()
+    this.props.attemptRecoverPassword(this.state.email)
   }
 
   handleChangeEmail= (text) => {
@@ -82,18 +75,22 @@ class EditServiceForm extends React.Component {
                 <Input
                 ref='email'
                 value={email}
-                keyboardType='email'
+                keyboardType='email-address'
                 returnKeyType='next'
                 autoCapitalize='sentences'
                 autoCorrect={false}
-                onChangeText={this.handleChangeTitle}
+                onChangeText={this.handleChangeEmail}
                 underlineColorAndroid='transparent'
                 onSubmitEditing={() => this.refs.description.focus()}
                 />
               </Item>
-                <Text style={Styles.errorLabel}>
-                  { (this.props.error && this.props.error.title) ? this.props.error['title'][0] : ''}
-                </Text>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.email) ? this.props.error['email'][0] : ''}
+              </Text>
+              <Text style={Styles.errorLabel}>
+                { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
+              </Text>
+
 
             </Form>
             <Button
@@ -102,6 +99,11 @@ class EditServiceForm extends React.Component {
               >
                 <Text>Send</Text>
             </Button>
+            <CardItem>
+              <Body>
+                <Text> {this.props.successMessage} </Text>
+              </Body>
+            </CardItem>
           </Card>
         </Content>
       </Container>
@@ -111,25 +113,21 @@ class EditServiceForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    posting: state.services.posting,
-    error: state.services.error,
+    posting: state.users.posting,
+    successMessage: state.users.passwordRecoverySuccess,
+    error: state.users.passwordRecoveryError
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptRecoverEmail:
+    attemptRecoverPassword:
       (email) => dispatch(
-        UsersActions.servicePostRequest(
+        UsersActions.passwordRecoveryRequest(
           email
         )
       ),
-    attemptServiceDelete:
-      (uuid) => dispatch(ServiceActions.serviceDeletionRequest(uuid)),
-    retrieveService: (uuid) => dispatch(ServiceActions.serviceRequest(uuid)),
-    retrieveCategories: () => dispatch(CategoryActions.categoryRequest()),
-    clearNewService: () => dispatch(ServiceActions.clearNewService())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditServiceForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RecoverPasswordScreen)
