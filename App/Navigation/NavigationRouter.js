@@ -24,6 +24,7 @@ import LoginScreen from '../Containers/LoginScreen'
 import SignupScreen from '../Containers/SignupScreen'
 import AboutScreen from '../Containers/AboutScreen'
 import HowItWorksScreen from '../Containers/HowItWorksScreen'
+import RecoverPasswordScreen from '../Containers/RecoverPasswordScreen'
 import PerformTransactionScreen from '../Containers/PerformTransactionScreen'
 import DrawerMenu from './DrawerMenu'
 
@@ -51,10 +52,6 @@ class NavigationRouter extends Component {
     }),
 }
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', NavigationActions.pop);
-  }
-
   popRoute() {
     this.props.popRoute();
   }
@@ -78,6 +75,7 @@ class NavigationRouter extends Component {
             <scene key='signup' component={SignupScreen} title='signup' hideNavBar />
             <scene key='about' component={AboutScreen} title='about' hideNavBar />
             <scene key='howItWorks' component={HowItWorksScreen} title='howItWorks' hideNavBar />
+            <scene key='recoverPassword' component={RecoverPasswordScreen} title='Recover Password' hideNavBar/>
             <scene key='performTransaction' component={PerformTransactionScreen} title='performTransaction' hideNavBar/>
         </Scene>
       </Router>

@@ -10,6 +10,7 @@
    "Delete Service": "Eliminar Servicio",
    "Select a Photo": "Añadir foto",
    "Add Service": "Publicar Oferta",
+   "cancel": "Cancelar",
    "Services": "Servicios",
    "Service": "Servicio",
    "Loading Service": "Cargando Servicio",
@@ -44,4 +45,5 @@
    "Amount:": "Cantidad:",
    "Send": "Enviar",
    "You have no transactions to be shown yet": "Ninguna transacción... De momento.",
+   "Forgot password?": "Recordar contraseña",
 }

@@ -29,6 +29,7 @@ import UserServices from './UserServices'
 import LoginSignUpButtons from '../Components/LoginSignUpButtons'
 import { Images } from '../Themes/'
 import CommonHeader from '../Components/CommonHeader'
+import AppConfig from '../Config/AppConfig'
 
 
 // Styles
@@ -100,7 +101,13 @@ class UserScreen extends React.Component {
       )
     } else {
       return (
-        <View />
+        <Button block
+          onPress={() => {
+            NavigationActions.performTransaction({recipient: this.props.user})
+          }}
+        >
+          <Text>{I18n.t('Send') + ' ' +  AppConfig.CurrencyName}</Text>
+        </Button>
       )
     }
   }

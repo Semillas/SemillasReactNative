@@ -13,7 +13,8 @@ import {
 } from 'react-native'
 import {
   Container,
-  Content
+  Content,
+  Button
 } from 'native-base'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyle'
@@ -153,6 +154,16 @@ class LoginScreen extends React.Component {
             <Text style={Styles.errorLabel}>
               { (this.props.error && this.props.error.non_field_errors) ? this.props.error['non_field_errors'][0] : ''}
             </Text>
+
+            <Button
+              transparent
+              info
+              onPress={NavigationActions.recoverPassword}
+              >
+              <Text>{I18n.t('Forgot password?')}</Text>
+            </Button>
+
+
             <View style={[Styles.loginRow]}>
               <TouchableOpacity style={Styles.loginButtonWrapper} onPress={this.handlePressLogin}>
                 <View style={Styles.loginButton}>

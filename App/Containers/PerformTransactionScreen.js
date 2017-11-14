@@ -7,6 +7,7 @@ import {
   Modal
 } from 'react-native'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 import {
   Container,
   Content,
@@ -53,6 +54,9 @@ class PerformTransactionScreen extends React.Component {
   componentWillMount () {
     if (!this.props.wallet) {
       this.props.walletRequest(this.props.user.uuid)
+    }
+    if (this.props.recipientByParameter) {
+      this.setState({recipient: this.props.recipientByParameter})
     }
   }
 
@@ -221,7 +225,14 @@ class PerformTransactionScreen extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+
+PerformTransactionScreen.propTypes = {
+  performSearch: PropTypes.func,
+  user: PropTypes.object,
+  recipientByParameter: PropTypes.object
+}
+
+const mapStateToProps = (state, ownProps) => {
   return {
     user: state.login.user,
     searchTerm: state.users.searchText,
@@ -230,6 +241,7 @@ const mapStateToProps = (state) => {
     transactionError: state.wallet.transactionError,
     transacting: state.wallet.transactionRequesting,
     successMessage: state.wallet.successMessage,
+    recipientByParameter: ownProps.recipient,
     wallet: state.wallet.wallet
   }
 }
