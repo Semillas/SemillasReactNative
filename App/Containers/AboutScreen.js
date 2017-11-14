@@ -3,6 +3,7 @@
 import React from 'react'
 import { WebView } from 'react-native'
 import { connect } from 'react-redux'
+import { Container } from 'native-base'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import { Metrics } from '../Themes'
@@ -10,6 +11,7 @@ import { Metrics } from '../Themes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import CommonHeader from '../Components/CommonHeader'
 
 // Styles
 import styles from './Styles/AboutScreenStyle'
@@ -21,10 +23,13 @@ class AboutScreen extends React.Component {
 
   render () {
     return (
-      <WebView
-        source={{uri: 'https://www.semillasocial.org/landing/people/'}}
-        style={styles.webView}
-      />
+      <Container>
+        <CommonHeader title={I18n.t('About')} />
+        <WebView
+          source={{uri: 'https://www.semillasocial.org/landing/porque/'}}
+          style={styles.webView}
+        />
+      </Container>
     )
   }
 
