@@ -21,7 +21,10 @@ const { Types, Creators } = createActions({
   usersCancelSearch: null,
   usersSearchRequest: ['searchText'],
   usersSearchSuccess: ['users'],
-  usersSearchFailure: ['error']
+  usersSearchFailure: ['error'],
+  passwordRecoveryRequest: ['email'],
+  passwordRecoverySuccess: ['message'],
+  passwordRecoveryFailure: ['error'],
 })
 
 export const UsersTypes = Types
@@ -40,7 +43,9 @@ export const INITIAL_STATE = Immutable({
   photoPostError: null,
   searchText: null,
   searching: false,
-  searchError: null
+  searchError: null,
+  passwordRecoverySuccess: null,
+  passwordRecoveryError: null
 })
 
 /* ------------- Reducers ------------- */
@@ -140,6 +145,21 @@ export const searchSuccess = (state: Object, action: Object) => {
 export const searchFailure = (state: Object) =>
   Object.assign({}, state, ({ searching: false, searchError: true }))
 
+
+// request for a password reset
+export const passwordRecoveryRequest = (state: Object) =>
+  Object.assign({}, state, { posting: true, passwordRecoveryError: null })
+
+export const passwordRecoverySuccess = (state: Object, action: Object) => {
+  const { message } = action
+  return Object.assign({}, state, { posting: false, passwordRecoverySuccess: message })
+}
+
+export const passwordRecoveryFailure = (state: Object, { error }: Object) => {
+  return Object.assign({}, state, ({ posting: false, passwordRecoveryError: error }))
+}
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -156,4 +176,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USERS_SEARCH_REQUEST]: searchRequest,
   [Types.USERS_SEARCH_SUCCESS]: searchSuccess,
   [Types.USERS_SEARCH_FAILURE]: searchFailure,
+  [Types.PASSWORD_RECOVERY_REQUEST]: passwordRecoveryRequest,
+  [Types.PASSWORD_RECOVERY_SUCCESS]: passwordRecoverySuccess,
+  [Types.PASSWORD_RECOVERY_FAILURE]: passwordRecoveryFailure,
 })
