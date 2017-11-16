@@ -19,14 +19,14 @@ import styles from './Styles/AboutScreenStyle'
 // I18n
 import I18n from 'react-native-i18n'
 
-class AboutScreen extends React.Component {
+class HowItWorksScreen extends React.Component {
 
   render () {
     return (
       <Container>
-        <CommonHeader title={I18n.t('About')} />
+        <CommonHeader title={I18n.t('How it works')} />
         <WebView
-          source={{uri: 'https://www.semillasocial.org/landing/porque/'}}
+          source={{uri: 'https://www.semillasocial.org/landing/how_it_works/'}}
           style={styles.webView}
         />
       </Container>
@@ -45,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AboutScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(HowItWorksScreen)
