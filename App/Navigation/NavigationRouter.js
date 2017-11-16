@@ -73,9 +73,9 @@ class NavigationRouter extends Component {
             <scene key='currency' component={CurrencyScreen} title='semillas' hideNavBar />
             <scene key='login' component={LoginScreen} hideNavBar title='login' />
             <scene key='signup' component={SignupScreen} title='signup' hideNavBar />
+            <scene key='recoverPassword' component={RecoverPasswordScreen} title='Recover Password' hideNavBar/>
             <scene key='about' component={AboutScreen} title='about' hideNavBar />
             <scene key='howItWorks' component={HowItWorksScreen} title='howItWorks' hideNavBar />
-            <scene key='recoverPassword' component={RecoverPasswordScreen} title='Recover Password' hideNavBar/>
             <scene key='performTransaction' component={PerformTransactionScreen} title='performTransaction' hideNavBar/>
         </Scene>
       </Router>
